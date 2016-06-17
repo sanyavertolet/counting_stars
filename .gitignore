@@ -1,3 +1,6 @@
+/docs/
+/cmake-build-debug/
+/cmake-build-debug-coverage/
 #
 # Сюда можно добавить ещё ваших
 # спецефичных временных файлов или
@@ -6,24 +9,16 @@
 # Как обычно. Ваш Алексей Сальников.
 #
 
-*~
-*.o
-*.a
-*.so
-*.so.*
-*.swp
-*.swo
-.#*
-*.tmp
-a.out
-.DS_Store
-thumbs.db
+**/*~
+**/*.o
+**/*.a
+**/*.so
+**/*.so.*
+**/*.swp
+**/*.swo
+**/.#*
+**/*.tmp
+**/a.out
+**/.DS_Store
+**/thumbs.db
 
-*.exe
-*.obj
-*.dll
-*.lib
-*.ppu
-
-/docs/
-/cmake-build-debug/
