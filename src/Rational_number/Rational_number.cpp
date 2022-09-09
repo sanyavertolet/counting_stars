@@ -265,29 +265,26 @@ Rational_number Rational_number::operator-(const Rational_number &another) const
     return Rational_number(new_sign, new_numerator, new_denominator);
 }
 
-#ifdef ___DEV___
 Rational_number Rational_number::operator*(const Rational_number &another) const {
     char new_sign;
-    if (sign == '+' && another.sign == '+' || sign == '-' && another.sign == '-') {
+    if (sign == another.sign) {
         new_sign = '+';
     } else {
         new_sign = '-';
     }
-    std::string new_numerator = multiply(numerator, another.numerator);
-    std::string new_denominator = multiply(denominator, another.denominator);
+    std::string new_numerator = string_arithmetics::multiply(numerator, another.numerator);
+    std::string new_denominator = string_arithmetics::multiply(denominator, another.denominator);
     return Rational_number(new_sign, new_numerator, new_denominator);
 }
 
 Rational_number Rational_number::operator/(const Rational_number &another) const {
     char new_sign;
-    if (sign == '+' && another.sign == '+' || sign == '-' && another.sign == '-') {
+    if (sign == another.sign) {
         new_sign = '+';
     } else {
         new_sign = '-';
     }
-    std::string new_numerator = multiply(numerator, another.denominator);
-    std::string new_denominator = multiply(denominator, another.numerator);
+    std::string new_numerator = string_arithmetics::multiply(numerator, another.denominator);
+    std::string new_denominator = string_arithmetics::multiply(denominator, another.numerator);
     return Rational_number(new_sign, new_numerator, new_denominator);
 }
-
-#endif
