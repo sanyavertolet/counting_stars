@@ -5,7 +5,6 @@
 #ifndef COUNTING_STARS_RATIONAL_NUMBER_H
 #define COUNTING_STARS_RATIONAL_NUMBER_H
 
-
 #include <string>
 #include <cmath>
 
@@ -28,8 +27,10 @@ public:
     //NOLINTNEXTLINE
     Rational_number operator--(int);
 
-    Rational_number make_canonical();
-    Rational_number simplify();
+    Rational_number operator+(const Rational_number &) const;
+    Rational_number operator-(const Rational_number &) const;
+    Rational_number operator*(const Rational_number &) const;
+    Rational_number operator/(const Rational_number &) const;
 
     Rational_number operator+=(Rational_number);
     Rational_number operator-=(Rational_number);
@@ -43,10 +44,13 @@ public:
     Rational_number operator<(Rational_number);
     Rational_number operator>(Rational_number);
 
-    friend Rational_number operator+(Rational_number, Rational_number);
-    friend Rational_number operator-(Rational_number, Rational_number);
-    friend Rational_number operator*(Rational_number, Rational_number);
-    friend Rational_number operator/(Rational_number, Rational_number);
+//    friend Rational_number operator+(Rational_number, Rational_number);
+//    friend Rational_number operator-(Rational_number, Rational_number);
+//    friend Rational_number operator*(Rational_number, Rational_number);
+//    friend Rational_number operator/(Rational_number, Rational_number);
+
+    Rational_number make_canonical();
+    Rational_number simplify();
 
     explicit operator std::string() const;
 

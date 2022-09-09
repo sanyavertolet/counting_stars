@@ -85,3 +85,84 @@ TEST(Rational_number_operators_test, postfix_decrement_check)
     ASSERT_TRUE(rational--.numerator == "12");
     ASSERT_TRUE(rational.sign == '+' && rational.numerator == "0" && rational.denominator == "12");
 }
+
+TEST(Rational_number_operators_test, plus_check)
+{
+    auto one = Rational_number('+', "10", "12");
+    auto another = Rational_number('+', "10", "12");
+    auto result = one + another;
+    ASSERT_TRUE(result.sign == '+' && result.numerator == "20" && result.denominator == "12");
+
+    one = Rational_number('+', "10", "12");
+    another = Rational_number('-', "10", "12");
+    result = one + another;
+    ASSERT_TRUE(result.sign == '+' && result.numerator == "0" && result.denominator == "12");
+
+    one = Rational_number('+', "10", "12");
+    another = Rational_number('+', "10", "24");
+    result = one + another;
+    ASSERT_TRUE(result.sign == '+' && result.numerator == "30" && result.denominator == "24");
+
+    one = Rational_number('+', "5", "12");
+    another = Rational_number('-', "10", "12");
+    result = one + another;
+    ASSERT_TRUE(result.sign == '-' && result.numerator == "5" && result.denominator == "12");
+
+    one = Rational_number('-', "5", "12");
+    another = Rational_number('-', "10", "12");
+    result = one + another;
+    ASSERT_TRUE(result.sign == '-' && result.numerator == "15" && result.denominator == "12");
+
+    one = Rational_number('-', "5", "12");
+    another = Rational_number('+', "10", "12");
+    result = one + another;
+    ASSERT_TRUE(result.sign == '+' && result.numerator == "5" && result.denominator == "12");
+
+    one = Rational_number('-', "345", "993");
+    another = Rational_number('+', "228", "432");
+    result = one + another;
+    ASSERT_TRUE(result.sign == '+' && result.numerator == "25788" && result.denominator == "142992");
+}
+
+TEST(Rational_number_operators_test, minus_check)
+{
+    auto one = Rational_number('+', "10", "12");
+    auto another = Rational_number('+', "10", "12");
+    auto result = one - another;
+    ASSERT_TRUE(result.sign == '+' && result.numerator == "0" && result.denominator == "12");
+
+    one = Rational_number('+', "10", "12");
+    another = Rational_number('-', "10", "12");
+    result = one - another;
+    ASSERT_TRUE(result.sign == '+' && result.numerator == "20" && result.denominator == "12");
+
+    one = Rational_number('+', "10", "12");
+    another = Rational_number('+', "10", "24");
+    result = one - another;
+    ASSERT_TRUE(result.sign == '+' && result.numerator == "10" && result.denominator == "24");
+
+    one = Rational_number('+', "5", "12");
+    another = Rational_number('-', "10", "12");
+    result = one - another;
+    ASSERT_TRUE(result.sign == '+' && result.numerator == "15" && result.denominator == "12");
+
+    one = Rational_number('-', "5", "12");
+    another = Rational_number('-', "10", "12");
+    result = one - another;
+    ASSERT_TRUE(result.sign == '+' && result.numerator == "5" && result.denominator == "12");
+
+    one = Rational_number('-', "5", "12");
+    another = Rational_number('+', "10", "12");
+    result = one - another;
+    ASSERT_TRUE(result.sign == '-' && result.numerator == "15" && result.denominator == "12");
+
+    one = Rational_number('-', "345", "993");
+    another = Rational_number('+', "228", "432");
+    result = one - another;
+    ASSERT_TRUE(result.sign == '-' && result.numerator == "125148" && result.denominator == "142992");
+
+    one = Rational_number('-', "345", "993");
+    another = Rational_number('-', "228", "432");
+    result = one - another;
+    ASSERT_TRUE(result.sign == '+' && result.numerator == "25788" && result.denominator == "142992");
+}
