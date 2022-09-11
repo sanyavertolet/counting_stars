@@ -50,7 +50,9 @@ public:
 //    friend Rational_number operator/(Rational_number, Rational_number);
 
     Rational_number make_canonical();
-    Rational_number simplify();
+    Rational_number simplify() const;
+
+    Rational_number& simplify();
 
     explicit operator std::string() const;
 

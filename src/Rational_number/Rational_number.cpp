@@ -150,6 +150,7 @@ Rational_number& Rational_number::operator++() {
         sign = '+';
     }
     remove_leading_zeros();
+    this->simplify();
     return *this;
 }
 
@@ -169,6 +170,7 @@ Rational_number Rational_number::operator++(int) {
         sign = '+';
     }
     remove_leading_zeros();
+    this->simplify();
     return result;
 }
 
@@ -185,6 +187,7 @@ Rational_number& Rational_number::operator--() {
         numerator = string_arithmetics::minus(numerator, denominator);
     }
     remove_leading_zeros();
+    this->simplify();
     return *this;
 }
 
@@ -203,11 +206,11 @@ Rational_number Rational_number::operator--(int) {
         numerator = string_arithmetics::minus(numerator, denominator);
     }
     remove_leading_zeros();
+    this->simplify();
     return result;
 }
 
 Rational_number Rational_number::operator+(const Rational_number &another) const {
-    // todo: implement simplifying
     std::string gcd = string_arithmetics::gcd(denominator, another.denominator);
     std::string left_multiplier = string_arithmetics::divide_as_integers(another.denominator, gcd);
     std::string right_multiplier = string_arithmetics::divide_as_integers(denominator, gcd);
@@ -233,11 +236,10 @@ Rational_number Rational_number::operator+(const Rational_number &another) const
         new_numerator = string_arithmetics::minus(left_extended_numerator, right_extended_numerator);
     }
 
-    return Rational_number(new_sign, new_numerator, new_denominator);
+    return Rational_number(new_sign, new_numerator, new_denominator).simplify();
 }
 
 Rational_number Rational_number::operator-(const Rational_number &another) const {
-    // todo: implement simplifying
     std::string gcd = string_arithmetics::gcd(denominator, another.denominator);
     std::string left_multiplier = string_arithmetics::divide_as_integers(another.denominator, gcd);
     std::string right_multiplier = string_arithmetics::divide_as_integers(denominator, gcd);
@@ -262,7 +264,7 @@ Rational_number Rational_number::operator-(const Rational_number &another) const
     } else {
         new_numerator = string_arithmetics::minus(left_extended_numerator, right_extended_numerator);
     }
-    return Rational_number(new_sign, new_numerator, new_denominator);
+    return Rational_number(new_sign, new_numerator, new_denominator).simplify();
 }
 
 Rational_number Rational_number::operator*(const Rational_number &another) const {
@@ -274,7 +276,7 @@ Rational_number Rational_number::operator*(const Rational_number &another) const
     }
     std::string new_numerator = string_arithmetics::multiply(numerator, another.numerator);
     std::string new_denominator = string_arithmetics::multiply(denominator, another.denominator);
-    return Rational_number(new_sign, new_numerator, new_denominator);
+    return Rational_number(new_sign, new_numerator, new_denominator).simplify();
 }
 
 Rational_number Rational_number::operator/(const Rational_number &another) const {
@@ -286,5 +288,23 @@ Rational_number Rational_number::operator/(const Rational_number &another) const
     }
     std::string new_numerator = string_arithmetics::multiply(numerator, another.denominator);
     std::string new_denominator = string_arithmetics::multiply(denominator, another.numerator);
-    return Rational_number(new_sign, new_numerator, new_denominator);
+    return Rational_number(new_sign, new_numerator, new_denominator).simplify();
+}
+
+Rational_number Rational_number::simplify() const {
+    std::string gcd = string_arithmetics::gcd(numerator, denominator);
+    std::string new_numerator = string_arithmetics::divide_as_integers(numerator, gcd);
+    std::string new_denominator = string_arithmetics::divide_as_integers(denominator, gcd);
+    return Rational_number(sign, new_numerator, new_denominator);
+}
+
+Rational_number& Rational_number::simplify() {
+    if (numerator == "0") {
+        denominator = "1";
+    } else {
+        std::string gcd = string_arithmetics::gcd(numerator, denominator);
+        numerator = string_arithmetics::divide_as_integers(numerator, gcd);
+        denominator = string_arithmetics::divide_as_integers(denominator, gcd);
+    }
+    return *this;
 }
