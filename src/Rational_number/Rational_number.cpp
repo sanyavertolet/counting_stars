@@ -4,307 +4,247 @@
 
 #include "Rational_number.h"
 
-#include <utility>
-#include "../string_arithmetics/string_arithmetics.h"
+// ================================== CONSTRUCTORS ===================================
 
-enum class Comparator_result {
-    LESS = -1,
-    EQUAL = 0,
-    GREATER = 1,
-};
-
-Rational_number::Rational_number(char sgn, std::string num, std::string denom) {
-    sign = sgn;
+Rational_number::Rational_number(StringInt num, StringInt denom) {
     numerator = std::move(num);
     denominator = std::move(denom);
+    if (numerator.get_sign() == denominator.get_sign()) {
+        numerator.set_sign('+');
+    } else {
+        numerator.set_sign('-');
+    }
+    denominator.set_sign('+');
     validate();
 }
 
-Rational_number::Rational_number(signed num, unsigned denom) {
-    if (num < 0) {
-        sign = '-';
-    } else {
-        sign = '+';
-    }
-    numerator = std::to_string(abs(num));
-    denominator = std::to_string(denom);
+Rational_number::Rational_number(const signed& num, const unsigned& denom): numerator(num), denominator(denom) {
     validate();
 }
 
-Rational_number::Rational_number(int number) {
-    if (number < 0) {
-        sign = '-';
-    } else {
-        sign = '+';
-    }
-    numerator = std::to_string(abs(number));
-    denominator = "1";
-    validate();
-}
+Rational_number::Rational_number(const int& number): numerator(number), denominator(1) { }
 
 Rational_number::Rational_number(std::string number) {
     if (number.empty()) {
         throw std::runtime_error("Invalid input number: [" + number + "]");
     }
-    if (number[0] == '-') {
-        sign = '-';
-        number.erase(0, 1);
-    } else if (number[0] == '+') {
-        sign = '+';
+    if (number[0] == '-' || number[0] == '+') {
+        numerator.set_sign(number[0]);
         number.erase(0, 1);
     } else {
-        sign = '+';
+        numerator.set_sign('+');
     }
     auto slash_pos = number.find('/');
     if (slash_pos == std::string::npos) {
         auto dot_pos = number.find('.');
         if (dot_pos == std::string::npos) {
-            numerator = number;
-            denominator = "1";
+            numerator.set_val(number);
+            denominator = 1;
         } else {
             auto power = number.substr(dot_pos).size() - 1;
             number.erase(dot_pos, 1);
-            numerator = number;
-            denominator = "1";
+            numerator.set_val(number);
+            denominator = 1;
             for (int i = 0; i < power; ++i) {
-                denominator += "0";
+                denominator.set_val(denominator.get_val() += "0");
             }
         }
     } else {
         if (slash_pos + 1 < number.length()) {
-            denominator = number.substr(slash_pos + 1);
+            denominator.set_val(number.substr(slash_pos + 1));
         }
-        numerator = number.substr(0, slash_pos);
+        numerator.set_val(number.substr(0, slash_pos));
     }
     validate();
 }
 
-void Rational_number::validate() {
-    if (sign != '+' && sign != '-') {
-        throw std::runtime_error("Invalid sign: [" + std::string(1, sign) + "]");
-    }
-    if (numerator.empty()) {
-        throw std::runtime_error("Empty numerator");
-    }
-    if (denominator.empty()) {
-        throw std::runtime_error("Empty denominator");
-    }
-    if (denominator == "0") {
-        throw std::runtime_error("Denominator of rational number should not be null");
-    }
-    remove_leading_zeros();
-    for (char digit : numerator) {
-        if (!isnumber(digit)) {
-            throw std::runtime_error("Invalid numerator: [" + numerator + "]");
-        }
-    }
-    for (char digit : denominator) {
-        if (!isnumber(digit)) {
-            throw std::runtime_error("Invalid denominator: [" + denominator + "]");
-        }
-    }
-}
+Rational_number::Rational_number(const signed long long& num): numerator(num), denominator(1) { }
 
-void Rational_number::remove_leading_zeros() {
-    auto size = numerator.length();
-    int i;
-    for (i = 0; i < size - 1; ++i) {
-        if (numerator[i] != '0') {
-            break;
-        }
-    }
-    numerator = numerator.substr(i);
-}
-
-Rational_number::operator std::string() const {
-    if (sign == '-') {
-        return sign + numerator + '/' + denominator;
-    } else {
-        return numerator + '/' + denominator;
-    }
-}
-
-std::string to_string(Rational_number &number) {
-    return std::string(number);
+Rational_number::Rational_number(const signed long long& num, const unsigned long long& denom): numerator(num), denominator(denom) {
+    validate();
 }
 
 Rational_number Rational_number::operator-() const {
-    if (sign == '-') {
-        return Rational_number('+', numerator, denominator);
+    return { -numerator, denominator };
+}
+
+// ================================== SETTERS ===================================
+
+void Rational_number::set_numerator(const StringInt& new_numerator) {
+    numerator = new_numerator;
+}
+
+void Rational_number::set_denominator(const StringInt& new_denominator) {
+    if (new_denominator == 0) {
+        throw std::runtime_error("Denominator cannot be null.");
+    } else if (new_denominator.get_sign() != '+') {
+        throw std::runtime_error("Denominator must be unsigned.");
     } else {
-        return Rational_number('-', numerator, denominator);
+        denominator = new_denominator;
     }
 }
 
+// ================================== GETTERS ===================================
+
+StringInt Rational_number::get_numerator() {
+    return numerator;
+}
+StringInt Rational_number::get_denominator() {
+    return denominator;
+}
+
+// ================================== INC/DEC ===================================
+
 Rational_number& Rational_number::operator++() {
-    auto comparator_result = string_arithmetics::compare_as_numbers(numerator, denominator);
-    if (sign == '+') {
-        numerator = string_arithmetics::plus(numerator, denominator);
-    } else if (comparator_result == string_arithmetics::Comparator_result::EQUAL) {
-        numerator = "0";
-        sign = '+';
-    } else if (comparator_result == string_arithmetics::Comparator_result::GREATER) {
-        numerator = string_arithmetics::minus(numerator, denominator);
-    } else {
-        numerator = string_arithmetics::minus(numerator, denominator);
-        sign = '+';
-    }
-    remove_leading_zeros();
-    this->simplify();
+    *this += 1;
     return *this;
 }
 
 //NOLINTNEXTLINE
 Rational_number Rational_number::operator++(int) {
-    auto result = *this;
-    auto comparator_result = string_arithmetics::compare_as_numbers(numerator, denominator);
-    if (sign == '+') {
-        numerator = string_arithmetics::plus(numerator, denominator);
-    } else if (comparator_result == string_arithmetics::Comparator_result::EQUAL) {
-        numerator = "0";
-        sign = '+';
-    } else if (comparator_result == string_arithmetics::Comparator_result::GREATER) {
-        numerator = string_arithmetics::minus(numerator, denominator);
-    } else {
-        numerator = string_arithmetics::minus(numerator, denominator);
-        sign = '+';
-    }
-    remove_leading_zeros();
-    this->simplify();
-    return result;
+    Rational_number tmp(*this);
+    operator++();
+    return tmp;
 }
 
 Rational_number& Rational_number::operator--() {
-    auto comparator_result = string_arithmetics::compare_as_numbers(numerator, denominator);
-    if (sign == '-') {
-        numerator = string_arithmetics::plus(numerator, denominator);
-    } else if (comparator_result == string_arithmetics::Comparator_result::EQUAL) {
-        numerator = "0";
-    } else if (comparator_result == string_arithmetics::Comparator_result::GREATER) {
-        numerator = string_arithmetics::minus(numerator, denominator);
-    } else {
-        sign = '-';
-        numerator = string_arithmetics::minus(numerator, denominator);
-    }
-    remove_leading_zeros();
-    this->simplify();
+    *this -= 1;
     return *this;
 }
 
 //NOLINTNEXTLINE
 Rational_number Rational_number::operator--(int) {
-    auto result = *this;
-    auto comparator_result = string_arithmetics::compare_as_numbers(numerator, denominator);
-    if (sign == '-') {
-        numerator = string_arithmetics::plus(numerator, denominator);
-    } else if (comparator_result == string_arithmetics::Comparator_result::EQUAL) {
-        numerator = "0";
-    } else if (comparator_result == string_arithmetics::Comparator_result::GREATER) {
-        numerator = string_arithmetics::minus(numerator, denominator);
-    } else {
-        sign = '-';
-        numerator = string_arithmetics::minus(numerator, denominator);
-    }
-    remove_leading_zeros();
-    this->simplify();
-    return result;
+    Rational_number tmp(*this);
+    operator--();
+    return tmp;
 }
 
-Rational_number Rational_number::operator+(const Rational_number &another) const {
-    std::string gcd = string_arithmetics::gcd(denominator, another.denominator);
-    std::string left_multiplier = string_arithmetics::divide_as_integers(another.denominator, gcd);
-    std::string right_multiplier = string_arithmetics::divide_as_integers(denominator, gcd);
-    std::string left_extended_numerator = string_arithmetics::multiply(numerator, left_multiplier);
-    std::string right_extended_numerator = string_arithmetics::multiply(another.numerator, right_multiplier);
-    std::string new_denominator = string_arithmetics::multiply(denominator, left_multiplier);
+// ================================== STREAMS ===================================
 
-    auto comparator_result = string_arithmetics::compare_as_numbers(left_extended_numerator, right_extended_numerator);
-    char new_sign;
-    if ((sign == '+' && another.sign == '+') ||
-        (sign == '-' && another.sign == '+' && comparator_result != string_arithmetics::Comparator_result::GREATER) ||
-        (sign == '+' && another.sign == '-' && comparator_result != string_arithmetics::Comparator_result::LESS)
-    ) {
-        new_sign = '+';
-    } else {
-        new_sign = '-';
-    }
-
-    std::string new_numerator;
-    if (sign == another.sign) {
-        new_numerator = string_arithmetics::plus(left_extended_numerator, right_extended_numerator);
-    } else {
-        new_numerator = string_arithmetics::minus(left_extended_numerator, right_extended_numerator);
-    }
-
-    return Rational_number(new_sign, new_numerator, new_denominator).simplify();
+std::ostream& operator<< (std::ostream& os, Rational_number const& x) {
+    os << std::string(x);
+    return os;
 }
 
-Rational_number Rational_number::operator-(const Rational_number &another) const {
-    std::string gcd = string_arithmetics::gcd(denominator, another.denominator);
-    std::string left_multiplier = string_arithmetics::divide_as_integers(another.denominator, gcd);
-    std::string right_multiplier = string_arithmetics::divide_as_integers(denominator, gcd);
-    std::string left_extended_numerator = string_arithmetics::multiply(numerator, left_multiplier);
-    std::string right_extended_numerator = string_arithmetics::multiply(another.numerator, right_multiplier);
-    std::string new_denominator = string_arithmetics::multiply(denominator, left_multiplier);
-
-    auto comparator_result = string_arithmetics::compare_as_numbers(left_extended_numerator, right_extended_numerator);
-    char new_sign;
-    if ((sign == '+' && another.sign == '-') ||
-        (sign == '+' && another.sign == '+' && comparator_result != string_arithmetics::Comparator_result::LESS) ||
-        (sign == '-' && another.sign == '-' && comparator_result != string_arithmetics::Comparator_result::GREATER)
-            ) {
-        new_sign = '+';
-    } else {
-        new_sign = '-';
-    }
-
-    std::string new_numerator;
-    if (sign != another.sign) {
-        new_numerator = string_arithmetics::plus(left_extended_numerator, right_extended_numerator);
-    } else {
-        new_numerator = string_arithmetics::minus(left_extended_numerator, right_extended_numerator);
-    }
-    return Rational_number(new_sign, new_numerator, new_denominator).simplify();
+std::istream& operator>> (std::istream& is, Rational_number& x) {
+    std::string rational_number_string;
+    is >> rational_number_string;
+    x = Rational_number(rational_number_string);
+    return is;
 }
 
-Rational_number Rational_number::operator*(const Rational_number &another) const {
-    char new_sign;
-    if (sign == another.sign) {
-        new_sign = '+';
-    } else {
-        new_sign = '-';
-    }
-    std::string new_numerator = string_arithmetics::multiply(numerator, another.numerator);
-    std::string new_denominator = string_arithmetics::multiply(denominator, another.denominator);
-    return Rational_number(new_sign, new_numerator, new_denominator).simplify();
+// ================================== COMPARATORS ===================================
+
+inline bool operator<(const Rational_number& lhs, const Rational_number& rhs) {
+    return lhs.numerator * rhs.denominator < rhs.numerator * lhs.denominator;
 }
 
-Rational_number Rational_number::operator/(const Rational_number &another) const {
-    char new_sign;
-    if (sign == another.sign) {
-        new_sign = '+';
-    } else {
-        new_sign = '-';
-    }
-    std::string new_numerator = string_arithmetics::multiply(numerator, another.denominator);
-    std::string new_denominator = string_arithmetics::multiply(denominator, another.numerator);
-    return Rational_number(new_sign, new_numerator, new_denominator).simplify();
+inline bool operator>(const Rational_number& lhs, const Rational_number& rhs) {
+    return rhs < lhs;
 }
 
-Rational_number Rational_number::simplify() const {
-    std::string gcd = string_arithmetics::gcd(numerator, denominator);
-    std::string new_numerator = string_arithmetics::divide_as_integers(numerator, gcd);
-    std::string new_denominator = string_arithmetics::divide_as_integers(denominator, gcd);
-    return Rational_number(sign, new_numerator, new_denominator);
+inline bool operator==(const Rational_number& lhs, const Rational_number& rhs) {
+    return lhs.numerator == rhs.numerator && lhs.denominator == rhs.denominator;
 }
 
-Rational_number& Rational_number::simplify() {
-    if (numerator == "0") {
-        denominator = "1";
+inline bool operator!=(const Rational_number& lhs, const Rational_number& rhs) {
+    return !(lhs == rhs);
+}
+
+inline bool operator<=(const Rational_number& lhs, const Rational_number& rhs) {
+    return lhs == rhs || lhs < rhs;
+}
+
+inline bool operator>=(const Rational_number& lhs, const Rational_number& rhs) {
+    return rhs <= lhs;
+}
+
+// ================================== ASSIGNING BINARY OPERATORS ===================================
+
+Rational_number& Rational_number::operator+=(const Rational_number &rhs) {
+    auto greatest_common_divider = gcd(denominator, rhs.denominator);
+    auto left_multiplier = rhs.denominator / greatest_common_divider;
+    auto right_multiplier = denominator / greatest_common_divider;
+    auto left_extended_numerator = numerator * left_multiplier;
+    auto right_extended_numerator = rhs.numerator * left_multiplier;
+    numerator = left_extended_numerator + right_extended_numerator;
+    denominator *= left_multiplier;
+    return this->make_canonical();
+}
+
+Rational_number& Rational_number::operator-=(const Rational_number &rhs) {
+    auto greatest_common_divider = gcd(denominator, rhs.denominator);
+    auto left_multiplier = rhs.denominator / greatest_common_divider;
+    auto right_multiplier = denominator / greatest_common_divider;
+    auto left_extended_numerator = numerator * left_multiplier;
+    auto right_extended_numerator = rhs.numerator * left_multiplier;
+    numerator = left_extended_numerator - right_extended_numerator;
+    denominator *= left_multiplier;
+    return this->make_canonical();
+}
+
+Rational_number& Rational_number::operator*=(const Rational_number &rhs) {
+    numerator *= rhs.numerator;
+    denominator *= rhs.denominator;
+    return this->make_canonical();
+}
+
+Rational_number& Rational_number::operator/=(const Rational_number &rhs) {
+    numerator.set_sign(numerator.get_sign() == rhs.numerator.get_sign() ? '+' : '-');
+    numerator *= rhs.denominator;
+    denominator = abs(denominator * rhs.numerator);
+    return this->make_canonical();
+}
+
+// ================================== BINARY OPERATORS ===================================
+
+inline Rational_number operator+(Rational_number lhs, const Rational_number& rhs) {
+    return lhs += rhs;
+}
+
+inline Rational_number operator-(Rational_number lhs, const Rational_number& rhs) {
+    return lhs -= rhs;
+}
+
+inline Rational_number operator*(Rational_number lhs, const Rational_number& rhs) {
+    return lhs *= rhs;
+}
+
+inline Rational_number operator/(Rational_number lhs, const Rational_number& rhs) {
+    return lhs /= rhs;
+}
+
+// ================================== BOOLEAN OPERATORS ===================================
+
+bool Rational_number::operator!() const {
+    return !(operator bool());
+}
+
+Rational_number::operator bool() const {
+    return numerator != 0;
+}
+
+Rational_number::operator std::string() const {
+    return std::string(numerator) + "/" + std::string(denominator);
+}
+
+// ================================== UTILITY METHODS ===================================
+
+Rational_number& Rational_number::make_canonical() {
+    if (numerator == 0) {
+        denominator = 1;
     } else {
-        std::string gcd = string_arithmetics::gcd(numerator, denominator);
-        numerator = string_arithmetics::divide_as_integers(numerator, gcd);
-        denominator = string_arithmetics::divide_as_integers(denominator, gcd);
+        StringInt greatest_common_divider = gcd(numerator, denominator);
+        numerator /= greatest_common_divider;
+        denominator /= greatest_common_divider;
     }
     return *this;
+}
+
+// ================================== PRIVATE METHODS ===================================
+
+void Rational_number::validate() const {
+    if (denominator == StringInt(0)) {
+        throw std::runtime_error("Denominator of rational number should not be null");
+    }
 }

@@ -8,64 +8,59 @@
 #include <string>
 #include <cmath>
 
+#include "../StringInt/StringInt.h"
+
 class Rational_number {
 public:
-    char sign;
-    std::string numerator;
-    std::string denominator;
+    Rational_number(StringInt, StringInt);
+    Rational_number(const signed&); // NOLINT(google-explicit-constructor)
+    Rational_number(const signed&, const unsigned&);
+    Rational_number(const signed long long&); // NOLINT(google-explicit-constructor)
+    Rational_number(const signed long long&, const unsigned long long&);
+    Rational_number(std::string); // NOLINT(google-explicit-constructor)
 
-    explicit Rational_number(char, std::string, std::string);
-    explicit Rational_number(int);
-    explicit Rational_number(signed, unsigned);
-    explicit Rational_number(std::string);
+    void set_numerator(const StringInt&);
+    void set_denominator(const StringInt&);
+
+    StringInt get_numerator();
+    StringInt get_denominator();
 
     Rational_number operator-() const;
     Rational_number& operator++();
     Rational_number& operator--();
-    //NOLINTNEXTLINE
-    Rational_number operator++(int);
-    //NOLINTNEXTLINE
-    Rational_number operator--(int);
+    Rational_number operator++(int); // NOLINT(cert-dcl21-cpp)
+    Rational_number operator--(int); // NOLINT(cert-dcl21-cpp)
 
-    Rational_number operator+(const Rational_number &) const;
-    Rational_number operator-(const Rational_number &) const;
-    Rational_number operator*(const Rational_number &) const;
-    Rational_number operator/(const Rational_number &) const;
+    friend std::ostream& operator<< (std::ostream& os, Rational_number const& x);
+    friend std::istream& operator>> (std::istream& is, Rational_number& x);
 
-    Rational_number operator+=(Rational_number);
-    Rational_number operator-=(Rational_number);
-    Rational_number operator*=(const Rational_number&);
-    Rational_number operator/=(Rational_number);
+    friend inline bool operator<(const Rational_number&, const Rational_number&);
+    friend inline bool operator>(const Rational_number&, const Rational_number&);
+    friend inline bool operator==(const Rational_number&, const Rational_number&);
+    friend inline bool operator!=(const Rational_number&, const Rational_number&);
+    friend inline bool operator<=(const Rational_number&, const Rational_number&);
+    friend inline bool operator>=(const Rational_number&, const Rational_number&);
 
-    Rational_number operator==(Rational_number);
-    Rational_number operator!=(Rational_number);
-    Rational_number operator<=(Rational_number);
-    Rational_number operator>=(Rational_number);
-    Rational_number operator<(Rational_number);
-    Rational_number operator>(Rational_number);
+    Rational_number& operator+=(const Rational_number&);
+    Rational_number& operator-=(const Rational_number&);
+    Rational_number& operator*=(const Rational_number&);
+    Rational_number& operator/=(const Rational_number&);
 
-//    friend Rational_number operator+(Rational_number, Rational_number);
-//    friend Rational_number operator-(Rational_number, Rational_number);
-//    friend Rational_number operator*(Rational_number, Rational_number);
-//    friend Rational_number operator/(Rational_number, Rational_number);
-
-    Rational_number make_canonical();
-    Rational_number simplify() const;
-
-    Rational_number& simplify();
-
+    bool operator!() const;
+    explicit operator bool() const;
     explicit operator std::string() const;
 
-    void remove_leading_zeros();
-
-    static Rational_number null() {
-        return Rational_number('+', "0", "1");
-    }
+    Rational_number& make_canonical();
 
 private:
-    void validate();
+    StringInt numerator;
+    StringInt denominator;
+    void validate() const;
 };
 
-std::string to_string(Rational_number&);
+inline Rational_number operator+(Rational_number, const Rational_number&);
+inline Rational_number operator-(Rational_number, const Rational_number&);
+inline Rational_number operator*(Rational_number, const Rational_number&);
+inline Rational_number operator/(Rational_number, const Rational_number&);
 
 #endif //COUNTING_STARS_RATIONAL_NUMBER_H
