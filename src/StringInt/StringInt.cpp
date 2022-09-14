@@ -1,6 +1,8 @@
-//
-// Created by sanyavertolet on 09.09.2022.
-//
+/**
+ * Header containing StringInt class implementation.
+ *
+ * @author sanyavertolet
+ */
 
 #include "StringInt.h"
 
@@ -40,14 +42,14 @@ void StringInt::set_sign(char s) {
     if (s == '+' || s == '-') {
         sign = s;
     } else {
-        throw std::runtime_error("Sign should be either '+' or '-', got '" + std::string(1, sign) + "'.");
+        throw IllegalSignException("Sign should be either '+' or '-', got '" + std::string(1, sign) + "'.");
     }
 }
 
 void StringInt::set_val(const std::string& v) {
     for (char i : v) {
         if (!isnumber(i)) {
-            throw std::runtime_error("Val should contain only digits, got '" + std::string(1, i) + "' symbol.");
+            throw IllegalDigitException("Val should contain only digits, got '" + std::string(1, i) + "' symbol.");
         }
     }
     val = v;
@@ -101,6 +103,7 @@ std::istream& operator>> (std::istream& is, StringInt& x) {
 }
 
 // ================================== COMPARATORS ===================================
+
 bool operator==(const StringInt& lhs, const StringInt& rhs) {
     return lhs.sign == rhs.sign && lhs.val == rhs.val;
 }
@@ -177,7 +180,6 @@ StringInt& StringInt::operator*=(const StringInt& other) {
 }
 
 StringInt& StringInt::operator/=(const StringInt& other) {
-    // todo: fix division
     if (sign == other.sign) {
         sign = '+';
     } else {
@@ -333,6 +335,7 @@ std::string StringInt::plus(const std::string& one, const std::string& another) 
     if (overflow != 0) {
         result = std::string(1, char(overflow + '0')).append(result);
     }
+    remove_leading_zeros(result);
     return result;
 }
 
@@ -356,6 +359,7 @@ std::string StringInt::minus(std::string one, std::string another) {
         auto new_digit = minus(one_digit, another_digit, underflow);
         result = std::string(1, new_digit).append(result);
     }
+    remove_leading_zeros(result);
     return result;
 }
 
@@ -371,6 +375,7 @@ std::string StringInt::multiply(std::string one, const std::string& another) {
         result = plus(result, temp_result);
         postfix_nulls = postfix_nulls.append("0");
     }
+    remove_leading_zeros(result);
     return result;
 }
 
@@ -383,17 +388,17 @@ std::pair<std::string, std::string> StringInt::division_step(const std::string& 
     for (i = 1; i < 10; ++i) {
         auto new_current_divisor = plus(current_divisor, divisor);
         if (compare_as_numbers(current_number, new_current_divisor) == Comparator_result::LESS) {
-            break;
+            return { { char(i + '0') }, current_divisor };
         } else {
             current_divisor = new_current_divisor;
         }
     }
-    return { { char(i % 10 + '0') }, current_divisor };
+    return { "0", "0" };
 }
 
 std::string StringInt::divide_as_integers(std::string one, const std::string& another) {
     if (another == "0") {
-        throw std::runtime_error("Null division: [" + one + "/" + another + "]");
+        throw DivisionByZeroException("Null division: [" + one + "/" + another + "]");
     }
     if (compare_as_numbers(one, another) == Comparator_result::LESS) {
         return "0";
@@ -413,4 +418,10 @@ std::string StringInt::divide_as_integers(std::string one, const std::string& an
         current_number = minus(current_number, calculated_number);
     }
     return result;
+}
+
+void StringInt::remove_leading_zeros(std::string& number) {
+    while (number.length() > 1 && number[0] == '0') {
+        number.erase(number.begin());
+    }
 }
