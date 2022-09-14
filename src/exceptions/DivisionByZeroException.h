@@ -19,6 +19,7 @@ private:
     const char* message;
 
 public:
+    DivisionByZeroException() : message("Division by zero") {}
     explicit DivisionByZeroException(const char* msg) : message(msg) {}
     explicit DivisionByZeroException(const std::string& msg) : message(msg.c_str()) {}
     [[nodiscard]] const char* what() const _NOEXCEPT override {

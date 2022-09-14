@@ -1,6 +1,9 @@
-//
-// Created by sanyavertolet on 06.09.2022.
-//
+/**
+ * Tests for Rational_number constructors.
+ *
+ * @author sanyavertolet
+ */
+
 #include "../Rational_number.h"
 #include "gtest/gtest.h"
 

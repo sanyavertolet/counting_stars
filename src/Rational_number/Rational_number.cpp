@@ -6,6 +6,10 @@
 
 // ================================== CONSTRUCTORS ===================================
 
+Rational_number::Rational_number(): numerator(1), denominator(1) { }
+
+Rational_number::Rational_number(const StringInt& num): numerator(num), denominator(1) { }
+
 Rational_number::Rational_number(StringInt num, StringInt denom) {
     numerator = std::move(num);
     denominator = std::move(denom);
@@ -76,9 +80,9 @@ void Rational_number::set_numerator(const StringInt& new_numerator) {
 
 void Rational_number::set_denominator(const StringInt& new_denominator) {
     if (new_denominator == 0) {
-        throw std::runtime_error("Denominator cannot be null.");
+        throw DivisionByZeroException("Denominator cannot be null.");
     } else if (new_denominator.get_sign() != '+') {
-        throw std::runtime_error("Denominator must be unsigned.");
+        throw IllegalSignException("Denominator must be unsigned.");
     } else {
         denominator = new_denominator;
     }
@@ -97,25 +101,27 @@ StringInt Rational_number::get_denominator() {
 
 Rational_number& Rational_number::operator++() {
     *this += 1;
-    return *this;
+    return this->make_canonical();
 }
 
 //NOLINTNEXTLINE
 Rational_number Rational_number::operator++(int) {
     Rational_number tmp(*this);
     operator++();
+    make_canonical();
     return tmp;
 }
 
 Rational_number& Rational_number::operator--() {
     *this -= 1;
-    return *this;
+    return this->make_canonical();
 }
 
 //NOLINTNEXTLINE
 Rational_number Rational_number::operator--(int) {
     Rational_number tmp(*this);
     operator--();
+    make_canonical();
     return tmp;
 }
 
@@ -135,27 +141,27 @@ std::istream& operator>> (std::istream& is, Rational_number& x) {
 
 // ================================== COMPARATORS ===================================
 
-inline bool operator<(const Rational_number& lhs, const Rational_number& rhs) {
+bool operator<(const Rational_number& lhs, const Rational_number& rhs) {
     return lhs.numerator * rhs.denominator < rhs.numerator * lhs.denominator;
 }
 
-inline bool operator>(const Rational_number& lhs, const Rational_number& rhs) {
+bool operator>(const Rational_number& lhs, const Rational_number& rhs) {
     return rhs < lhs;
 }
 
-inline bool operator==(const Rational_number& lhs, const Rational_number& rhs) {
+bool operator==(const Rational_number& lhs, const Rational_number& rhs) {
     return lhs.numerator == rhs.numerator && lhs.denominator == rhs.denominator;
 }
 
-inline bool operator!=(const Rational_number& lhs, const Rational_number& rhs) {
+bool operator!=(const Rational_number& lhs, const Rational_number& rhs) {
     return !(lhs == rhs);
 }
 
-inline bool operator<=(const Rational_number& lhs, const Rational_number& rhs) {
+bool operator<=(const Rational_number& lhs, const Rational_number& rhs) {
     return lhs == rhs || lhs < rhs;
 }
 
-inline bool operator>=(const Rational_number& lhs, const Rational_number& rhs) {
+bool operator>=(const Rational_number& lhs, const Rational_number& rhs) {
     return rhs <= lhs;
 }
 
@@ -166,7 +172,7 @@ Rational_number& Rational_number::operator+=(const Rational_number &rhs) {
     auto left_multiplier = rhs.denominator / greatest_common_divider;
     auto right_multiplier = denominator / greatest_common_divider;
     auto left_extended_numerator = numerator * left_multiplier;
-    auto right_extended_numerator = rhs.numerator * left_multiplier;
+    auto right_extended_numerator = rhs.numerator * right_multiplier;
     numerator = left_extended_numerator + right_extended_numerator;
     denominator *= left_multiplier;
     return this->make_canonical();
@@ -177,7 +183,7 @@ Rational_number& Rational_number::operator-=(const Rational_number &rhs) {
     auto left_multiplier = rhs.denominator / greatest_common_divider;
     auto right_multiplier = denominator / greatest_common_divider;
     auto left_extended_numerator = numerator * left_multiplier;
-    auto right_extended_numerator = rhs.numerator * left_multiplier;
+    auto right_extended_numerator = rhs.numerator * right_multiplier;
     numerator = left_extended_numerator - right_extended_numerator;
     denominator *= left_multiplier;
     return this->make_canonical();
@@ -190,6 +196,9 @@ Rational_number& Rational_number::operator*=(const Rational_number &rhs) {
 }
 
 Rational_number& Rational_number::operator/=(const Rational_number &rhs) {
+    if (rhs.numerator.get_val() == "0") {
+        throw DivisionByZeroException();
+    }
     numerator.set_sign(numerator.get_sign() == rhs.numerator.get_sign() ? '+' : '-');
     numerator *= rhs.denominator;
     denominator = abs(denominator * rhs.numerator);
@@ -198,19 +207,19 @@ Rational_number& Rational_number::operator/=(const Rational_number &rhs) {
 
 // ================================== BINARY OPERATORS ===================================
 
-inline Rational_number operator+(Rational_number lhs, const Rational_number& rhs) {
+Rational_number operator+(Rational_number lhs, const Rational_number& rhs) {
     return lhs += rhs;
 }
 
-inline Rational_number operator-(Rational_number lhs, const Rational_number& rhs) {
+Rational_number operator-(Rational_number lhs, const Rational_number& rhs) {
     return lhs -= rhs;
 }
 
-inline Rational_number operator*(Rational_number lhs, const Rational_number& rhs) {
+Rational_number operator*(Rational_number lhs, const Rational_number& rhs) {
     return lhs *= rhs;
 }
 
-inline Rational_number operator/(Rational_number lhs, const Rational_number& rhs) {
+Rational_number operator/(Rational_number lhs, const Rational_number& rhs) {
     return lhs /= rhs;
 }
 
@@ -225,13 +234,14 @@ Rational_number::operator bool() const {
 }
 
 Rational_number::operator std::string() const {
-    return std::string(numerator) + "/" + std::string(denominator);
+    return std::string(numerator) + "/" + denominator.get_val();
 }
 
 // ================================== UTILITY METHODS ===================================
 
 Rational_number& Rational_number::make_canonical() {
-    if (numerator == 0) {
+    if (numerator.get_val() == "0") {
+        numerator.set_sign('+');
         denominator = 1;
     } else {
         StringInt greatest_common_divider = gcd(numerator, denominator);
@@ -245,6 +255,6 @@ Rational_number& Rational_number::make_canonical() {
 
 void Rational_number::validate() const {
     if (denominator == StringInt(0)) {
-        throw std::runtime_error("Denominator of rational number should not be null");
+        throw DivisionByZeroException("Denominator of rational number should not be null");
     }
 }

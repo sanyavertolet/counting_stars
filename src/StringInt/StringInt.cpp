@@ -219,7 +219,7 @@ StringInt::operator bool() const {
 }
 
 StringInt::operator std::string() const {
-    return std::string(1, sign) + " " + val;
+    return std::string(1, sign) +  val;
 }
 
 // ================================== UTILITY METHODS ===================================

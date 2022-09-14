@@ -1,6 +1,8 @@
-//
-// Created by sanyavertolet on 06.09.2022.
-//
+/**
+ * Header containing StringInt class declaration.
+ *
+ * @author sanyavertolet
+ */
 
 #ifndef COUNTING_STARS_RATIONAL_NUMBER_H
 #define COUNTING_STARS_RATIONAL_NUMBER_H
@@ -8,59 +10,306 @@
 #include <string>
 #include <cmath>
 
+#include "../exceptions/exceptions.h"
 #include "../StringInt/StringInt.h"
 
+/**
+ * Class that implements rational numbers over StringInt.
+ */
 class Rational_number {
 public:
-    Rational_number(StringInt, StringInt);
-    Rational_number(const signed&); // NOLINT(google-explicit-constructor)
-    Rational_number(const signed&, const unsigned&);
+    /**
+     * Default constructor
+     */
+    Rational_number();
+
+    /**
+     * Constructor for casting from StringInt.
+     *
+     * @param num StringInt that will be used as numerator.
+     */
+    Rational_number(const StringInt& num);
+
+    /**
+     * Constructor from two StringInts - the most preferable one.
+     *
+     * @param sign sing of a number
+     * @param value string consisting only of digits
+     */
+    Rational_number(StringInt num, StringInt denom);
+
+    /**
+     * Constructor for casting from signed int.
+     *
+     * @param num signed int that will be used as numerator.
+     */
+    Rational_number(const signed& num); // NOLINT(google-explicit-constructor)
+
+    /**
+     * @param num signed int that will be used as numerator.
+     * @param denom unsigned int that will be used as denominator.
+     */
+    Rational_number(const signed& num, const unsigned& denom);
+
+    /**
+     * Constructor for casting from signed long long int.
+     *
+     * @param num signed long long int that will be used as numerator.
+     */
     Rational_number(const signed long long&); // NOLINT(google-explicit-constructor)
+
+    /**
+     * @param num signed long long int that will be used as numerator.
+     * @param denom unsigned long long int that will be used as denominator.
+     */
     Rational_number(const signed long long&, const unsigned long long&);
-    Rational_number(std::string); // NOLINT(google-explicit-constructor)
 
-    void set_numerator(const StringInt&);
-    void set_denominator(const StringInt&);
+    /**
+     * Constructor from std::string.
+     *
+     * @param rational std::string that will be parsed into numerator and denominator.
+     */
+    Rational_number(std::string rational); // NOLINT(google-explicit-constructor)
 
+    /**
+     * numerator setter.
+     *
+     * @param new_numerator StringInt that will be used as a new numerator of this Rational_number.
+     */
+    void set_numerator(const StringInt& new_numerator);
+
+    /**
+     * denominator setter.
+     *
+     * @param new_denominator StringInt that will be used as a new denominator of this Rational_number.
+     * @throws IllegalSignException when new_denominator is negative.
+     * @throws DivisionByZeroException when new_denominator equals to zero.
+     */
+    void set_denominator(const StringInt& new_denominator);
+
+    /**
+     * numerator getter.
+     *
+     * @return numerator of this Rational_number.
+     */
     StringInt get_numerator();
+
+    /**
+     * denominator getter.
+     *
+     * @return denominator of this Rational_number.
+     */
     StringInt get_denominator();
 
+    /**
+     * @return this Rational_number with opposite sign.
+     */
     Rational_number operator-() const;
+
+    /**
+     * Prefix increment.
+     *
+     * @return this Rational_number increased by one.
+     */
     Rational_number& operator++();
+
+    /**
+     * Prefix decrement.
+     *
+     * @return this Rational_number decreased by one.
+     */
     Rational_number& operator--();
+
+    /**
+     * Postfix increment.
+     *
+     * @return this Rational_number increased by one.
+     */
     Rational_number operator++(int); // NOLINT(cert-dcl21-cpp)
+
+    /**
+     * Postfix decrement.
+     *
+     * @return this Rational_number decreased by one.
+     */
     Rational_number operator--(int); // NOLINT(cert-dcl21-cpp)
 
+    /**
+     * Friend operator that prints this Rational_number to std::ostream.
+     *
+     * @param os output stream.
+     * @param x Rational_number to print.
+     * @return os.
+     */
     friend std::ostream& operator<< (std::ostream& os, Rational_number const& x);
+
+    /**
+     * Friend operator that reads Rational_number from std::istream.
+     *
+     * @param is input stream.
+     * @param x Rational_number to read to.
+     * @return is.
+     */
     friend std::istream& operator>> (std::istream& is, Rational_number& x);
 
-    friend inline bool operator<(const Rational_number&, const Rational_number&);
-    friend inline bool operator>(const Rational_number&, const Rational_number&);
-    friend inline bool operator==(const Rational_number&, const Rational_number&);
-    friend inline bool operator!=(const Rational_number&, const Rational_number&);
-    friend inline bool operator<=(const Rational_number&, const Rational_number&);
-    friend inline bool operator>=(const Rational_number&, const Rational_number&);
+    /**
+     * Friend equals operator.
+     *
+     * @param lhs left Rational_number operand.
+     * @param rhs right Rational_number operand.
+     * @return true if Rational_numbers are equal, false otherwise.
+     */
+    friend inline bool operator==(const Rational_number& lhs, const Rational_number& rhs);
 
-    Rational_number& operator+=(const Rational_number&);
-    Rational_number& operator-=(const Rational_number&);
-    Rational_number& operator*=(const Rational_number&);
-    Rational_number& operator/=(const Rational_number&);
+    /**
+     * Friend not-equals operator.
+     *
+     * @param lhs left Rational_number operand.
+     * @param rhs right Rational_number operand.
+     * @return true if Rational_numbers are not equal, false otherwise.
+     */
+    friend inline bool operator!=(const Rational_number& lhs, const Rational_number& rhs);
 
+    /**
+     * Friend less operator.
+     *
+     * @param lhs left Rational_number operand.
+     * @param rhs right Rational_number operand.
+     * @return true if lhs is less than rhs, false otherwise.
+     */
+    friend inline bool operator<(const Rational_number& lhs, const Rational_number& rhs);
+
+    /**
+     * Friend greater operator.
+     *
+     * @param lhs left Rational_number operand.
+     * @param rhs right Rational_number operand.
+     * @return true if lhs is greater than rhs, false otherwise.
+     */
+    friend inline bool operator>(const Rational_number& lhs, const Rational_number& rhs);
+
+    /**
+     * Friend leq operator.
+     *
+     * @param lhs left Rational_number operand.
+     * @param rhs right Rational_number operand.
+     * @return true if lhs is less than rhs or equal to it, false otherwise.
+     */
+    friend inline bool operator<=(const Rational_number& lhs, const Rational_number& rhs);
+
+    /**
+     * Friend geq operator.
+     *
+     * @param lhs left Rational_number operand.
+     * @param rhs right Rational_number operand.
+     * @return true if lhs is greater than rhs or equal to it, false otherwise.
+     */
+    friend inline bool operator>=(const Rational_number& lhs, const Rational_number& rhs);
+
+    /**
+     * Assigning plus operator.
+     *
+     * @param rhs right Rational_number operand.
+     * @return this Rational_number, increased by rhs.
+     */
+    Rational_number& operator+=(const Rational_number& rhs);
+
+    /**
+     * Assigning minus operator.
+     *
+     * @param rhs right Rational_number operand.
+     * @return this Rational_number, decreased by rhs.
+     */
+    Rational_number& operator-=(const Rational_number& rhs);
+
+    /**
+     * Assigning multiply operator.
+     *
+     * @param rhs right Rational_number operand.
+     * @return this Rational_number, multiplied by rhs.
+     */
+    Rational_number& operator*=(const Rational_number& rhs);
+
+    /**
+     * Assigning division operator.
+     *
+     * @param rhs right Rational_number operand.
+     * @return this Rational_number, divided by rhs.
+     */
+    Rational_number& operator/=(const Rational_number& rhs);
+
+    /**
+     * Boolean negation operator.
+     *
+     * @return true if this Rational_number is equal to 0, false otherwise.
+     */
     bool operator!() const;
+
+    /**
+     * Boolean cast operator.
+     *
+     * @return true if this Rational_number is not equal to 0, false otherwise.
+     */
     explicit operator bool() const;
+
+    /**
+     * std::string cast operator.
+     *
+     * @return string representation of this Rational_number.
+     */
     explicit operator std::string() const;
 
+    /**
+     * Simplify this Rational_number.
+     *
+     * @return this simplified Rational_number.
+     */
     Rational_number& make_canonical();
 
 private:
+    /**
+     * numerator of this Rational_number
+     */
     StringInt numerator;
+
+    /**
+     * denominator of this Rational_number.
+     */
     StringInt denominator;
+
+    /**
+     * Internal validation method.
+     * @throws DivisionByZeroException
+     */
     void validate() const;
 };
 
-inline Rational_number operator+(Rational_number, const Rational_number&);
-inline Rational_number operator-(Rational_number, const Rational_number&);
-inline Rational_number operator*(Rational_number, const Rational_number&);
-inline Rational_number operator/(Rational_number, const Rational_number&);
+/**
+ * @param lhs left Rational_number number.
+ * @param rhs right Rational_number number.
+ * @return sum of lhs and rhs.
+ */
+Rational_number operator+(Rational_number lhs, const Rational_number& rhs);
+
+/**
+ * @param lhs left Rational_number number.
+ * @param rhs right Rational_number number.
+ * @return lhs decreased by rhs.
+ */
+Rational_number operator-(Rational_number lhs, const Rational_number& rhs);
+
+/**
+ * @param lhs left Rational_number number.
+ * @param rhs right Rational_number number.
+ * @return product of lhs and rhs.
+ */
+Rational_number operator*(Rational_number lhs, const Rational_number& rhs);
+
+/**
+ * @param lhs left Rational_number number.
+ * @param rhs right Rational_number number.
+ * @return lhs divided by rhs.
+ */
+Rational_number operator/(Rational_number lhs, const Rational_number& rhs);
 
 #endif //COUNTING_STARS_RATIONAL_NUMBER_H

@@ -416,7 +416,7 @@ StringInt gcd(StringInt lhs, StringInt rhs);
 /**
  * @param lhs left StringInt number.
  * @param rhs right StringInt number.
- * @return sum or lhs and rhs.
+ * @return sum of lhs and rhs.
  */
 StringInt operator+(StringInt lhs, const StringInt& rhs);
 
@@ -430,7 +430,7 @@ StringInt operator-(StringInt lhs, const StringInt&);
 /**
  * @param lhs left StringInt number.
  * @param rhs right StringInt number.
- * @return product or lhs and rhs.
+ * @return product of lhs and rhs.
  */
 StringInt operator*(StringInt lhs, const StringInt&);
 
