@@ -25,3 +25,5 @@ thumbs.db
 *.lib
 *.ppu
 
+/docs/
+/cmake-build-debug/
