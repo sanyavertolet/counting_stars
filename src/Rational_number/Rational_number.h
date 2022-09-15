@@ -69,7 +69,7 @@ public:
      *
      * @param rational std::string that will be parsed into numerator and denominator.
      */
-    Rational_number(std::string rational); // NOLINT(google-explicit-constructor)
+    Rational_number(const std::string& rational); // NOLINT(google-explicit-constructor)
 
     /**
      * numerator setter.

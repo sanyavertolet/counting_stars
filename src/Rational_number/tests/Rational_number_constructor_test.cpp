@@ -67,8 +67,12 @@ TEST(Rational_number_constructor_test, from_string)
     ASSERT_EQ(number.get_denominator().get_sign(), '+') << "Got " << number.get_denominator().get_sign() << ", should be +";
     ASSERT_EQ(number.get_denominator().get_val(), "1") << "Got " << number.get_denominator().get_val() << ", should be 1";
 
+    number = Rational_number("-1/-1");
+    ASSERT_EQ(number.get_numerator().get_sign(), '+');
+    ASSERT_EQ(number.get_numerator().get_val(), "1");
+    ASSERT_EQ(number.get_denominator().get_sign(), '+');
+    ASSERT_EQ(number.get_denominator().get_val(), "1");
 
-    ASSERT_ANY_THROW(Rational_number("-1/-1"));
     ASSERT_ANY_THROW(Rational_number("0/0"));
     ASSERT_ANY_THROW(Rational_number("/0"));
     ASSERT_ANY_THROW(Rational_number("-1/"));

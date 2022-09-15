@@ -24,7 +24,7 @@ public:
     StringInt();
 
     /**
-     * Constructor from string and char - the most preferable one.
+     * Constructor from string and char.
      *
      * @param sign sing of a number
      * @param value string consisting only of digits

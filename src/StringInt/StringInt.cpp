@@ -105,7 +105,7 @@ std::istream& operator>> (std::istream& is, StringInt& x) {
 // ================================== COMPARATORS ===================================
 
 bool operator==(const StringInt& lhs, const StringInt& rhs) {
-    return lhs.sign == rhs.sign && lhs.val == rhs.val;
+    return lhs.val == rhs.val && (lhs.val == "0" || lhs.sign == rhs.sign);
 }
 
 bool operator!=(const StringInt& lhs, const StringInt &rhs) {

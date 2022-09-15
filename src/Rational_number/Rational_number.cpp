@@ -28,36 +28,47 @@ Rational_number::Rational_number(const signed& num, const unsigned& denom): nume
 
 Rational_number::Rational_number(const int& number): numerator(number), denominator(1) { }
 
-Rational_number::Rational_number(std::string number) {
+Rational_number::Rational_number(const std::string& rational) {
+    auto number = rational;
     if (number.empty()) {
         throw std::runtime_error("Invalid input number: [" + number + "]");
     }
+    char numerator_sign = '+';
     if (number[0] == '-' || number[0] == '+') {
-        numerator.set_sign(number[0]);
+        numerator_sign = number[0];
         number.erase(0, 1);
-    } else {
-        numerator.set_sign('+');
     }
     auto slash_pos = number.find('/');
     if (slash_pos == std::string::npos) {
         auto dot_pos = number.find('.');
         if (dot_pos == std::string::npos) {
-            numerator.set_val(number);
+            set_numerator(number);
             denominator = 1;
         } else {
             auto power = number.substr(dot_pos).size() - 1;
             number.erase(dot_pos, 1);
-            numerator.set_val(number);
-            denominator = 1;
+            set_numerator(number);
+            set_denominator(1);
             for (int i = 0; i < power; ++i) {
-                denominator.set_val(denominator.get_val() += "0");
+                set_denominator(denominator.get_val() += "0");
             }
         }
     } else {
         if (slash_pos + 1 < number.length()) {
-            denominator.set_val(number.substr(slash_pos + 1));
+            auto denominator_from_string = number.substr(slash_pos + 1);
+            if (denominator_from_string[0] == '-') {
+                numerator_sign = numerator_sign == '+' ? '-' : '+';
+                denominator_from_string.erase(denominator_from_string.begin());
+            } else if (denominator_from_string[0] == '+') {
+                denominator_from_string.erase(denominator_from_string.begin());
+            }
+            set_denominator(denominator_from_string);
         }
-        numerator.set_val(number.substr(0, slash_pos));
+        set_numerator(number.substr(0, slash_pos));
+        numerator.set_sign(numerator_sign);
+    }
+    if (numerator == 0) {
+        set_denominator(1);
     }
     validate();
 }
@@ -240,7 +251,7 @@ Rational_number::operator std::string() const {
 // ================================== UTILITY METHODS ===================================
 
 Rational_number& Rational_number::make_canonical() {
-    if (numerator.get_val() == "0") {
+    if (numerator.get_val() == 0) {
         numerator.set_sign('+');
         denominator = 1;
     } else {

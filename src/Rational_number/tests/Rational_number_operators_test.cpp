@@ -349,3 +349,32 @@ TEST(Rational_number_operators_test, division_check)
     ASSERT_EQ(result.get_denominator().get_sign(), '+');
     ASSERT_EQ(result.get_denominator().get_val(), "6289");
 }
+
+TEST(Rational_number_operators_test, to_string_and_back_check)
+{
+    Rational_number result;
+
+    result = std::string(Rational_number("10/12"));
+    ASSERT_EQ(result.get_numerator().get_sign(), '+');
+    ASSERT_EQ(result.get_numerator().get_val(), "10");
+    ASSERT_EQ(result.get_denominator().get_sign(), '+');
+    ASSERT_EQ(result.get_denominator().get_val(), "12");
+
+    result = std::string(Rational_number("-10/12"));
+    ASSERT_EQ(result.get_numerator().get_sign(), '-');
+    ASSERT_EQ(result.get_numerator().get_val(), "10");
+    ASSERT_EQ(result.get_denominator().get_sign(), '+');
+    ASSERT_EQ(result.get_denominator().get_val(), "12");
+
+    result = std::string(Rational_number("0/999999999"));
+    ASSERT_EQ(result.get_numerator().get_sign(), '+');
+    ASSERT_EQ(result.get_numerator().get_val(), "0");
+    ASSERT_EQ(result.get_denominator().get_sign(), '+');
+    ASSERT_EQ(result.get_denominator().get_val(), "1");
+
+    result = std::string(Rational_number("-1/-2"));
+    ASSERT_EQ(result.get_numerator().get_sign(), '+');
+    ASSERT_EQ(result.get_numerator().get_val(), "1");
+    ASSERT_EQ(result.get_denominator().get_sign(), '+');
+    ASSERT_EQ(result.get_denominator().get_val(), "2");
+}
