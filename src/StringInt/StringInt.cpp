@@ -16,9 +16,11 @@ StringInt::StringInt(const std::string& number) {
     if (number[0] == '+' || number[0] == '-') {
         sign = number[0];
         set_val(number.substr(1));
-    } else {
+    } else if (isnumber(number[0])) {
         sign = '+';
         set_val(number);
+    } else {
+        throw IllegalSignException(std::string(1, number[0]));
     }
 }
 
@@ -214,8 +216,37 @@ bool StringInt::operator!() const {
     return !(operator bool());
 }
 
+// ================================== CAST OPERATORS ===================================
+
 StringInt::operator bool() const {
     return val != "0";
+}
+
+StringInt::operator long long() const {
+    return downcast_to("long long", LONG_LONG_MIN, LONG_LONG_MAX);
+}
+
+StringInt::operator int() const {
+    return int(downcast_to("int", INT_MIN, INT_MAX));
+}
+
+StringInt::operator short() const {
+    return short(downcast_to("short", SHRT_MIN, SHRT_MAX));
+}
+
+StringInt::operator char() const {
+    return char(downcast_to("char", CHAR_MIN, CHAR_MAX));
+}
+
+long long StringInt::downcast_to(const std::string& type_name, long long minimal, long long maximal) const {
+    if (*this < minimal || maximal < *this) {
+        throw OverflowException(operator std::string() + "overflows " + type_name = ".");
+    }
+    long long value_as_num = 0;
+    for (char digit : val) {
+        value_as_num = value_as_num * 10 + digit;
+    }
+    return value_as_num;
 }
 
 StringInt::operator std::string() const {

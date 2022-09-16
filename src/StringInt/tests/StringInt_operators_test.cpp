@@ -1,6 +1,9 @@
-//
-// Created by sanyavertolet on 06.09.2022.
-//
+/**
+ * Tests for StringInt operators.
+ *
+ * @author sanyavertolet
+ */
+
 #include "gtest/gtest.h"
 #include "../StringInt.h"
 

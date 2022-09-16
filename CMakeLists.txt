@@ -31,3 +31,7 @@ add_test(NAME StringInt_constructor_test COMMAND StringInt_constructor_test)
 add_executable(StringInt_operators_test src/StringInt/StringInt.cpp src/StringInt/StringInt.h src/StringInt/tests/StringInt_operators_test.cpp src/exceptions/IllegalSignException.h)
 target_link_libraries(StringInt_operators_test gtest_main)
 add_test(NAME StringInt_operators_test COMMAND StringInt_operators_test)
+
+add_executable(StringInt_cast_test src/StringInt/StringInt.cpp src/StringInt/StringInt.h src/StringInt/tests/StringInt_cast_test.cpp)
+target_link_libraries(StringInt_cast_test gtest_main)
+add_test(NAME StringInt_cast_test COMMAND StringInt_cast_test)

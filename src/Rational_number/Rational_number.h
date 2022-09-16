@@ -9,6 +9,7 @@
 
 #include <string>
 #include <cmath>
+#include <climits>
 
 #include "../exceptions/exceptions.h"
 #include "../StringInt/StringInt.h"
@@ -251,6 +252,18 @@ public:
      * @return true if this Rational_number is not equal to 0, false otherwise.
      */
     explicit operator bool() const;
+
+    operator float() const;
+
+    operator double() const;
+
+    operator long long() const;
+
+    operator int() const;
+
+    operator short() const;
+
+    operator char() const;
 
     /**
      * std::string cast operator.

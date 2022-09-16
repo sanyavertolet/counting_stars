@@ -9,5 +9,7 @@
 #include "DivisionByZeroException.h"
 #include "IllegalSignException.h"
 #include "IllegalDigitException.h"
+#include "OutOfIntegerDivisionException.h"
+#include "OverflowException.h"
 
 #endif //COUNTING_STARS_EXCEPTIONS_H

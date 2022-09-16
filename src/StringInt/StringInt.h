@@ -248,6 +248,34 @@ public:
     explicit operator bool() const;
 
     /**
+     * Long long cast operator.
+     *
+     * @return this StringInt, casted to long long.
+     */
+    explicit operator long long() const;
+
+    /**
+     * Int cast operator.
+     *
+     * @return this StringInt, casted to int.
+     */
+    explicit operator int() const;
+
+    /**
+     * Short cast operator.
+     *
+     * @return this StringInt, casted to short.
+     */
+    explicit operator short() const;
+
+    /**
+     * Char cast operator.
+     *
+     * @return this StringInt casted to char.
+     */
+    explicit operator char() const;
+
+    /**
      * std::string cast operator.
      *
      * @return string representation of this StringInt.
@@ -274,6 +302,17 @@ private:
      * Value of this StringInt.
      */
     std::string val;
+
+    /**
+     * Internal method to cast this StringInt to type which values are in [minimal, maximal).
+     * Be sure required type is long long int or less.
+     *
+     * @param type_name name of type, needed only for exception message.
+     * @param minimal min border to check overflow.
+     * @param maximal max border to check overflow.
+     * @return this StringInt, casted to long long.
+     */
+    long long downcast_to(const std::string& type_name, long long minimal, long long maximal) const;
 
     /**
      * Internal enum class used as return value of compare_as_numbers method.

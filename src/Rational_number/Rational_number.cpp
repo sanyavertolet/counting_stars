@@ -240,8 +240,22 @@ bool Rational_number::operator!() const {
     return !(operator bool());
 }
 
+// ================================== CASTS ===================================
+
 Rational_number::operator bool() const {
     return numerator != 0;
+}
+
+Rational_number::operator double() const {
+    return 0.0;
+}
+
+Rational_number::operator long long() const {
+    if (*this <= Rational_number(LONG_LONG_MAX)) {
+//        return (numerator / denominator);
+    } else {
+        throw OverflowException(operator std::string() + " overflows long long.");
+    }
 }
 
 Rational_number::operator std::string() const {

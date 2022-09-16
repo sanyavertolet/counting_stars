@@ -1,6 +1,9 @@
-//
-// Created by sanyavertolet on 06.09.2022.
-//
+/**
+ * Tests for StringInt constructors.
+ *
+ * @author sanyavertolet
+ */
+
 #include "gtest/gtest.h"
 #include "../StringInt.h"
 
@@ -33,14 +36,25 @@ TEST(StringInt_constructor_test, signed_constructor_test)
     ASSERT_EQ(from_char_string, from_signed_long_long) << "Should be equal as built from the same value " << signed_value;
 }
 
-TEST(StringInt_constructor_test, cast_check)
+TEST(StringInt_constructor_test, from_string_constructor_test)
 {
-    StringInt string_int = 5;
-    ASSERT_EQ(string_int, StringInt('+', "5"));
-    string_int = -5;
-    ASSERT_EQ(string_int, StringInt('-', "5"));
-    string_int = -123123123ll;
-    ASSERT_EQ(string_int, StringInt('-', "123123123"));
-    string_int = 123123123ull;
-    ASSERT_EQ(string_int, StringInt('+', "123123123"));
+    StringInt num;
+
+    num = StringInt("+123");
+    ASSERT_EQ(num.get_sign(), '+');
+    ASSERT_EQ(num.get_val(), "123");
+
+    num = StringInt("-123");
+    ASSERT_EQ(num.get_sign(), '-');
+    ASSERT_EQ(num.get_val(), "123");
+
+    num = StringInt("123");
+    ASSERT_EQ(num.get_sign(), '+');
+    ASSERT_EQ(num.get_val(), "123");
+
+    ASSERT_THROW(StringInt("!123"), IllegalSignException);
+    ASSERT_THROW(StringInt("++123"), IllegalDigitException);
+    ASSERT_THROW(StringInt("+-123"), IllegalDigitException);
+    ASSERT_THROW(StringInt("--123"), IllegalDigitException);
+    ASSERT_THROW(StringInt("-123321123321123321L"), IllegalDigitException);
 }
