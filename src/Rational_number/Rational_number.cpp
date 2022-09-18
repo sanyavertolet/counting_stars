@@ -1,6 +1,8 @@
-//
-// Created by sanyavertolet on 06.09.2022.
-//
+/**
+ * Rational_number implementation.
+ *
+ * @author sanyavertolet
+ */
 
 #include "Rational_number.h"
 
@@ -77,6 +79,12 @@ Rational_number::Rational_number(const signed long long& num): numerator(num), d
 
 Rational_number::Rational_number(const signed long long& num, const unsigned long long& denom): numerator(num), denominator(denom) {
     validate();
+}
+
+Rational_number::Rational_number(const long double &rational) {
+    Rational_number required_number = Rational_number(std::to_string(rational));
+    set_numerator(required_number.numerator);
+    set_denominator(required_number.denominator);
 }
 
 Rational_number Rational_number::operator-() const {
@@ -246,16 +254,32 @@ Rational_number::operator bool() const {
     return numerator != 0;
 }
 
+Rational_number::operator long double() const {
+    return cast_to_floating("long double", LDBL_MIN, LDBL_MAX);
+}
+
 Rational_number::operator double() const {
-    return 0.0;
+    return double(cast_to_floating("double", DBL_MIN, DBL_MAX));
+}
+
+Rational_number::operator float() const {
+    return float(cast_to_floating("float", FLT_MIN, FLT_MAX));
 }
 
 Rational_number::operator long long() const {
-    if (*this <= Rational_number(LONG_LONG_MAX)) {
-//        return (numerator / denominator);
-    } else {
-        throw OverflowException(operator std::string() + " overflows long long.");
-    }
+    return cast_to_integer("long long", LONG_LONG_MIN, LONG_LONG_MAX);
+}
+
+Rational_number::operator int() const {
+    return int(cast_to_integer("int", INT_MIN, INT_MAX));
+}
+
+Rational_number::operator short() const {
+    return short(cast_to_integer("short", SHRT_MIN, SHRT_MAX));
+}
+
+Rational_number::operator char() const {
+    return char(cast_to_integer("char", CHAR_MIN, CHAR_MAX));
 }
 
 Rational_number::operator std::string() const {
@@ -278,8 +302,33 @@ Rational_number& Rational_number::make_canonical() {
 
 // ================================== PRIVATE METHODS ===================================
 
+long long Rational_number::cast_to_integer(const std::string& type_name, const long long& min, const long long& max, bool ignore_div_exception) const {
+    if (Rational_number(max) < *this || *this < Rational_number(min)) {
+        throw OverflowException(operator std::string() + " overflows " + type_name + ".");
+    }
+    auto division_result = numerator / denominator;
+    if (!ignore_div_exception && *this != division_result * denominator) {
+        throw OutOfIntegerDivisionException(operator std::string() + " cannot be mapped to integers without precision loss.");
+    }
+    return (long long)(division_result);
+}
+
+long double Rational_number::cast_to_floating(const std::string& type_name, const long double& min, const long double& max) const {
+    if (Rational_number(max) < *this || *this < Rational_number(min)) {
+        throw OverflowException(operator std::string() + " overflows " + type_name + ".");
+    }
+    Rational_number extended_number = *this;
+    StringInt power_of_10 = 1;
+    for (int i = 0; i < LDBL_DECIMAL_DIG; ++i) {
+        extended_number *= Rational_number(10);
+        power_of_10 *= 10;
+    }
+    StringInt integer_result = numerator / denominator;
+    return (long double)(integer_result) / (long double)(power_of_10);
+}
+
 void Rational_number::validate() const {
     if (denominator == StringInt(0)) {
-        throw DivisionByZeroException("Denominator of rational number should not be null");
+        throw DivisionByZeroException("Denominator of rational number should not be null: " + std::string(numerator) + "/" + std::string(denominator));
     }
 }

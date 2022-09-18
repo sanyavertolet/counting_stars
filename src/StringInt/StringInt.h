@@ -10,6 +10,8 @@
 #include <string>
 #include <map>
 #include <iostream>
+#include <cfloat>
+#include <climits>
 
 #include "../exceptions/exceptions.h"
 
@@ -276,6 +278,13 @@ public:
     explicit operator char() const;
 
     /**
+     * Long double cast operator.
+     *
+     * @return this StringInt, casted to long double.
+     */
+    explicit operator long double() const;
+
+    /**
      * std::string cast operator.
      *
      * @return string representation of this StringInt.
@@ -414,6 +423,13 @@ private:
      */
     static std::string multiply(std::string lhs, const std::string &rhs);
 
+    /**
+     * Internal method to perform division
+     *
+     * @param current_number
+     * @param divisor
+     * @return pair of division result and result * divisor
+     */
     static std::pair<std::string, std::string> division_step(const std::string& current_number, const std::string& divisor);
 
     /**

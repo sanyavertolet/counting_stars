@@ -238,6 +238,13 @@ StringInt::operator char() const {
     return char(downcast_to("char", CHAR_MIN, CHAR_MAX));
 }
 
+StringInt::operator long double() const {
+    if (static_cast<long long>(LDBL_MAX) < *this || *this < static_cast<long long>(LDBL_MIN)) {
+        throw OverflowException(operator std::string() + " overflows long long.");
+    }
+    return (long double)((long long)(*this));
+}
+
 long long StringInt::downcast_to(const std::string& type_name, long long minimal, long long maximal) const {
     if (*this < minimal || maximal < *this) {
         throw OverflowException(operator std::string() + "overflows " + type_name = ".");

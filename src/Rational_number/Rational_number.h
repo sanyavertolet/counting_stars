@@ -1,5 +1,5 @@
 /**
- * Header containing StringInt class declaration.
+ * Header containing Rational_number class declaration.
  *
  * @author sanyavertolet
  */
@@ -9,6 +9,7 @@
 
 #include <string>
 #include <cmath>
+#include <cfloat>
 #include <climits>
 
 #include "../exceptions/exceptions.h"
@@ -66,7 +67,14 @@ public:
     Rational_number(const signed long long&, const unsigned long long&);
 
     /**
-     * Constructor from std::string.
+     * Constructor for casting from long double.
+     *
+     * @param rational long double that will be parsed into numerator and denominator.
+     */
+    Rational_number(const long double& rational); // NOLINT(google-explicit-constructor)
+
+    /**
+     * Constructor for casting from std::string.
      *
      * @param rational std::string that will be parsed into numerator and denominator.
      */
@@ -253,16 +261,60 @@ public:
      */
     explicit operator bool() const;
 
-    operator float() const;
+    /**
+     * long double cast operator.
+     *
+     * @return this Rational_number casted to long double.
+     * @throws OverflowException
+     */
+    operator long double() const;
 
+    /**
+     * double cast operator.
+     *
+     * @return this Rational_number casted to double.
+     * @throws OverflowException
+     */
     operator double() const;
 
+    /**
+     * float cast operator.
+     *
+     * @return this Rational_number casted to float.
+     * @throws OverflowException
+     */
+    operator float() const;
+
+    /**
+     * long long cast operator.
+     *
+     * @return this Rational_number casted to long long.
+     * @throws OutOfIntegerDivisionException, OverflowException
+     */
     operator long long() const;
 
+    /**
+     * int cast operator.
+     *
+     * @return this Rational_number casted to int.
+     * @throws OutOfIntegerDivisionException, OverflowException
+     */
     operator int() const;
 
+    /**
+     * short cast operator.
+     *
+     * @return this Rational_number casted to short.
+     * @throws OutOfIntegerDivisionException, OverflowException
+     */
     operator short() const;
 
+    /**
+     * char cast operator.
+     *
+     * @return this Rational_number casted to char.
+     * @throws OutOfIntegerDivisionException, OverflowException
+     */
     operator char() const;
 
     /**
@@ -289,6 +341,31 @@ private:
      * denominator of this Rational_number.
      */
     StringInt denominator;
+
+    /**
+     * Internal method to perform casts to integer types.
+     *
+     * @param type_name name of required type - used for exception message.
+     * @param min minimal possible value of required type
+     * @param max maximal possible value of required type
+     * @param ignore_exceptions flag that defined whether OutOfIntegerDivisionException should be thrown or not.
+     * @return this Rational_number casted to required type
+     * @throws OutOfIntegerDivisionException, OverflowException
+     */
+    [[nodiscard]]
+    long long cast_to_integer(const std::string& type_name, const long long& min, const long long& max, bool ignore_exceptions = false) const;
+
+    /**
+     * Internal method to perform casts to floating point types.
+     *
+     * @param type_name name of required type - used for exception message.
+     * @param min minimal possible value of required type
+     * @param max maximal possible value of required type
+     * @return this Rational_number casted to required type
+     * @throws OutOfIntegerDivisionException, OverflowException
+     */
+    [[nodiscard]]
+    long double cast_to_floating(const std::string& type_name, const long double& min, const long double& max) const;
 
     /**
      * Internal validation method.
