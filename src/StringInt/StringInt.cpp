@@ -34,8 +34,54 @@ StringInt::StringInt(const long long& number): sign(number < 0 ? '-' : '+'), val
 
 StringInt::StringInt(const unsigned long long& number): sign('+'), val(std::to_string(number)) { }
 
-StringInt StringInt::operator-() const {
-    return { sign == '-' ? '+' : '-', val };
+StringInt::StringInt(const long double& number): sign(number < 0 ? '-' : '+'), val(std::to_string(static_cast<unsigned long long>(abs(number)))) { }
+
+StringInt::StringInt(const double& number): sign(number < 0 ? '-' : '+'), val(std::to_string(static_cast<unsigned long long>(abs(number)))) { }
+
+StringInt::StringInt(const float& number): sign(number < 0 ? '-' : '+'), val(std::to_string(static_cast<unsigned long long>(abs(number)))) { }
+
+// ================================== COPY OPERATORS ===================================
+
+StringInt& StringInt::operator=(const long long& number) {
+    StringInt result(number);
+    *this = result;
+    return *this;
+}
+
+StringInt& StringInt::operator=(const int& number) {
+    StringInt result(number);
+    *this = result;
+    return *this;
+}
+
+StringInt& StringInt::operator=(const short& number) {
+    StringInt result(number);
+    *this = result;
+    return *this;
+}
+
+StringInt& StringInt::operator=(const char& number) {
+    StringInt result(number);
+    *this = result;
+    return *this;
+}
+
+StringInt& StringInt::operator=(const long double& number) {
+    StringInt result(number);
+    *this = result;
+    return *this;
+}
+
+StringInt& StringInt::operator=(const double& number) {
+    StringInt result(number);
+    *this = result;
+    return *this;
+}
+
+StringInt& StringInt::operator=(const float& number) {
+    StringInt result(number);
+    *this = result;
+    return *this;
 }
 
 // ================================== SETTERS ===================================
@@ -68,6 +114,10 @@ std::string StringInt::get_val() const {
 }
 
 // ================================== INC/DEC ===================================
+
+StringInt StringInt::operator-() const {
+    return { sign == '-' ? '+' : '-', val };
+}
 
 StringInt& StringInt::operator++() {
    *this += 1;

@@ -41,11 +41,25 @@ public:
     StringInt(const std::string& number); // NOLINT(google-explicit-constructor)
 
     /**
+     * Constructor for casting from long long.
+     *
+     * @param number signed long long integer number that will be parsed into sign and value of StringInt.
+     */
+    StringInt(const long long& number); // NOLINT(google-explicit-constructor)
+
+    /**
      * Constructor for casting from int.
      *
      * @param number signed integer number that will be parsed into sign and value of StringInt.
      */
     StringInt(const int& number); // NOLINT(google-explicit-constructor)
+
+    /**
+     * Constructor for casting from unsigned long long.
+     *
+     * @param number unsigned long long integer number that will be parsed into value of StringIng.
+     */
+    StringInt(const unsigned long long& number); // NOLINT(google-explicit-constructor)
 
     /**
      * Constructor for casting from unsigned.
@@ -55,18 +69,74 @@ public:
     StringInt(const unsigned& number); // NOLINT(google-explicit-constructor)
 
     /**
-     * Constructor for casting from long long.
-     *
-     * @param number signed long long integer number that will be parsed into sign and value of StringInt.
-     */
-    StringInt(const long long&); // NOLINT(google-explicit-constructor)
-
-    /**
-     * Constructor for casting from unsigned long long.
+     * Constructor for casting from long double.
      *
      * @param number unsigned long long integer number that will be parsed into value of StringIng.
      */
-    StringInt(const unsigned long long&); // NOLINT(google-explicit-constructor)
+    StringInt(const long double& number); // NOLINT(google-explicit-constructor)
+
+    /**
+     * Constructor for casting from double.
+     *
+     * @param number unsigned long long integer number that will be parsed into value of StringIng.
+     */
+    StringInt(const double& number); // NOLINT(google-explicit-constructor)
+
+    /**
+     * Constructor for casting from float.
+     *
+     * @param number unsigned long long integer number that will be parsed into value of StringIng.
+     */
+    StringInt(const float& number); // NOLINT(google-explicit-constructor)
+
+    /**
+     * Operator for casting from long long.
+     *
+     * @param number long long that will be parsed into StringInt.
+     */
+    StringInt& operator=(const long long& number);
+
+    /**
+     * Operator for casting from int.
+     *
+     * @param number int that will be parsed into StringInt.
+     */
+    StringInt& operator=(const int& number);
+
+    /**
+     * Operator for casting from short.
+     *
+     * @param number short that will be parsed into StringInt.
+     */
+    StringInt& operator=(const short & number);
+
+    /**
+     * Operator for casting from char.
+     *
+     * @param number char that will be parsed into StringInt.
+     */
+    StringInt& operator=(const char& number);
+
+    /**
+     * Operator for casting from long double.
+     *
+     * @param number long double that will be parsed into StringInt.
+     */
+    StringInt& operator=(const long double& number);
+
+    /**
+     * Operator for casting from double.
+     *
+     * @param number double that will be parsed into StringInt.
+     */
+    StringInt& operator=(const double& number);
+
+    /**
+     * Operator for casting from float.
+     *
+     * @param number float that will be parsed into StringInt.
+     */
+    StringInt& operator=(const float& number);
 
     /**
      * sign setter.

@@ -26,13 +26,6 @@ public:
     Rational_number();
 
     /**
-     * Constructor for casting from StringInt.
-     *
-     * @param num StringInt that will be used as numerator.
-     */
-    Rational_number(const StringInt& num);
-
-    /**
      * Constructor from two StringInts - the most preferable one.
      *
      * @param sign sing of a number
@@ -41,17 +34,30 @@ public:
     Rational_number(StringInt num, StringInt denom);
 
     /**
-     * Constructor for casting from signed int.
-     *
-     * @param num signed int that will be used as numerator.
-     */
-    Rational_number(const signed& num); // NOLINT(google-explicit-constructor)
-
-    /**
      * @param num signed int that will be used as numerator.
      * @param denom unsigned int that will be used as denominator.
      */
     Rational_number(const signed& num, const unsigned& denom);
+
+    /**
+     * @param num signed long long int that will be used as numerator.
+     * @param denom unsigned long long int that will be used as denominator.
+     */
+    Rational_number(const signed long long&, const unsigned long long&);
+
+    /**
+     * Constructor for casting from StringInt.
+     *
+     * @param num StringInt that will be used as numerator.
+     */
+    Rational_number(const StringInt& num);
+
+    /**
+     * Constructor for casting from signed int.
+     *
+     * @param num signed int that will be used as numerator.
+     */
+    Rational_number(const int& num); // NOLINT(google-explicit-constructor)
 
     /**
      * Constructor for casting from signed long long int.
@@ -61,12 +67,6 @@ public:
     Rational_number(const signed long long&); // NOLINT(google-explicit-constructor)
 
     /**
-     * @param num signed long long int that will be used as numerator.
-     * @param denom unsigned long long int that will be used as denominator.
-     */
-    Rational_number(const signed long long&, const unsigned long long&);
-
-    /**
      * Constructor for casting from long double.
      *
      * @param rational long double that will be parsed into numerator and denominator.
@@ -74,11 +74,74 @@ public:
     Rational_number(const long double& rational); // NOLINT(google-explicit-constructor)
 
     /**
+     * Constructor for casting from double.
+     *
+     * @param rational double that will be parsed into numerator and denominator.
+     */
+    Rational_number(const double& rational); // NOLINT(google-explicit-constructor)
+
+    /**
+     * Constructor for casting from float.
+     *
+     * @param rational float that will be parsed into numerator and denominator.
+     */
+    Rational_number(const float& rational); // NOLINT(google-explicit-constructor)
+
+    /**
      * Constructor for casting from std::string.
      *
      * @param rational std::string that will be parsed into numerator and denominator.
      */
     Rational_number(const std::string& rational); // NOLINT(google-explicit-constructor)
+
+    /**
+     * Operator for casting from long long.
+     *
+     * @param rational long long that will be parsed into numerator and denominator.
+     */
+    Rational_number& operator=(const long long& number);
+
+    /**
+     * Operator for casting from int.
+     *
+     * @param rational int that will be parsed into numerator and denominator.
+     */
+    Rational_number& operator=(const int& number);
+
+    /**
+     * Operator for casting from short.
+     *
+     * @param rational short that will be parsed into numerator and denominator.
+     */
+    Rational_number& operator=(const short& number);
+
+    /**
+     * Operator for casting from char.
+     *
+     * @param rational char that will be parsed into numerator and denominator.
+     */
+    Rational_number& operator=(const char& number);
+
+    /**
+     * Operator for casting from long double.
+     *
+     * @param rational long double that will be parsed into numerator and denominator.
+     */
+    Rational_number& operator=(const long double& number);
+
+    /**
+     * Operator for casting from double.
+     *
+     * @param rational double that will be parsed into numerator and denominator.
+     */
+    Rational_number& operator=(const double& number);
+
+    /**
+     * Operator for casting from float.
+     *
+     * @param rational float that will be parsed into numerator and denominator.
+     */
+    Rational_number& operator=(const float & number);
 
     /**
      * numerator setter.
@@ -325,6 +388,20 @@ public:
     explicit operator std::string() const;
 
     /**
+     * Get floor of this Rational_number.
+     *
+     * @return Floor of this Rational_number as StringInt.
+     */
+    [[nodiscard]] StringInt floor() const;
+
+    /**
+     * Get round of this Rational_number.
+     *
+     * @return Round of this Rational_number as StringInt.
+     */
+    [[nodiscard]] StringInt round() const;
+
+    /**
      * Simplify this Rational_number.
      *
      * @return this simplified Rational_number.
@@ -353,7 +430,13 @@ private:
      * @throws OutOfIntegerDivisionException, OverflowException
      */
     [[nodiscard]]
-    long long cast_to_integer(const std::string& type_name, const long long& min, const long long& max, bool ignore_exceptions = false) const;
+    StringInt cast_to_integer(
+            const std::string& type_name,
+            const StringInt& min,
+            const StringInt& max,
+            bool ignore_exceptions = false,
+            bool ignore_overflows = false
+                    ) const;
 
     /**
      * Internal method to perform casts to floating point types.
