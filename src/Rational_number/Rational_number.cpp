@@ -225,7 +225,11 @@ bool operator>(const Rational_number& lhs, const Rational_number& rhs) {
 }
 
 bool operator==(const Rational_number& lhs, const Rational_number& rhs) {
-    return lhs.numerator == rhs.numerator && lhs.denominator == rhs.denominator;
+    Rational_number simplified_lhs = lhs;
+    simplified_lhs.make_canonical();
+    Rational_number simplified_rhs = rhs;
+    simplified_rhs.make_canonical();
+    return simplified_lhs.numerator == simplified_rhs.numerator && simplified_lhs.denominator == simplified_rhs.denominator;
 }
 
 bool operator!=(const Rational_number& lhs, const Rational_number& rhs) {
@@ -233,7 +237,7 @@ bool operator!=(const Rational_number& lhs, const Rational_number& rhs) {
 }
 
 bool operator<=(const Rational_number& lhs, const Rational_number& rhs) {
-    return lhs == rhs || lhs < rhs;
+    return !(lhs > rhs);
 }
 
 bool operator>=(const Rational_number& lhs, const Rational_number& rhs) {
@@ -271,7 +275,7 @@ Rational_number& Rational_number::operator*=(const Rational_number &rhs) {
 }
 
 Rational_number& Rational_number::operator/=(const Rational_number &rhs) {
-    if (rhs.numerator.get_val() == "0") {
+    if (rhs.numerator == 0) {
         throw DivisionByZeroException();
     }
     numerator.set_sign(numerator.get_sign() == rhs.numerator.get_sign() ? '+' : '-');
@@ -359,7 +363,7 @@ StringInt Rational_number::round() const {
 }
 
 Rational_number& Rational_number::make_canonical() {
-    if (numerator.get_val() == 0) {
+    if (numerator == 0) {
         numerator.set_sign('+');
         denominator = 1;
     } else {

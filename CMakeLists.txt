@@ -13,7 +13,9 @@ FetchContent_Declare(
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
-add_executable(counting_stars main.cpp src/StringInt/StringInt.cpp src/StringInt/StringInt.h src/Rational_number/Rational_number.cpp src/Rational_number/Rational_number.h src/exceptions/exceptions.h src/exceptions/IllegalSignException.h src/exceptions/IllegalDigitException.h src/exceptions/DivisionByZeroException.h src/exceptions/ParseException.h src/Complex_number/Complex_number.cpp src/Complex_number/Complex_number.h)
+set(exceptions src/exceptions/exceptions.h src/exceptions/IllegalSignException.h src/exceptions/IllegalDigitException.h src/exceptions/DivisionByZeroException.h src/exceptions/ParseException.h)
+
+add_executable(counting_stars ${exceptions} src/StringInt/StringInt.cpp src/StringInt/StringInt.h src/Rational_number/Rational_number.cpp src/Rational_number/Rational_number.h src/Complex_number/Complex_number.cpp src/Complex_number/Complex_number.h)
 
 add_executable(Rational_number_constructor_test src/StringInt/StringInt.cpp src/StringInt/StringInt.h src/Rational_number/Rational_number.cpp src/Rational_number/Rational_number.h src/Rational_number/tests/Rational_number_constructor_test.cpp)
 target_link_libraries(Rational_number_constructor_test gtest_main)
@@ -24,11 +26,11 @@ target_link_libraries(Rational_number_operators_test gtest_main)
 add_test(NAME Rational_number_operators_test COMMAND Rational_number_operators_test)
 
 
-add_executable(StringInt_constructor_test src/StringInt/StringInt.cpp src/StringInt/StringInt.h src/StringInt/tests/StringInt_constructor_test.cpp src/exceptions/IllegalSignException.h)
+add_executable(StringInt_constructor_test src/StringInt/StringInt.cpp src/StringInt/StringInt.h src/StringInt/tests/StringInt_constructor_test.cpp ${exceptions})
 target_link_libraries(StringInt_constructor_test gtest_main)
 add_test(NAME StringInt_constructor_test COMMAND StringInt_constructor_test)
 
-add_executable(StringInt_operators_test src/StringInt/StringInt.cpp src/StringInt/StringInt.h src/StringInt/tests/StringInt_operators_test.cpp src/exceptions/IllegalSignException.h)
+add_executable(StringInt_operators_test src/StringInt/StringInt.cpp src/StringInt/StringInt.h src/StringInt/tests/StringInt_operators_test.cpp ${exceptions})
 target_link_libraries(StringInt_operators_test gtest_main)
 add_test(NAME StringInt_operators_test COMMAND StringInt_operators_test)
 

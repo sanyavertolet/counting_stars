@@ -183,7 +183,7 @@ bool operator>(const StringInt& lhs, const StringInt& rhs) {
 }
 
 bool operator<=(const StringInt& lhs, const StringInt& rhs) {
-    return lhs == rhs || lhs < rhs;
+    return !(lhs > rhs);
 }
 
 bool operator>=(const StringInt& lhs, const StringInt& rhs) {
