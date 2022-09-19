@@ -1,6 +1,7 @@
 /**
  * Header file that describes IllegalSignException.
- *  @author sanyavertolet
+ *
+ * @author sanyavertolet
  */
 
 #ifndef COUNTING_STARS_ILLEGALSIGNEXCEPTION_H

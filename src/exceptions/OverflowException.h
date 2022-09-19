@@ -1,6 +1,7 @@
 /**
  * Header file that describes overflow exception.
- *  @author sanyavertolet
+ *
+ * @author sanyavertolet
  */
 
 #ifndef COUNTING_STARS_OVERFLOWEXCEPTION_H

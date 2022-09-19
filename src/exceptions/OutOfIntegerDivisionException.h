@@ -1,6 +1,7 @@
 /**
  * Header file that describes out of integer division exception.
- *  @author sanyavertolet
+ *
+ * @author sanyavertolet
  */
 
 #ifndef COUNTING_STARS_OUTOFINTEGERDIVISION_H

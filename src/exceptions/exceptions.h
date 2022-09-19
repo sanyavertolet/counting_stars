@@ -1,6 +1,7 @@
 /**
  * Header file that contains all exception includes.
- *  @author sanyavertolet
+ *
+ * @author sanyavertolet
  */
 
 #ifndef COUNTING_STARS_EXCEPTIONS_H
@@ -11,5 +12,7 @@
 #include "IllegalDigitException.h"
 #include "OutOfIntegerDivisionException.h"
 #include "OverflowException.h"
+#include "ParseException.h"
+#include "CastException.h"
 
 #endif //COUNTING_STARS_EXCEPTIONS_H

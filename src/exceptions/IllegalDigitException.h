@@ -1,6 +1,7 @@
 /**
  * Header file that describes IllegalDigitException.
- *  @author sanyavertolet
+ *
+ * @author sanyavertolet
  */
 
 #ifndef COUNTING_STARS_ILLEGALDIGITEXCEPTION_H

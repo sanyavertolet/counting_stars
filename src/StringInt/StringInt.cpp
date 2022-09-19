@@ -245,19 +245,19 @@ StringInt& StringInt::operator/=(const StringInt& other) {
 // ================================== BINARY OPERATORS ===================================
 
 StringInt operator+(StringInt lhs, const StringInt& rhs) {
-    return lhs += rhs;
+    return (lhs += rhs);
 }
 
 StringInt operator-(StringInt lhs, const StringInt& rhs) {
-    return lhs -= rhs;
+    return (lhs -= rhs);
 }
 
 StringInt operator*(StringInt lhs, const StringInt& rhs) {
-    return lhs *= rhs;
+    return (lhs *= rhs);
 }
 
 StringInt operator/(StringInt lhs, const StringInt& rhs) {
-    return lhs /= rhs;
+    return (lhs /= rhs);
 }
 
 // ================================== BOOLEAN OPERATORS ===================================

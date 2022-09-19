@@ -1,6 +1,7 @@
 /**
  * Header file that describes DivisionByZeroException.
- *  @author sanyavertolet
+ *
+ * @author sanyavertolet
  */
 
 #ifndef COUNTING_STARS_DIVISIONBYZEROEXCEPTION_H
