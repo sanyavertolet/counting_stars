@@ -1,5 +1,5 @@
 /**
- * Header containing StringInt class implementation.
+ * File containing StringInt class implementation.
  *
  * @author sanyavertolet
  */

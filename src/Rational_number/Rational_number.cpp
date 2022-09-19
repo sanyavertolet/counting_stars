@@ -1,5 +1,5 @@
 /**
- * Rational_number implementation.
+ * File containing Rational_number class implementation.
  *
  * @author sanyavertolet
  */

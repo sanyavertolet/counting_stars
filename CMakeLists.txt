@@ -15,7 +15,7 @@ FetchContent_MakeAvailable(googletest)
 
 set(exceptions src/exceptions/exceptions.h src/exceptions/IllegalSignException.h src/exceptions/IllegalDigitException.h src/exceptions/DivisionByZeroException.h src/exceptions/ParseException.h)
 
-add_executable(counting_stars ${exceptions} src/StringInt/StringInt.cpp src/StringInt/StringInt.h src/Rational_number/Rational_number.cpp src/Rational_number/Rational_number.h src/Complex_number/Complex_number.cpp src/Complex_number/Complex_number.h)
+add_executable(counting_stars ${exceptions} src/StringInt/StringInt.cpp src/StringInt/StringInt.h src/Rational_number/Rational_number.cpp src/Rational_number/Rational_number.h src/Complex_number/Complex_number.cpp src/Complex_number/Complex_number.h src/Vector/Vector.cpp src/Vector/Vector.h)
 
 add_executable(Rational_number_constructor_test src/StringInt/StringInt.cpp src/StringInt/StringInt.h src/Rational_number/Rational_number.cpp src/Rational_number/Rational_number.h src/Rational_number/tests/Rational_number_constructor_test.cpp)
 target_link_libraries(Rational_number_constructor_test gtest_main)

@@ -1,5 +1,5 @@
 /**
- * Header containing Complex_number class implementation.
+ * File containing Complex_number class implementation.
  *
  * @author sanyavertolet
  */
