@@ -14,5 +14,6 @@
 #include "OverflowException.h"
 #include "ParseException.h"
 #include "CastException.h"
+#include "OutOfRangeException.h"
 
 #endif //COUNTING_STARS_EXCEPTIONS_H
