@@ -17,7 +17,7 @@ double Vector<TValue>::get_precision() {
 }
 
 template<typename TValue>
-int Vector<TValue>::get_size() {
+StringInt Vector<TValue>::get_size() {
     return data.size();
 }
 
