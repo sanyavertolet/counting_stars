@@ -213,7 +213,7 @@ public:
      * @param x Rational_number to print.
      * @return os.
      */
-    friend std::ostream& operator<< (std::ostream& os, Rational_number const& x);
+    friend std::ostream& operator<<(std::ostream& os, Rational_number const& x);
 
     /**
      * Friend operator that reads Rational_number from std::istream.
@@ -222,7 +222,7 @@ public:
      * @param x Rational_number to read to.
      * @return is.
      */
-    friend std::istream& operator>> (std::istream& is, Rational_number& x);
+    friend std::istream& operator>>(std::istream& is, Rational_number& x);
 
     /**
      * Friend equals operator.

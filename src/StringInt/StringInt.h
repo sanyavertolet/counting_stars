@@ -208,7 +208,7 @@ public:
      * @param x StringInt to print.
      * @return os.
      */
-    friend std::ostream& operator<< (std::ostream& os, StringInt const& x);
+    friend std::ostream& operator<<(std::ostream& os, StringInt const& x);
 
     /**
      * Friend operator that reads StringInt from std::istream.
@@ -217,7 +217,7 @@ public:
      * @param x StringInt to read to.
      * @return is.
      */
-    friend std::istream& operator>> (std::istream& is, StringInt& x);
+    friend std::istream& operator>>(std::istream& is, StringInt& x);
 
     /**
      * Friend equals operator.

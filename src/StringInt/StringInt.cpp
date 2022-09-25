@@ -142,12 +142,12 @@ StringInt StringInt::operator--(int) {
 
 // ================================== STREAMS ===================================
 
-std::ostream& operator<< (std::ostream& os, StringInt const& x) {
+std::ostream& operator<<(std::ostream& os, StringInt const& x) {
     os << std::string(x);
     return os;
 }
 
-std::istream& operator>> (std::istream& is, StringInt& x) {
+std::istream& operator>>(std::istream& is, StringInt& x) {
     std::string number;
     is >> number;
     x = StringInt(number);

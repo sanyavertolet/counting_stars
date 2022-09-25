@@ -202,12 +202,12 @@ Rational_number Rational_number::operator--(int) {
 
 // ================================== STREAMS ===================================
 
-std::ostream& operator<< (std::ostream& os, Rational_number const& x) {
+std::ostream& operator<<(std::ostream& os, Rational_number const& x) {
     os << std::string(x);
     return os;
 }
 
-std::istream& operator>> (std::istream& is, Rational_number& x) {
+std::istream& operator>>(std::istream& is, Rational_number& x) {
     std::string rational_number_string;
     is >> rational_number_string;
     x = Rational_number(rational_number_string);

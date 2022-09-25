@@ -49,15 +49,11 @@ public:
      * @param required_precision precision of contained elements, default is default_precision.
      * @param default_value value that should be set as default value for each element.
      */
-    Vector(
-            const char* file_path,
-            double required_precision = default_precision,
-            TValue default_value = 0
-                    ): precision(required_precision) {
+    Vector(const char* file_path, double required_precision = default_precision, TValue default_value = 0):
+    precision(required_precision), mass_transform(default_value) {
         std::ifstream infile(file_path);
         if (infile.bad()) {
-//            throw FileNotFoundException();
-            throw std::runtime_error("FileNotFoundException: " + std::string(file_path));
+            throw FileNotFoundException(file_path);
         }
         //todo: implement
     }
@@ -67,28 +63,36 @@ public:
      *
      * @param new_precision new double to be set as precision.
      */
-    void set_precision(double new_precision);
+    void set_precision(double new_precision) {
+        precision = new_precision;
+    }
 
     /**
      * precision getter.
      *
      * @return current precision.
      */
-    double get_precision();
+    double get_precision() {
+        return precision;
+    }
 
     /**
      * Get number of not-null elements.
      *
      * @return number of not-null elements.
      */
-    StringInt get_size();
+    StringInt get_size() {
+        return data.size();
+    }
 
     /**
      * Get dimension of this Vector.
      *
      * @return dimension of this Vector.
      */
-    StringInt get_dim();
+    StringInt get_dim() {
+        return dim;
+    }
 
     /**
      * Friend operator that prints this Vector to std::ostream.
@@ -97,7 +101,7 @@ public:
      * @param x Vector to print.
      * @return os.
      */
-    friend std::ostream& operator<< (std::ostream& os, Vector<TValue> const& x);
+    friend std::ostream& operator<<(std::ostream& os, Vector<TValue> const& x);
 
     /**
      * Friend operator that reads Vector from std::istream.
@@ -106,7 +110,7 @@ public:
      * @param x Vector to read to.
      * @return is.
      */
-    friend std::istream& operator>> (std::istream& is, Vector<TValue>& x);
+    friend std::istream& operator>>(std::istream& is, Vector<TValue>& x);
 
     /**
      * Eq operator.
@@ -137,7 +141,14 @@ public:
      *
      * @return Vector with items with inverted signs.
      */
-    Vector operator-();
+    Vector operator-() {
+        Vector<TValue> result(*this);
+        for(auto& [key, value]: result.data) {
+            value = -value;
+        }
+        mass_transform = -mass_transform;
+        return result;
+    }
 
     /**
      * Access operator.
@@ -145,7 +156,22 @@ public:
      * @param index index of required element.
      * @return element of this Vector on position index.
      */
-    TValue& operator()(const StringInt& index);
+    TValue& operator()(const StringInt& index) {
+        if (dim >= 0) {
+            if (index >= dim) {
+                throw OutOfRangeException("OutOfRangeException");
+            }
+        }
+        if (data.find(index) == data.end()) {
+            data[index] = mass_transform;
+        }
+        auto result(data.at(index));
+        if (Rational_number(precision) != Rational_number(0) && result < precision) {
+            return TValue(0);
+        } else {
+            return data.at(index);
+        }
+    }
 
     /**
      * Plus and assign operator.
@@ -155,7 +181,17 @@ public:
      * @return this Vector, increased by rhs.
      */
     template<typename TValueRight>
-    auto& operator+=(const Vector<TValueRight> &rhs);
+    auto& operator+=(const Vector<TValueRight> &rhs) {
+        mass_transform += rhs.mass_transform;
+        for (auto [key, value] : rhs.data) {
+            if (data.find(key) == data.end()) {
+                data[key] = mass_transform + value;
+            } else {
+                data[key] += value;
+            }
+        }
+        return *this;
+    }
 
     /**
      * Minus and assign operator.
@@ -165,7 +201,17 @@ public:
      * @return this Vector, decreased by rhs.
      */
     template<typename TValueRight>
-    auto& operator-=(const Vector<TValueRight> &rhs);
+    auto& operator-=(const Vector<TValueRight> &rhs) {
+        mass_transform -= rhs.mass_transform;
+        for (auto [key, value] : rhs.data) {
+            if (data.find(key) == data.end()) {
+                data[key] = mass_transform - value;
+            } else {
+                data[key] -= value;
+            }
+        }
+        return *this;
+    }
 
     /**
      * Plus operator.
@@ -323,7 +369,15 @@ class Vector<bool> {
      *
      * @return number of true elements.
      */
-    [[nodiscard]] int get_size() const;
+    [[nodiscard]] int get_size() const {
+        int result = 0;
+        uint64_t tmp = data;
+        while (tmp) {
+            result += int(tmp & 1);
+            tmp >>= 1;
+        }
+        return result;
+    }
 
     /**
      * Friend operator that prints this Vector to std::ostream.
@@ -341,7 +395,7 @@ class Vector<bool> {
      * @param x Vector to read to.
      * @return is.
      */
-    friend std::istream& operator>> (std::istream& is, Vector<bool>& x);
+    friend std::istream& operator>>(std::istream& is, Vector<bool>& x);
 
     /**
      * Eq operator.
@@ -364,7 +418,11 @@ class Vector<bool> {
     /**
      * @return Vector that contains negative elements - false to true and backwards.
      */
-    Vector<bool> operator~();
+    Vector<bool> operator~() {
+        Vector<bool> result = *this;
+        result.data ^= -1;
+        return result;
+    }
 
     /**
      * Element getter.
@@ -372,7 +430,13 @@ class Vector<bool> {
      * @param index index of element.
      * @return value of element on position [index].
      */
-    bool operator()(int index) const;
+    bool operator()(int index) const {
+        if (index >= max_index) {
+            throw OutOfRangeException("Index " + std::to_string(index) + " is out of range, ["
+                                      + std::to_string(max_index) + "] is maximal possible index.");
+        }
+        return (data & (1 << index)) >> index;
+    }
 
     /**
      * Element setter
@@ -381,7 +445,14 @@ class Vector<bool> {
      * @param value value to be set.
      * @return value of element on position [index].
      */
-    bool operator()(int index, bool value);
+    bool operator()(int index, bool value) {
+        if (index >= max_index) {
+            throw OutOfRangeException("Index " + std::to_string(index) + " is out of range ("
+                                      + std::to_string(max_index) + " is maximum possible index).");
+        }
+        data ^= 1 << index;
+        return value;
+    }
 
     /**
      * Plus and assign operator - OR.
@@ -389,7 +460,10 @@ class Vector<bool> {
      * @param rhs right operand.
      * @return this Vector OR [rhs].
      */
-    Vector<bool>& operator+=(const Vector<bool> &rhs);
+    Vector<bool>& operator+=(const Vector<bool> &rhs) {
+        data |= rhs.data;
+        return *this;
+    }
 
     /**
      * Multiply and assign operator - AND.
@@ -397,7 +471,10 @@ class Vector<bool> {
      * @param rhs right operand.
      * @return this Vector AND [rhs].
      */
-    Vector<bool>& operator*=(const Vector<bool> &rhs);
+    Vector<bool>& operator*=(const Vector<bool> &rhs) {
+        data &= rhs.data;
+        return *this;
+    }
 
     /**
      * Plus operator - OR.

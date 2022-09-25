@@ -8,6 +8,7 @@
 #define COUNTING_STARS_EXCEPTIONS_H
 
 #include "DivisionByZeroException.h"
+#include "FileNotFoundException.h"
 #include "IllegalSignException.h"
 #include "IllegalDigitException.h"
 #include "OutOfIntegerDivisionException.h"
