@@ -231,7 +231,7 @@ public:
      * @param rhs right Rational_number operand.
      * @return true if Rational_numbers are equal, false otherwise.
      */
-    friend inline bool operator==(const Rational_number& lhs, const Rational_number& rhs);
+    friend bool operator==(const Rational_number& lhs, const Rational_number& rhs);
 
     /**
      * Friend not-equals operator.
@@ -240,7 +240,7 @@ public:
      * @param rhs right Rational_number operand.
      * @return true if Rational_numbers are not equal, false otherwise.
      */
-    friend inline bool operator!=(const Rational_number& lhs, const Rational_number& rhs);
+    friend bool operator!=(const Rational_number& lhs, const Rational_number& rhs);
 
     /**
      * Friend less operator.
@@ -249,7 +249,7 @@ public:
      * @param rhs right Rational_number operand.
      * @return true if lhs is less than rhs, false otherwise.
      */
-    friend inline bool operator<(const Rational_number& lhs, const Rational_number& rhs);
+    friend bool operator<(const Rational_number& lhs, const Rational_number& rhs);
 
     /**
      * Friend greater operator.
@@ -258,7 +258,7 @@ public:
      * @param rhs right Rational_number operand.
      * @return true if lhs is greater than rhs, false otherwise.
      */
-    friend inline bool operator>(const Rational_number& lhs, const Rational_number& rhs);
+    friend bool operator>(const Rational_number& lhs, const Rational_number& rhs);
 
     /**
      * Friend leq operator.
@@ -267,7 +267,7 @@ public:
      * @param rhs right Rational_number operand.
      * @return true if lhs is less than rhs or equal to it, false otherwise.
      */
-    friend inline bool operator<=(const Rational_number& lhs, const Rational_number& rhs);
+    friend bool operator<=(const Rational_number& lhs, const Rational_number& rhs);
 
     /**
      * Friend geq operator.
@@ -276,7 +276,7 @@ public:
      * @param rhs right Rational_number operand.
      * @return true if lhs is greater than rhs or equal to it, false otherwise.
      */
-    friend inline bool operator>=(const Rational_number& lhs, const Rational_number& rhs);
+    friend bool operator>=(const Rational_number& lhs, const Rational_number& rhs);
 
     /**
      * Assigning plus operator.

@@ -5,6 +5,7 @@
  */
 
 #include "Vector.h"
+#include "../Complex_number/Complex_number.h"
 
 template<typename TValueLeft, typename TValueRight>
 bool operator==(const Vector<TValueLeft> &lhs, const Vector<TValueRight> &rhs) {
@@ -22,16 +23,36 @@ bool operator!=(const Vector<TValueLeft> &lhs, const Vector<TValueRight> &rhs) {
 template<typename TValueLeft, typename TValueRight>
 auto operator+(const Vector<TValueLeft> &lhs, const Vector<TValueRight> &rhs) {
     Vector<decltype(TValueLeft() + TValueRight())> result;
-    result += lhs;
-    result += rhs;
+    for (auto [key, value] : lhs.data) {
+        result[key] = value;
+    }
+    for (auto [key, value] : rhs.data) {
+        if (lhs.data.find(key) == lhs.data.end()) {
+            result[key] = value;
+        } else {
+            result[key] += value;
+        }
+    }
+    result.mass_transform = lhs.mass_transform + rhs.mass_transform;
+    result.set_precision((lhs.precision + rhs.precision) / 2);
     return result;
 }
 
 template<typename TValueLeft, typename TValueRight>
 auto operator-(const Vector<TValueLeft> &lhs, const Vector<TValueRight> &rhs) {
     Vector<decltype(TValueLeft() + TValueRight())> result;
-    result += lhs;
-    result -= rhs;
+    for (auto [key, value] : lhs.data) {
+        result[key] = value;
+    }
+    for (auto [key, value] : rhs.data) {
+        if (lhs.data.find(key) == lhs.data.end()) {
+            result[key] = -value;
+        } else {
+            result[key] -= value;
+        }
+    }
+    result.mass_transform = lhs.mass_transform - rhs.mass_transform;
+    result.set_precision((lhs.precision + rhs.precision) / 2);
     return result;
 }
 
@@ -41,6 +62,7 @@ auto operator+(Vector<TValueLeft> lhs, const TValueRight& rhs) {
         value += rhs;
     }
     lhs.mass_transform += rhs;
+    lhs.delete_null_elements();
     return lhs;
 }
 
@@ -50,6 +72,7 @@ auto operator-(Vector<TValueLeft> lhs, const TValueRight& rhs) {
         value -= rhs;
     }
     lhs.mass_transform -= rhs;
+    lhs.delete_null_elements();
     return lhs;
 }
 
@@ -59,42 +82,21 @@ auto operator*(Vector<TValueLeft> lhs, const TValueRight& rhs) {
         value *= rhs;
     }
     lhs.mass_transform *= rhs;
+    lhs.delete_null_elements();
     return lhs;
 }
 
 template<typename TValueLeft, typename TValueRight>
 auto operator/(Vector<TValueLeft> lhs, const TValueRight& rhs) {
+    if (rhs == 0) {
+        throw DivisionByZeroException("Denominator is null.");
+    }
     for (auto& [key, value] : lhs) {
         value /= rhs;
     }
     lhs.mass_transform /= rhs;
+    lhs.delete_null_elements();
     return lhs;
-}
-
-template<typename TValue>
-std::string to_string(Vector<TValue> vector) {
-    std::stringstream ss;
-    std::string type_name;
-    ss << "vector " << get_type_name(TValue()) << " " << vector.dim << std::endl << std::endl;
-    for (auto [key, value]: vector.data) {
-        ss << (key + 1) << value << std::endl;
-    }
-    return ss.str();
-}
-
-template<typename TValue, typename TComplexReal, typename TComplexImaginary>
-std::string get_type_name(TValue type) {
-    std::string type_name;
-    if (typeid(TValue) == typeid(Rational_number)) {
-        type_name = "rational";
-    } else if (typeid(TValue) == typeid(bool)) {
-        type_name = "bit";
-    } else if (typeid(TValue) == typeid(Complex_number<TComplexReal, TComplexImaginary>)) {
-        type_name = "complex";
-    } else {
-        type_name = typeid(TValue).name();
-    }
-    return type_name;
 }
 
 #ifdef __DEV__

@@ -69,6 +69,13 @@ public:
     StringInt(const unsigned& number); // NOLINT(google-explicit-constructor)
 
     /**
+     * Constructor for casting from unsigned long.
+     *
+     * @param number unsigned long int that will be used as value of StringInt.
+     */
+    StringInt(const unsigned long& number); // NOLINT(google-explicit-constructor)
+
+    /**
      * Constructor for casting from long double.
      *
      * @param number unsigned long long integer number that will be parsed into value of StringIng.

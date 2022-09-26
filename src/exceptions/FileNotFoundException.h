@@ -32,6 +32,4 @@ public:
     }
 };
 
-std::string const FileNotFoundException::default_message = "File not found";
-
 #endif //COUNTING_STARS_FILENOTFOUNDEXCEPTION_H

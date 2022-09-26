@@ -12,11 +12,12 @@
 #include <fstream>
 #include <sstream>
 #include <utility>
+#include <set>
 
 #include "../exceptions/exceptions.h"
-#include "../Complex_number/Complex_number.h"
 #include "../StringInt/StringInt.h"
 #include "../Rational_number/Rational_number.h"
+#include "../Complex_number/Complex_number.h"
 
 /**
  * Template class that implements vector.
@@ -49,7 +50,7 @@ public:
      * @param required_precision precision of contained elements, default is default_precision.
      * @param default_value value that should be set as default value for each element.
      */
-    Vector(const char* file_path, double required_precision = default_precision, TValue default_value = 0):
+    Vector(const char* file_path, TValue required_precision = default_precision, TValue default_value = 0):
     precision(required_precision), mass_transform(default_value) {
         std::ifstream infile(file_path);
         if (infile.bad()) {
@@ -63,8 +64,9 @@ public:
      *
      * @param new_precision new double to be set as precision.
      */
-    void set_precision(double new_precision) {
+    void set_precision(TValue new_precision) {
         precision = new_precision;
+        delete_null_elements();
     }
 
     /**
@@ -72,7 +74,7 @@ public:
      *
      * @return current precision.
      */
-    double get_precision() {
+    TValue get_precision() {
         return precision;
     }
 
@@ -82,7 +84,8 @@ public:
      * @return number of not-null elements.
      */
     StringInt get_size() {
-        return data.size();
+        delete_null_elements();
+        return StringInt(data.size());
     }
 
     /**
@@ -101,7 +104,10 @@ public:
      * @param x Vector to print.
      * @return os.
      */
-    friend std::ostream& operator<<(std::ostream& os, Vector<TValue> const& x);
+    friend std::ostream& operator<<(std::ostream& os, Vector const& x) {
+        os << to_string(x);
+        return os;
+    }
 
     /**
      * Friend operator that reads Vector from std::istream.
@@ -142,6 +148,7 @@ public:
      * @return Vector with items with inverted signs.
      */
     Vector operator-() {
+        delete_null_elements();
         Vector<TValue> result(*this);
         for(auto& [key, value]: result.data) {
             value = -value;
@@ -157,6 +164,7 @@ public:
      * @return element of this Vector on position index.
      */
     TValue& operator()(const StringInt& index) {
+        delete_null_elements();
         if (dim >= 0) {
             if (index >= dim) {
                 throw OutOfRangeException("OutOfRangeException");
@@ -165,12 +173,10 @@ public:
         if (data.find(index) == data.end()) {
             data[index] = mass_transform;
         }
-        auto result(data.at(index));
-        if (Rational_number(precision) != Rational_number(0) && result < precision) {
-            return TValue(0);
-        } else {
-            return data.at(index);
+        if (data[index] <= TValue(precision)) {
+            data[index] = 0;
         }
+        return data[index];
     }
 
     /**
@@ -190,6 +196,7 @@ public:
                 data[key] += value;
             }
         }
+        delete_null_elements();
         return *this;
     }
 
@@ -210,6 +217,7 @@ public:
                 data[key] -= value;
             }
         }
+        delete_null_elements();
         return *this;
     }
 
@@ -291,14 +299,22 @@ public:
      * @param vector Vector to be converted to string.
      * @return std::string representation of vector.
      */
-    friend std::string to_string(Vector<TValue> vector);
+    friend std::string to_string(Vector vector) {
+        std::stringstream ss;
+        std::string type_name;
+        ss << "vector " << get_type_name(TValue()) << " " << vector.dim << std::endl << std::endl;
+        for (auto [key, value]: vector.data) {
+            ss << (key + 1) << "\t" <<  value << std::endl;
+        }
+        return ss.str();
+    }
 
 private:
     /**
      * Precision of elements in this Vector.
      * If a number is less then precision, value is considered to be zero.
      */
-    double precision;
+    TValue precision;
 
     /**
      * Number of maximum stored elements.
@@ -324,6 +340,39 @@ private:
      * Constant that defines default precision.
      */
     static constexpr double default_precision = 0.0000000001;
+
+    template<typename TComplexReal = double, typename TComplexImaginary = double>
+    static std::string get_type_name(TValue type) {
+        std::string type_name;
+        if (typeid(type) == typeid(Rational_number)) {
+            type_name = "rational";
+        } else if (typeid(type) == typeid(bool)) {
+            type_name = "bit";
+        } else if (typeid(type) == typeid(Complex_number<TComplexReal, TComplexImaginary>)) {
+            type_name = "complex";
+        } else {
+            type_name = "<" + std::string(typeid(TValue).name()) + ">";
+        }
+        return type_name;
+    }
+
+    /**
+     * Internal method to delete elements from [data] that are less than [precision].
+     */
+    void delete_null_elements() {
+        std::set<StringInt> to_delete;
+        if (mass_transform <= TValue(precision)) {
+            mass_transform = 0;
+        }
+        for (auto [key, value] : data) {
+            if (value <= TValue(precision)) {
+                to_delete.insert(key);
+            }
+        }
+        for (auto key : to_delete) {
+            data.erase(key);
+        }
+    }
 };
 
 /**
@@ -342,6 +391,7 @@ Vector<TValue> parse_from_ifstream(std::ifstream &is);
  */
 template<>
 class Vector<bool> {
+public:
     /**
      * Default constructor
      *
@@ -373,7 +423,7 @@ class Vector<bool> {
         int result = 0;
         uint64_t tmp = data;
         while (tmp) {
-            result += int(tmp & 1);
+            result += int(tmp & 1u);
             tmp >>= 1;
         }
         return result;
@@ -386,7 +436,7 @@ class Vector<bool> {
      * @param x Vector to print.
      * @return os.
      */
-    friend std::ostream& operator<< (std::ostream& os, Vector<bool> const& x);
+    friend std::ostream& operator<<(std::ostream& os, Vector<bool> const& x);
 
     /**
      * Friend operator that reads Vector from std::istream.

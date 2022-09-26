@@ -30,6 +30,8 @@ StringInt::StringInt(const int& number): sign(number < 0 ? '-' : '+'), val(std::
 
 StringInt::StringInt(const unsigned& number): sign('+'), val(std::to_string(number)) { }
 
+StringInt::StringInt(const unsigned long& number): sign('+'), val(std::to_string(number)) { }
+
 StringInt::StringInt(const long long& number): sign(number < 0 ? '-' : '+'), val(std::to_string(abs(number))) { }
 
 StringInt::StringInt(const unsigned long long& number): sign('+'), val(std::to_string(number)) { }
@@ -307,7 +309,7 @@ long long StringInt::downcast_to(const std::string& type_name, long long minimal
 }
 
 StringInt::operator std::string() const {
-    return std::string(1, sign) +  val;
+    return (sign == -1 ? std::string(1, sign) : "") +  val;
 }
 
 // ================================== UTILITY METHODS ===================================
