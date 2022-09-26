@@ -103,4 +103,14 @@ TEST(Vector_test, bool_test)
     ASSERT_EQ((bool_vector += another_bool_vector).get_size(), 2);
     ASSERT_EQ((bool_vector *= another_bool_vector).get_size(), 1);
     ASSERT_EQ(to_string(bool_vector), "vector bit 64\n\n1 1\n");
+    bool_vector(0, false);
+    bool_vector(1, true);
+    ASSERT_EQ((bool_vector + another_bool_vector).get_size(), 2);
+    ASSERT_EQ((bool_vector * another_bool_vector).get_size(), 0);
+    std::stringstream ss;
+    ss << bool_vector;
+    ASSERT_EQ(ss.str(), "vector bit 64\n\n2 1\n");
+    ASSERT_THROW(ss >> another_bool_vector, std::runtime_error);
+    ASSERT_TRUE(bool_vector != another_bool_vector);
+    ASSERT_TRUE(bool_vector == ~~bool_vector);
 }

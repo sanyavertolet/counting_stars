@@ -13,7 +13,7 @@ std::ostream& operator<<(std::ostream& os, Vector<bool> const& x) {
 
 std::istream& operator>>(std::istream& is, Vector<bool>& x) {
     throw std::runtime_error("Not implemented yet.");
-    return is;
+//    return is;
 }
 
 bool operator==(const Vector<bool> &lhs, const Vector<bool> &rhs) {
@@ -25,11 +25,15 @@ bool operator!=(const Vector<bool> &lhs, const Vector<bool> &rhs) {
 }
 
 Vector<bool> operator+(const Vector<bool> &lhs, const Vector<bool> &rhs) {
-    return lhs.data | rhs.data;
+    Vector<bool> result;
+    result.data = lhs.data | rhs.data;
+    return result;
 }
 
 Vector<bool> operator*(const Vector<bool> &lhs, const Vector<bool> &rhs) {
-    return lhs.data & rhs.data;
+    Vector<bool> result;
+    result.data = lhs.data & rhs.data;
+    return result;
 }
 
 std::string to_string(Vector<bool> vector) {

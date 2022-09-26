@@ -394,10 +394,15 @@ class Vector<bool> {
 public:
     /**
      * Default constructor
+     */
+    Vector(): data(0u) { }
+
+    /**
+     * Constructor that allows to set default value to data.
      *
      * @param is_zeroes flag to set default value for each element of Vector.
      */
-    Vector(bool is_zeroes = true): data(is_zeroes ? 0 : -1) { }
+    explicit Vector(bool is_zeroes): data(is_zeroes ? 0 : -1) { }
 
     /**
      * Constructor from file.

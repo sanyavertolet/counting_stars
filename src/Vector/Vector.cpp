@@ -4,8 +4,8 @@
  * @author sanyavertolet
  */
 
-#include "Vector.h"
 #include "../Complex_number/Complex_number.h"
+#include "Vector.h"
 
 template<typename TValueLeft, typename TValueRight>
 bool operator==(const Vector<TValueLeft> &lhs, const Vector<TValueRight> &rhs) {
