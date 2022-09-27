@@ -207,7 +207,7 @@ public:
     Rational_number operator--(int); // NOLINT(cert-dcl21-cpp)
 
     /**
-     * Friend operator that prints this Rational_number to std::ostream.
+     * Friend operator that prints Rational_number to std::ostream.
      *
      * @param os output stream.
      * @param x Rational_number to print.

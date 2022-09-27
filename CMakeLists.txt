@@ -15,7 +15,7 @@ FetchContent_MakeAvailable(googletest)
 
 set(exceptions src/exceptions/exceptions.h src/exceptions/IllegalSignException.h src/exceptions/IllegalDigitException.h src/exceptions/DivisionByZeroException.h src/exceptions/ParseException.h src/exceptions/CastException.h src/exceptions/OutOfRangeException.h src/exceptions/OutOfIntegerDivisionException.h src/exceptions/OverflowException.h src/exceptions/ParseException.h src/exceptions/FileNotFoundException.h src/exceptions/FileNotFoundException.cpp)
 
-add_executable(counting_stars ${exceptions} src/StringInt/StringInt.cpp src/StringInt/StringInt.h src/Rational_number/Rational_number.cpp src/Rational_number/Rational_number.h src/Complex_number/Complex_number.h src/Vector/Vector.cpp src/Vector/Vector.bool.cpp src/Vector/Vector.h)
+add_executable(counting_stars ${exceptions} src/StringInt/StringInt.cpp src/StringInt/StringInt.h src/Rational_number/Rational_number.cpp src/Rational_number/Rational_number.h src/Complex_number/Complex_number.h src/Vector/Vector.cpp src/Vector/Vector.bool.cpp src/Vector/Vector.h src/Matrix/Pos.h src/Matrix/Matrix_coords.h src/Matrix/Matrix_proxy.h)
 
 add_executable(Rational_number_constructor_test src/StringInt/StringInt.cpp src/StringInt/StringInt.h src/Rational_number/Rational_number.cpp src/Rational_number/Rational_number.h src/Rational_number/tests/Rational_number_constructor_test.cpp)
 target_link_libraries(Rational_number_constructor_test gtest_main)

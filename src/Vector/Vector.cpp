@@ -62,7 +62,7 @@ auto operator+(Vector<TValueLeft> lhs, const TValueRight& rhs) {
         value += rhs;
     }
     lhs.mass_transform += rhs;
-    lhs.delete_null_elements();
+    lhs.delete_zero_elements();
     return lhs;
 }
 
@@ -72,7 +72,7 @@ auto operator-(Vector<TValueLeft> lhs, const TValueRight& rhs) {
         value -= rhs;
     }
     lhs.mass_transform -= rhs;
-    lhs.delete_null_elements();
+    lhs.delete_zero_elements();
     return lhs;
 }
 
@@ -82,7 +82,7 @@ auto operator*(Vector<TValueLeft> lhs, const TValueRight& rhs) {
         value *= rhs;
     }
     lhs.mass_transform *= rhs;
-    lhs.delete_null_elements();
+    lhs.delete_zero_elements();
     return lhs;
 }
 
@@ -95,7 +95,7 @@ auto operator/(Vector<TValueLeft> lhs, const TValueRight& rhs) {
         value /= rhs;
     }
     lhs.mass_transform /= rhs;
-    lhs.delete_null_elements();
+    lhs.delete_zero_elements();
     return lhs;
 }
 
