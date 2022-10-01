@@ -8,6 +8,7 @@
 #define COUNTING_STARS_ILLEGALSIGNEXCEPTION_H
 
 #include <exception>
+#include <string>
 
 /**
  * Exception thrown on illegal sign of a number.

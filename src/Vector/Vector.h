@@ -32,16 +32,21 @@ class Vector {
 public:
     /**
      * Default constructor.
+     */
+    Vector(): precision(0), dim(-1), mass_transform(0), data({}) {}
+
+    /**
+     * Constructor for almost any case.
      *
      * @param required_precision precision of contained elements, default is default_precision.
      * @param required_dim dimension of vector, default -1.
      * @param default_value value that should be set as default value for each element.
      */
-    Vector(
-            StringInt  required_dim = -1,
+    explicit Vector(
+            StringInt required_dim = -1,
             double default_value = 0,
             double required_precision = default_precision
-                    ): precision(required_precision), dim(std::move(required_dim)), mass_transform(default_value), data({}) { }
+                    ): dim(std::move(required_dim)), mass_transform(default_value), precision(required_precision), data({}) { }
 
     /**
      * Constructor from file.
@@ -51,12 +56,76 @@ public:
      * @param default_value value that should be set as default value for each element.
      */
     Vector(const char* file_path, TValue required_precision = default_precision, TValue default_value = 0):
-    precision(required_precision), mass_transform(default_value) {
+            mass_transform(default_value), precision(required_precision) {
         std::ifstream infile(file_path);
         if (infile.bad()) {
             throw FileNotFoundException(file_path);
         }
         //todo: implement
+    }
+
+    /**
+     * Copy constructor.
+     *
+     * @param rhs instance to copy.
+     */
+    Vector(const Vector& rhs): dim(rhs.dim), mass_transform(rhs.mass_transform), precision(rhs.precision), data(rhs.data) { }
+
+    /**
+     * Move constructor.
+     *
+     * @param rhs instance to move.
+     */
+    Vector(Vector&& rhs) noexcept : dim(rhs.dim), mass_transform(rhs.mass_transform), precision(rhs.precision), data(rhs.data) {
+        rhs.dim = StringInt();
+        rhs.mass_transform = TValue();
+        rhs.precision = TValue();
+        rhs.data = {};
+    }
+
+    /**
+     * Copy operator.
+     *
+     * @param rhs instance to copy.
+     * @return this Vector filled with rhs fields.
+     */
+    Vector& operator=(const Vector& rhs) {
+        Vector tmp(rhs);
+        std::swap(dim, tmp.dim);
+        std::swap(mass_transform, tmp.mass_transform);
+        std::swap(precision, tmp.precision);
+        std::swap(data, tmp.data);
+        return *this;
+    }
+
+    /**
+     * Move operator.
+     *
+     * @param rhs instance to move.
+     * @return this Vector filled with rhs fields.
+     */
+    Vector& operator=(Vector&& rhs) noexcept {
+        dim = std::move(rhs.dim);
+        rhs.dim = StringInt();
+        mass_transform = std::move(rhs.mass_transform);
+        rhs.mass_transform = TValue();
+        precision = std::move(rhs.precision);
+        rhs.precision = TValue();
+        data = std::move(rhs.data);
+        rhs.data = {};
+        return *this;
+    }
+
+    /**
+     * Move data operator.
+     *
+     * @param rhs instance to copy.
+     * @return this Vector with data filled with rhs.
+     */
+    Vector& operator=(std::map<StringInt, TValue>&& data_to_move) noexcept {
+        data = std::move(data_to_move);
+        data_to_move = {};
+        return *this;
     }
 
     /**
@@ -66,7 +135,7 @@ public:
      */
     void set_precision(TValue new_precision) {
         precision = new_precision;
-        delete_null_elements();
+        delete_zero_elements();
     }
 
     /**
@@ -84,7 +153,7 @@ public:
      * @return number of not-null elements.
      */
     StringInt get_size() {
-        delete_null_elements();
+        delete_zero_elements();
         return StringInt(data.size());
     }
 
@@ -98,7 +167,7 @@ public:
     }
 
     /**
-     * Friend operator that prints this Vector to std::ostream.
+     * Friend operator that prints Vector to std::ostream.
      *
      * @param os output stream.
      * @param x Vector to print.
@@ -148,7 +217,7 @@ public:
      * @return Vector with items with inverted signs.
      */
     Vector operator-() {
-        delete_null_elements();
+        delete_zero_elements();
         Vector<TValue> result(*this);
         for(auto& [key, value]: result.data) {
             value = -value;
@@ -164,7 +233,7 @@ public:
      * @return element of this Vector on position index.
      */
     TValue& operator()(const StringInt& index) {
-        delete_null_elements();
+        delete_zero_elements();
         if (dim >= 0) {
             if (index >= dim) {
                 throw OutOfRangeException("OutOfRangeException");
@@ -196,7 +265,7 @@ public:
                 data[key] += value;
             }
         }
-        delete_null_elements();
+        delete_zero_elements();
         return *this;
     }
 
@@ -217,7 +286,7 @@ public:
                 data[key] -= value;
             }
         }
-        delete_null_elements();
+        delete_zero_elements();
         return *this;
     }
 
@@ -311,12 +380,6 @@ public:
 
 private:
     /**
-     * Precision of elements in this Vector.
-     * If a number is less then precision, value is considered to be zero.
-     */
-    TValue precision;
-
-    /**
      * Number of maximum stored elements.
      * If dim is negative, Vector is considered to be endless.
      */
@@ -329,9 +392,15 @@ private:
     TValue mass_transform;
 
     /**
-     * Data is stored as ordered map.
+     * Precision of elements in this Vector.
+     * If a number is less then precision, value is considered to be zero.
+     */
+    TValue precision;
+
+    /**
+     * Data stored as ordered map.
      *
-     * key is StringInt - index of a number
+     * key - StringInt describing index of a number.
      * value - TValue that should be stored.
      */
     std::map<StringInt, TValue> data;
@@ -359,7 +428,7 @@ private:
     /**
      * Internal method to delete elements from [data] that are less than [precision].
      */
-    void delete_null_elements() {
+    void delete_zero_elements() {
         std::set<StringInt> to_delete;
         if (mass_transform <= TValue(precision)) {
             mass_transform = 0;
@@ -435,7 +504,7 @@ public:
     }
 
     /**
-     * Friend operator that prints this Vector to std::ostream.
+     * Friend operator that prints Vector to std::ostream.
      *
      * @param os output stream.
      * @param x Vector to print.
