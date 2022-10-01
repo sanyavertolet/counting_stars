@@ -18,6 +18,8 @@
 #include "IllegalSignException.h"
 #include "IllegalStateException.h"
 
+#include "NullPointerException.h"
+
 #include "OutOfIntegerDivisionException.h"
 #include "OutOfRangeException.h"
 #include "OverflowException.h"

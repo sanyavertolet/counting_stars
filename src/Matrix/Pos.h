@@ -187,5 +187,8 @@ private:
     StringInt j;
 };
 
+std::string to_string(const Pos& pos) {
+    return std::string(pos);
+}
 
 #endif //COUNTING_STARS_POS_H

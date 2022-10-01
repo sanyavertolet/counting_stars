@@ -101,7 +101,7 @@ public:
     /**
      * Move operator.
      *
-     * @param rhs instance to copy.
+     * @param rhs instance to move.
      * @return this Vector filled with rhs fields.
      */
     Vector& operator=(Vector&& rhs) noexcept {
@@ -113,6 +113,18 @@ public:
         rhs.precision = TValue();
         data = std::move(rhs.data);
         rhs.data = {};
+        return *this;
+    }
+
+    /**
+     * Move data operator.
+     *
+     * @param rhs instance to copy.
+     * @return this Vector with data filled with rhs.
+     */
+    Vector& operator=(std::map<StringInt, TValue>&& data_to_move) noexcept {
+        data = std::move(data_to_move);
+        data_to_move = {};
         return *this;
     }
 

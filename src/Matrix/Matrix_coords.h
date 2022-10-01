@@ -22,11 +22,24 @@ public:
     Matrix_coords(): tlhs({-1, -1}), brhs({-1, -1}) { }
 
     /**
+     * Constructor from one Pos.
+     * @param pos single Pos.
+     */
+    explicit Matrix_coords(const Pos& pos): tlhs(pos), brhs(pos) { }
+
+    /**
      * Constructor from two Pos.
      * @param tl top-left Pos.
      * @param br bottom-right Pos.
      */
-    Matrix_coords(Pos tl, Pos br): tlhs(std::move(tl)), brhs(std::move(br)) { }
+    explicit Matrix_coords(Pos tl, Pos br): tlhs(std::move(tl)), brhs(std::move(br)) { }
+
+    /**
+     * Constructor from two StringInt.
+     * @param i row index.
+     * @param j column index.
+     */
+    explicit Matrix_coords(const StringInt& i, const StringInt& j): tlhs({i, j}), brhs({i, j}) { }
 
     /**
      * Constructor from four StringInt.
@@ -55,7 +68,7 @@ public:
      * @return brhs.
      */
     [[nodiscard]] Pos get_brhs() const {
-        return tlhs;
+        return brhs;
     }
 
     /**
@@ -65,7 +78,15 @@ public:
      * @return true if dot is in Matrix_coords, false otherwise.
      */
     [[nodiscard]] bool has(const Pos& dot) const {
-        return tlhs.get_i() <= dot.get_i() < brhs.get_i() && tlhs.get_j() <= dot.get_j() < brhs.get_j();
+        bool is_top_ok = tlhs.get_i() <= dot.get_i();
+        bool is_left_ok = tlhs.get_j() <= dot.get_j();
+        bool is_bottom_ok = dot.get_i() <= brhs.get_i() || brhs.get_i() == -1;
+        bool is_right_ok = dot.get_j() <= brhs.get_j() || brhs.get_j() == -1;
+        return is_top_ok && is_bottom_ok && is_left_ok && is_right_ok;
+    }
+
+    explicit operator std::string() const {
+        return "[" + to_string(tlhs) + " - " + to_string(brhs) + "]";
     }
 private:
     /**
@@ -79,5 +100,8 @@ private:
     Pos brhs;
 };
 
+std::string to_string(const Matrix_coords& coords) {
+    return std::string(coords);
+}
 
 #endif //COUNTING_STARS_MATRIX_COORDS_H

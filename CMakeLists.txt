@@ -15,7 +15,7 @@ FetchContent_MakeAvailable(googletest)
 
 set(exceptions src/exceptions/exceptions.h src/exceptions/IllegalSignException.h src/exceptions/IllegalDigitException.h src/exceptions/DivisionByZeroException.h src/exceptions/ParseException.h src/exceptions/CastException.h src/exceptions/OutOfRangeException.h src/exceptions/OutOfIntegerDivisionException.h src/exceptions/OverflowException.h src/exceptions/ParseException.h src/exceptions/FileNotFoundException.h src/exceptions/FileNotFoundException.cpp)
 
-add_executable(counting_stars ${exceptions} src/StringInt/StringInt.cpp src/StringInt/StringInt.h src/Rational_number/Rational_number.cpp src/Rational_number/Rational_number.h src/Complex_number/Complex_number.h src/Vector/Vector.cpp src/Vector/Vector.bool.cpp src/Vector/Vector.h src/Matrix/Pos.h src/Matrix/Matrix_coords.h src/Matrix/Matrix_proxy.h)
+add_executable(counting_stars ${exceptions} src/StringInt/StringInt.cpp src/StringInt/StringInt.h src/Rational_number/Rational_number.cpp src/Rational_number/Rational_number.h src/Complex_number/Complex_number.h src/Vector/Vector.cpp src/Vector/Vector.bool.cpp src/Vector/Vector.h src/Matrix/Pos.h src/Matrix/Matrix_coords.h)
 
 add_executable(Rational_number_constructor_test src/StringInt/StringInt.cpp src/StringInt/StringInt.h src/Rational_number/Rational_number.cpp src/Rational_number/Rational_number.h src/Rational_number/tests/Rational_number_constructor_test.cpp)
 target_link_libraries(Rational_number_constructor_test gtest_main)
@@ -47,6 +47,27 @@ add_executable(Complex_number_operators_test src/Complex_number/Complex_number.h
 target_link_libraries(Complex_number_operators_test gtest_main)
 add_test(NAME Complex_number_operators_test COMMAND Complex_number_operators_test)
 
+
 add_executable(Vector_test src/Vector/Vector.h src/Vector/Vector.cpp src/Vector/Vector.bool.cpp src/Complex_number/Complex_number.h src/Rational_number/Rational_number.cpp src/Rational_number/Rational_number.h src/StringInt/StringInt.cpp src/StringInt/StringInt.h src/Vector/tests/Vector_test.cpp ${exceptions})
 target_link_libraries(Vector_test gtest_main)
 add_test(NAME Vector_test COMMAND Vector_test)
+
+
+add_executable(Pos_test src/Matrix/Pos.h src/Matrix/tests/Pos_test.cpp src/StringInt/StringInt.h src/StringInt/StringInt.cpp ${exceptions})
+target_link_libraries(Pos_test gtest_main)
+add_test(NAME Pos_test COMMAND Pos_test)
+
+
+add_executable(Matrix_coords_test src/Matrix/Pos.h src/Matrix/Matrix_coords.h src/StringInt/StringInt.h src/StringInt/StringInt.cpp ${exceptions} src/Matrix/tests/Matrix_coords_test.cpp)
+target_link_libraries(Matrix_coords_test gtest_main)
+add_test(NAME Matrix_coords_test COMMAND Matrix_coords_test)
+
+
+add_executable(Matrix_column_coord_test src/Matrix/Pos.h src/Matrix/Matrix_column_coord.h src/StringInt/StringInt.h src/StringInt/StringInt.cpp ${exceptions} src/Matrix/tests/Matrix_column_coord_test.cpp)
+target_link_libraries(Matrix_column_coord_test gtest_main)
+add_test(NAME Matrix_column_coord_test COMMAND Matrix_column_coord_test)
+
+
+add_executable(Matrix_row_coord_test src/Matrix/Pos.h src/Matrix/Matrix_row_coord.h src/StringInt/StringInt.h src/StringInt/StringInt.cpp ${exceptions} src/Matrix/tests/Matrix_row_coord_test.cpp)
+target_link_libraries(Matrix_row_coord_test gtest_main)
+add_test(NAME Matrix_row_coord_test COMMAND Matrix_row_coord_test)

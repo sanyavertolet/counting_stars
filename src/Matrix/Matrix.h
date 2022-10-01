@@ -20,8 +20,6 @@
 #include "Matrix_column_coord.h"
 #include "Matrix_row_coord.h"
 
-#include "Matrix_proxy.h"
-
 #include "Pos.h"
 
 template<typename TMatrixValue>
@@ -78,6 +76,16 @@ public:
     }
 
     /**
+     * Matrix destructor.
+     * It is necessary to mark matrix as deleted in all proxies that point to this matrix while deleting the matrix.
+     */
+    ~Matrix() {
+        for (auto proxy: proxies) {
+            proxy->matrix = nullptr;
+        }
+    }
+
+    /**
      * Copy operator.
      *
      * @param rhs instance to copy.
@@ -109,6 +117,13 @@ public:
         rhs.data = {};
     }
 
+    /**
+     * Change matrix dimension.
+     *
+     * @param new_dim
+     * @param swallow_exception
+     * @throws OutOfRangeException if new matrix dimension leads to possible data loss.
+     */
     void set_dim(const Pos& new_dim, bool swallow_exception = false) {
         if (!swallow_exception && new_dim.get_i() < dim.get_i() || new_dim.get_j() < dim.get_j()) {
             throw OutOfRangeException("New dim is smaller by at least one coordinate.\n\tOld: " + std::string(dim) + "\n\tNew: " + std::string(new_dim));
@@ -129,6 +144,10 @@ public:
 
     TValue get_precision() const {
         return precision;
+    }
+
+    TValue get_mass_transform() const {
+        return mass_transform;
     }
 
     [[nodiscard]] StringInt get_size() const {
@@ -251,13 +270,13 @@ public:
 
     /**
      * Slice read operator.
+     *   todo: implement
      *
      * @param coords Matrix_coords.
      * @return slice of this Matrix on positions coords.
+     * /
+     * const Matrix& operator[](const Matrix_coords& coords) const { }
      */
-    const Matrix& operator[](const Matrix_coords& coords) const {
-        //todo: implement
-    }
 
     /**
      * Slice write operator.
@@ -522,7 +541,55 @@ public:
         return ss.str();
     }
 
+    /**
+     * Get all the recorded values from row by its index.
+     *
+     * @param column_index index of a requested row.
+     * @return r-value reference to subset of data map corresponding to requested row.
+     */
+    std::map<StringInt, const TValue&>&& get_row_values(const StringInt& row_index) const {
+        std::map<StringInt, const TValue&> values;
+        for (auto &[key, value] : data) {
+            if (key.get_i() == row_index) {
+                values.insert(key.get_j(), value);
+            }
+        }
+        return values;
+    }
 
+    /**
+     * Get all the recorded values from column by its index.
+     *
+     * @param column_index index of a requested column.
+     * @return r-value reference to subset of data map corresponding to requested column.
+     */
+    std::map<StringInt, const TValue&>&& get_column_values(const StringInt& column_index) const {
+        std::map<StringInt, const TValue&> values;
+        for (auto &[key, value] : data) {
+            if (key.get_j() == column_index) {
+                values.insert(key.get_i(), value);
+            }
+        }
+        return values;
+    }
+
+    /**
+     * Link proxy object with this Matrix.
+     *
+     * @param proxy Matrix_proxy pointer to add to proxies set.
+     */
+    void add_proxy(Matrix_proxy<TValue>* proxy) {
+        proxies.insert(proxy);
+    }
+
+    /**
+     * Unlink proxy object with this Matrix using erase-remove idiom.
+     *
+     * @param proxy Matrix_proxy pointer to remove from proxies set.
+     */
+    void remove_proxy(Matrix_proxy<TValue>* proxy) {
+        proxies.erase(std::remove(proxies.begin(), proxies.end(), proxy), proxies.end());
+    }
 private:
     /**
      * Pos of maximum row and column number.
@@ -547,6 +614,11 @@ private:
      * value - TValue that should be stored.
      */
     std::unordered_map<Pos, TValue> data;
+
+    /**
+     * All the proxies that are related to this matrix.
+     */
+   std::set<Matrix_proxy<TValue>*> proxies;
 
     /**
      * Internal method to perform lazy initialization of values by applying mass transform to them.
@@ -584,15 +656,16 @@ private:
 template<typename TMatrixValue>
 class Matrix_proxy {
 public:
-//    Matrix_proxy(): matrix(nullptr), slice_size() {}
     /**
      * Constructor for row slice.
      *
      * @param m matrix to point to.
      * @param coords Matrix_row_coord.
      */
-    Matrix_proxy(Matrix<TMatrixValue>* m, Matrix_row_coord coords):
-    matrix(m), from({coords.get_row_index(), 0}), to({coords.get_row_index(), m->get_dim().get_j()}) {}
+    Matrix_proxy(Matrix<TMatrixValue>* m, const Matrix_row_coord& coords):
+    matrix(m), is_row(true), index(coords.get_row_index()) {
+        matrix->add_proxy(this);
+    }
 
     /**
      * Constructor for column slice.
@@ -600,8 +673,10 @@ public:
      * @param m matrix to point to.
      * @param coords Matrix_column_coord.
      */
-    Matrix_proxy(Matrix<TMatrixValue>* m, Matrix_column_coord coords):
-    matrix(m), from({0, coords.get_column_index()}), to({m->get_dim().get_j(), coords.get_column_index()}) {}
+    Matrix_proxy(Matrix<TMatrixValue>* m, const Matrix_column_coord& coords):
+    matrix(m), is_row(false), index(coords.get_column_index()) {
+        matrix->add_proxy(this);
+    }
 
     /**
      * dim getter.
@@ -609,7 +684,14 @@ public:
      * @return dim of a given slice.
      */
     StringInt get_dim() {
-        return to - from;
+        if (matrix == nullptr) {
+            throw NullPointerException();
+        }
+        if (is_row) {
+            return matrix->get_dim().get_j();
+        } else {
+            return matrix->get_dim().get_i();
+        }
     }
 
     /**
@@ -618,18 +700,15 @@ public:
      * @param index index of required element.
      * @return element of this Matrix_proxy on position index.
      */
-    TMatrixValue& operator()(const StringInt& index) {
-        matrix->delete_zero_elements();
-        if (index >= get_dim()) {
-            throw OutOfRangeException("OutOfRangeException");
+    const TMatrixValue& operator()(const StringInt& idx) const {
+        if (matrix == nullptr) {
+            throw NullPointerException();
         }
-        if (matrix->data.find(index) == matrix->data.end()) {
-            matrix->data[index] = matrix->mass_transform;
+        if (is_row) {
+            return matrix->operator()(index, idx);
+        } else {
+            return matrix->operator()(idx, index);
         }
-        if (matrix->data[index] <= matrix->precision) {
-            matrix->data[index] = 0;
-        }
-        return matrix->data[index];
     }
 
     /**
@@ -638,32 +717,42 @@ public:
      * @return slice converted to Vector.
      */
     operator Vector<TMatrixValue>() {
-        Vector<TMatrixValue> result(to - from, matrix->data);
-        for (auto &[key, value] : matrix->data) {
-            if (from.get_i() == 0 && from.get_j() == key.get_j()) {
-                result(from.get_j()) = value;
-            } else if (from.get_j() == 0 && from.get_i() == key.get_i()){
-                result(from.get_i()) = value;
-            }
+        if (matrix == nullptr) {
+            throw NullPointerException();
+        }
+        Vector<TMatrixValue> result(get_dim(), matrix->get_mass_transform(), matrix->get_precision());
+        if (is_row) {
+            result = matrix->get_row_values();
+        } else {
+            result = matrix->get_column_values();
         }
         return result;
+    }
+
+    /**
+     * Proxy destructor.
+     * It is needed to remove the proxy from Matrix#proxies in order to escape segfault.
+     */
+    ~Matrix_proxy() {
+        if (matrix != nullptr) {
+            matrix->remove_proxy(this);
+        }
     }
 private:
     /**
      * Matrix pointer.
-     * todo: think of using smart_pointers
      */
     Matrix<TMatrixValue>* matrix;
 
     /**
-     * Beginning Pos of a slice.
+     * Flag that defines if this proxy object refers to row or not.
      */
-    Pos from;
+    bool is_row;
 
     /**
-     * Ending Pos of a slice.
+     * Index of a row/column that this proxy is referring to.
      */
-    Pos to;
+    StringInt index;
 };
 
 #endif //COUNTING_STARS_MATRIX_H

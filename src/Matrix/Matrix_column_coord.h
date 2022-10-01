@@ -10,6 +10,7 @@
 #include <utility>
 
 #include "../StringInt/StringInt.h"
+#include "Pos.h"
 
 /**
  * Class that allows to access Matrix with column slice.
@@ -26,7 +27,8 @@ public:
      *
      * @param index index of a column.
      */
-    Matrix_column_coord(StringInt index): column_index(std::move(index)) { }
+    explicit Matrix_column_coord(StringInt index):
+    column_index(index >= 0 ? std::move(index) : throw IllegalStateException("index must not be negative")) { }
 
     /**
      * column_index getter.
@@ -35,6 +37,16 @@ public:
      */
     [[nodiscard]] StringInt get_column_index() const {
         return column_index;
+    }
+
+    /**
+     * Check if dot is inside Matrix_column_coords.
+     *
+     * @param dot Pos with coordinates.
+     * @return true if dot is in Matrix_column_coords, false otherwise.
+     */
+    [[nodiscard]] bool has(const Pos& dot) const {
+        return dot.get_j() == column_index;
     }
 private:
     /**

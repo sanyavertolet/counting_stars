@@ -10,6 +10,7 @@
 #include <utility>
 
 #include "../StringInt/StringInt.h"
+#include "Pos.h"
 
 /**
  * Class that allows to access Matrix with row slice.
@@ -26,7 +27,8 @@ public:
      *
      * @param index index of a row.
      */
-    Matrix_row_coord(StringInt index): row_index(std::move(index)) { }
+    Matrix_row_coord(StringInt index):
+    row_index(index >= 0 ? std::move(index) : throw IllegalStateException("Row index must not be negative.")) { }
 
     /**
      * row_index getter.
@@ -35,6 +37,16 @@ public:
      */
     [[nodiscard]] StringInt get_row_index() const {
         return row_index;
+    }
+
+    /**
+     * Check if dot is inside Matrix_row_coords.
+     *
+     * @param dot Pos with coordinates.
+     * @return true if dot is in Matrix_row_coords, false otherwise.
+     */
+    [[nodiscard]] bool has(const Pos& dot) const {
+        return dot.get_i() == row_index;
     }
 private:
     /**
