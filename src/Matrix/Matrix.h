@@ -118,6 +118,17 @@ public:
     }
 
     /**
+     * Move operator.
+     *
+     * @param rhs instance to move.
+     * @return this Matrix filled with rhs fields.
+     */
+    Matrix& operator=(std::unordered_map<Pos, TValue>&& rhs) noexcept {
+        data = std::move(rhs);
+        rhs = {};
+    }
+
+    /**
      * Change matrix dimension.
      *
      * @param new_dim
@@ -802,13 +813,7 @@ public:
             throw NullPointerException();
         }
         Matrix<TMatrixValue> result(get_dim(), matrix->get_mass_transform(), matrix->get_precision());
-        if (type == Matrix_proxy_type::RECTANGLE) {
-            result =
-        } else if (type == Matrix_proxy_type::ROW) {
-            result = matrix->get_row_values();
-        } else {
-            result = matrix->get_column_values();
-        }
+        result = matrix->get_sub_matrix_values(Matrix_coords(from, to));
         return result;
     }
 
