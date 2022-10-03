@@ -7,23 +7,23 @@
 #ifndef COUNTING_STARS_EXCEPTIONS_H
 #define COUNTING_STARS_EXCEPTIONS_H
 
-#include "CastException.h"
+#include "CastException/CastException.h"
 
-#include "DivisionByZeroException.h"
+#include "DivisionByZeroException/DivisionByZeroException.h"
 
-#include "FileNotFoundException.h"
+#include "FileNotFoundException/FileNotFoundException.h"
 
-#include "IllegalDigitException.h"
-#include "IllegalDimException.h"
-#include "IllegalSignException.h"
-#include "IllegalStateException.h"
+#include "IllegalDigitException/IllegalDigitException.h"
+#include "IllegalDimException/IllegalDimException.h"
+#include "IllegalSignException/IllegalSignException.h"
+#include "IllegalStateException/IllegalStateException.h"
 
-#include "NullPointerException.h"
+#include "NullPointerException/NullPointerException.h"
 
-#include "OutOfIntegerDivisionException.h"
-#include "OutOfRangeException.h"
-#include "OverflowException.h"
+#include "OutOfIntegerDivision/OutOfIntegerDivisionException.h"
+#include "OutOfRangeException/OutOfRangeException.h"
+#include "OverflowException/OverflowException.h"
 
-#include "ParseException.h"
+#include "ParseException/ParseException.h"
 
 #endif //COUNTING_STARS_EXCEPTIONS_H

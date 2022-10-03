@@ -4,7 +4,7 @@
  * @author sanyavertolet
  */
 
-#include "../Pos.h"
+#include "../../src/Pos/Pos.h"
 #include "gtest/gtest.h"
 
 class Pos_test : public testing::Test { };

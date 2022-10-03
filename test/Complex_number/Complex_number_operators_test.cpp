@@ -4,9 +4,9 @@
  * @author sanyavertolet
  */
 
-#include "../Complex_number.h"
-#include "../../StringInt/StringInt.h"
-#include "../../Rational_number/Rational_number.h"
+#include "../../src/Complex_number/Complex_number.h"
+#include "../../src/StringInt/StringInt.h"
+#include "../../src/Rational_number/Rational_number.h"
 #include "gtest/gtest.h"
 
 class Complex_number_operators_test : public testing::Test { };

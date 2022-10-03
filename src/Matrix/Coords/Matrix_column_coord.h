@@ -9,8 +9,8 @@
 
 #include <utility>
 
-#include "../StringInt/StringInt.h"
-#include "Pos.h"
+#include "../../StringInt/StringInt.h"
+#include "../../Pos/Pos.h"
 
 /**
  * Class that allows to access Matrix with column slice.

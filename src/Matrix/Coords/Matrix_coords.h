@@ -9,7 +9,7 @@
 
 #include <utility>
 
-#include "Pos.h"
+#include "../../Pos/Pos.h"
 
 /**
  * Class that allows to access Matrix with rectangle slice.

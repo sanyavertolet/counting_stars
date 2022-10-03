@@ -16,11 +16,11 @@
 #include "../StringInt/StringInt.h"
 #include "../Vector/Vector.h"
 
-#include "Matrix_coords.h"
-#include "Matrix_column_coord.h"
-#include "Matrix_row_coord.h"
+#include "Coords/Matrix_coords.h"
+#include "Coords/Matrix_column_coord.h"
+#include "Coords/Matrix_row_coord.h"
 
-#include "Pos.h"
+#include "../Pos/Pos.h"
 
 template<typename TMatrixValue>
 class Matrix_proxy;
@@ -554,7 +554,7 @@ public:
                 values.insert(key.get_j(), value);
             }
         }
-        return values;
+        return std::move(values);
     }
 
     /**
@@ -570,7 +570,23 @@ public:
                 values.insert(key.get_i(), value);
             }
         }
-        return values;
+        return std::move(values);
+    }
+
+    /**
+     * Get all the recorded values from sub-matrix.
+     *
+     * @param sub_matrix_coords coordinates of a sub-matrix.
+     * @return r-value reference to subset of data map corresponding to requested coordinates.
+     */
+    std::map<StringInt, const TValue&>&& get_sub_matrix_values(const Matrix_coords& sub_matrix_coords) const {
+        std::map<Pos, const TValue&> values;
+        for (auto &[key, value] : data) {
+            if (sub_matrix_coords.has(key)) {
+                values.insert(key, value);
+            }
+        }
+        return std::move(values);
     }
 
     /**
@@ -653,6 +669,12 @@ private:
     }
 };
 
+enum class Matrix_proxy_type {
+    ROW,
+    COLUMN,
+    RECTANGLE,
+};
+
 template<typename TMatrixValue>
 class Matrix_proxy {
 public:
@@ -663,7 +685,7 @@ public:
      * @param coords Matrix_row_coord.
      */
     Matrix_proxy(Matrix<TMatrixValue>* m, const Matrix_row_coord& coords):
-    matrix(m), is_row(true), index(coords.get_row_index()) {
+    type(Matrix_proxy_type::ROW), matrix(m), from(coords.get_row_index(), 0), to(coords.get_row_index(), m->get_dim().get_j()) {
         matrix->add_proxy(this);
     }
 
@@ -674,8 +696,31 @@ public:
      * @param coords Matrix_column_coord.
      */
     Matrix_proxy(Matrix<TMatrixValue>* m, const Matrix_column_coord& coords):
-    matrix(m), is_row(false), index(coords.get_column_index()) {
+    type(Matrix_proxy_type::COLUMN), matrix(m), from(0, coords.get_column_index()), to(m->get_dim().get_i(), coords.get_column_index()) {
         matrix->add_proxy(this);
+    }
+
+    /**
+     * Constructor for rectangle slice.
+     *
+     * @param m matrix to point to.
+     * @param coords Matrix_coords.
+     */
+    Matrix_proxy(Matrix<TMatrixValue>* m, const Matrix_coords& coords):
+    type(Matrix_proxy_type::RECTANGLE), matrix(m), from(coords.get_tlhs()), to(coords.get_brhs()) {
+        matrix->add_proxy(this);
+        if (from.get_i() == -1) {
+            from.set_i(0);
+        }
+        if (from.get_j() == -1) {
+            from.set_j(0);
+        }
+        if (to.get_i() == -1) {
+            to.set_i(m->get_dim().get_i() - 1);
+        }
+        if (to.get_j() == -1) {
+            to.set_j(m->get_dim().get_j() - 1);
+        }
     }
 
     /**
@@ -683,19 +728,15 @@ public:
      *
      * @return dim of a given slice.
      */
-    StringInt get_dim() {
+    Pos get_dim() {
         if (matrix == nullptr) {
             throw NullPointerException();
         }
-        if (is_row) {
-            return matrix->get_dim().get_j();
-        } else {
-            return matrix->get_dim().get_i();
-        }
+        return {abs(to.get_i() - from.get_i() + 1), abs(to.get_j() - from.get_j() + 1)};
     }
 
     /**
-     * Access operator.
+     * Access operator for a row/column slice.
      *
      * @param index index of required element.
      * @return element of this Matrix_proxy on position index.
@@ -704,15 +745,35 @@ public:
         if (matrix == nullptr) {
             throw NullPointerException();
         }
-        if (is_row) {
-            return matrix->operator()(index, idx);
-        } else {
-            return matrix->operator()(idx, index);
+        switch (type) {
+            case Matrix_proxy_type::ROW:
+                return matrix->operator()(index, idx);
+            case Matrix_proxy_type::COLUMN:
+                return matrix->operator()(idx, index);
+            case Matrix_proxy_type::RECTANGLE:
+                throw IllegalStateException("Cannot get element of a rectangle slice by single coordinate.");
         }
     }
 
     /**
-     * Vector cast operator.
+     * Access operator for rectangle slice.
+     *
+     * @param index index of required element.
+     * @return element of this Matrix_proxy on position index.
+     */
+    const TMatrixValue& operator()(const Pos& pos) const {
+        if (matrix == nullptr) {
+            throw NullPointerException();
+        }
+        if (type == Matrix_proxy_type::RECTANGLE) {
+            return matrix->operator()(pos);
+        } else {
+            throw IllegalStateException("Cannot get element of a row/column slice by two coordinates.");
+        }
+    }
+
+    /**
+     * Vector cast operator from row/column slice.
      *
      * @return slice converted to Vector.
      */
@@ -721,7 +782,29 @@ public:
             throw NullPointerException();
         }
         Vector<TMatrixValue> result(get_dim(), matrix->get_mass_transform(), matrix->get_precision());
-        if (is_row) {
+        if (type == Matrix_proxy_type::RECTANGLE) {
+            throw IllegalStateException("Cannot cast rectangle slice to Vector.");
+        } else if (type == Matrix_proxy_type::ROW) {
+            result = matrix->get_row_values();
+        } else {
+            result = matrix->get_column_values();
+        }
+        return result;
+    }
+
+    /**
+     * Matrix cast operator.
+     *
+     * @return slice converted to Matrix.
+     */
+    operator Matrix<TMatrixValue>() {
+        if (matrix == nullptr) {
+            throw NullPointerException();
+        }
+        Matrix<TMatrixValue> result(get_dim(), matrix->get_mass_transform(), matrix->get_precision());
+        if (type == Matrix_proxy_type::RECTANGLE) {
+            result =
+        } else if (type == Matrix_proxy_type::ROW) {
             result = matrix->get_row_values();
         } else {
             result = matrix->get_column_values();
@@ -738,6 +821,11 @@ public:
             matrix->remove_proxy(this);
         }
     }
+
+    /**
+     * Type of a slice.
+     */
+    Matrix_proxy_type type;
 private:
     /**
      * Matrix pointer.
@@ -745,14 +833,14 @@ private:
     Matrix<TMatrixValue>* matrix;
 
     /**
-     * Flag that defines if this proxy object refers to row or not.
+     * Top-left Pos of a slice.
      */
-    bool is_row;
+    Pos from;
 
     /**
-     * Index of a row/column that this proxy is referring to.
+     * Bottom-left Pos of a slice.
      */
-    StringInt index;
+    Pos to;
 };
 
 #endif //COUNTING_STARS_MATRIX_H

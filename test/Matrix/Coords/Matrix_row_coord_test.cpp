@@ -4,7 +4,7 @@
  * @author sanyavertolet
  */
 
-#include "../Matrix_row_coord.h"
+#include "../../../src/Matrix/Coords/Matrix_row_coord.h"
 #include "gtest/gtest.h"
 
 class Matrix_row_coord_test : public testing::Test { };

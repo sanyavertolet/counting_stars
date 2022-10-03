@@ -4,7 +4,7 @@
  * @author sanyavertolet
  */
 
-#include "../Matrix_coords.h"
+#include "../../../src/Matrix/Coords/Matrix_coords.h"
 #include "gtest/gtest.h"
 
 #include <string>

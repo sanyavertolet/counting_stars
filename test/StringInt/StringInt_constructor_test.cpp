@@ -5,7 +5,7 @@
  */
 
 #include "gtest/gtest.h"
-#include "../StringInt.h"
+#include "../../src/StringInt/StringInt.h"
 
 class StringInt_constructor_test : public testing::Test { };
 

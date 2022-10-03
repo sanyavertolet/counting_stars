@@ -4,7 +4,7 @@
  * @author sanyavertolet
  */
 
-#include "../Complex_number.h"
+#include "../../src/Complex_number/Complex_number.h"
 #include "gtest/gtest.h"
 
 class Complex_number_constructor_test : public testing::Test { };

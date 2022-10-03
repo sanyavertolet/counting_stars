@@ -4,7 +4,7 @@
  * @author sanyavertolet
  */
 
-#include "../Rational_number.h"
+#include "../../src/Rational_number/Rational_number.h"
 #include "gtest/gtest.h"
 
 class Rational_number_constructor_test : public testing::Test { };

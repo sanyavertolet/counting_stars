@@ -4,10 +4,10 @@
  * @author sanyavertolet
  */
 
-#include "../../StringInt/StringInt.h"
-#include "../../Rational_number/Rational_number.h"
-#include "../../Complex_number/Complex_number.h"
-#include "../Vector.h"
+#include "../../src/StringInt/StringInt.h"
+#include "../../src/Rational_number/Rational_number.h"
+#include "../../src/Complex_number/Complex_number.h"
+#include "../../src/Vector/Vector.h"
 #include "gtest/gtest.h"
 
 class Vector_test : public testing::Test { };
