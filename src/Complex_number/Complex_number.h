@@ -1,5 +1,5 @@
 /**
- * Header containing Complex_number class declaration.
+ * Header containing Complex_number class declaration and implementation (partially).
  *
  * @author sanyavertolet
  */
@@ -104,7 +104,10 @@ public:
      * @param x Complex_number to print.
      * @return os.
      */
-    friend std::ostream& operator<<(std::ostream& os, Complex_number const& x);
+    friend std::ostream& operator<<(std::ostream& os, Complex_number const& x) {
+        os << std::string(x);
+        return os;
+    }
 
     /**
      * Friend operator that reads Complex_number from std::istream.
@@ -113,13 +116,37 @@ public:
      * @param x Complex_number to read to.
      * @return is.
      */
-    friend std::istream& operator>>(std::istream& is, Complex_number& x);
+    friend std::istream& operator>>(std::istream& is, Complex_number& x) {
+        char ch;
+        std::string input;
+        is.get(ch);
+        if (ch != '(') {
+            throw ParseException("Error while parsing Complex_number: unknown symbol instead of '(': " + std::string(1, ch));
+        }
+        TReal new_re;
+        is >> new_re;
+        x.template set_re(new_re);
+
+        is.get(ch);
+        if (ch != ',') {
+            throw ParseException("Error while parsing Complex_number: unknown symbol instead of ',': " + std::string(1, ch));
+        }
+
+        TImaginary new_im;
+        is >> new_im;
+        x.template set_im(new_im);
+
+        is.get(ch);
+        if (ch != ')') {
+            throw ParseException("Error while parsing Complex_number: unknown symbol instead of ')': " + std::string(1, ch));
+        }
+
+        return is;
+    }
 
     /**
      * Eq operator.
      *
-     * @tparam TRealLeft type of real part of left operand.
-     * @tparam TImaginaryLeft type of imaginary part of left operand.
      * @tparam TRealRight type of real part of right operand.
      * @tparam TImaginaryRight type of imaginary part of right operand.
      * @param lhs left operand.
@@ -129,13 +156,9 @@ public:
     template <typename TRealLeft, typename TImaginaryLeft, typename TRealRight, typename TImaginaryRight>
     friend bool operator==(Complex_number<TRealLeft, TImaginaryLeft> lhs, const Complex_number<TRealRight, TImaginaryRight> &rhs);
 
-#pragma clang diagnostic push
-#pragma ide diagnostic ignored "Simplify"
     /**
      * Neq operator.
      *
-     * @tparam TRealLeft type of real part of left operand.
-     * @tparam TImaginaryLeft type of imaginary part of left operand.
      * @tparam TRealRight type of real part of right operand.
      * @tparam TImaginaryRight type of imaginary part of right operand.
      * @param lhs left operand.
@@ -144,13 +167,10 @@ public:
      */
     template <typename TRealLeft, typename TImaginaryLeft, typename TRealRight, typename TImaginaryRight>
     friend bool operator!=(Complex_number<TRealLeft, TImaginaryLeft> lhs, const Complex_number<TRealRight, TImaginaryRight> &rhs);
-#pragma clang diagnostic pop
 
     /**
      * Less operator.
      *
-     * @tparam TRealLeft type of real part of left operand.
-     * @tparam TImaginaryLeft type of imaginary part of left operand.
      * @tparam TRealRight type of real part of right operand.
      * @tparam TImaginaryRight type of imaginary part of right operand.
      * @param lhs left operand.
@@ -163,8 +183,6 @@ public:
     /**
      * Greater operator.
      *
-     * @tparam TRealLeft type of real part of left operand.
-     * @tparam TImaginaryLeft type of imaginary part of left operand.
      * @tparam TRealRight type of real part of right operand.
      * @tparam TImaginaryRight type of imaginary part of right operand.
      * @param lhs left operand.
@@ -174,13 +192,9 @@ public:
     template <typename TRealLeft, typename TImaginaryLeft, typename TRealRight, typename TImaginaryRight>
     friend bool operator>(Complex_number<TRealLeft, TImaginaryLeft> lhs, const Complex_number<TRealRight, TImaginaryRight> &rhs);
 
-#pragma clang diagnostic push
-#pragma ide diagnostic ignored "Simplify"
     /**
      * Leq operator.
      *
-     * @tparam TRealLeft type of real part of left operand.
-     * @tparam TImaginaryLeft type of imaginary part of left operand.
      * @tparam TRealRight type of real part of right operand.
      * @tparam TImaginaryRight type of imaginary part of right operand.
      * @param lhs left operand.
@@ -189,15 +203,10 @@ public:
      */
     template <typename TRealLeft, typename TImaginaryLeft, typename TRealRight, typename TImaginaryRight>
     friend bool operator<=(Complex_number<TRealLeft, TImaginaryLeft> lhs, const Complex_number<TRealRight, TImaginaryRight> &rhs);
-#pragma clang diagnostic pop
 
-#pragma clang diagnostic push
-#pragma ide diagnostic ignored "Simplify"
     /**
      * Geq operator.
      *
-     * @tparam TRealLeft type of real part of left operand.
-     * @tparam TImaginaryLeft type of imaginary part of left operand.
      * @tparam TRealRight type of real part of right operand.
      * @tparam TImaginaryRight type of imaginary part of right operand.
      * @param lhs left operand.
@@ -206,7 +215,6 @@ public:
      */
     template <typename TRealLeft, typename TImaginaryLeft, typename TRealRight, typename TImaginaryRight>
     friend bool operator>=(Complex_number<TRealLeft, TImaginaryLeft> lhs, const Complex_number<TRealRight, TImaginaryRight> &rhs);
-#pragma clang diagnostic pop
 
     /**
      * Plus and assign operator.
@@ -381,41 +389,6 @@ auto operator/(Complex_number<TRealLeft, TImaginaryLeft> lhs,const Complex_numbe
     return Complex_number<decltype(new_re), decltype(new_im)>(new_re, new_im);
 }
 
-template<typename TReal, typename TImaginary>
-std::ostream& operator<< (std::ostream& os, Complex_number<TReal, TImaginary> const& x) {
-    os << std::string(x);
-    return os;
-}
-
-template<typename TReal, typename TImaginary>
-std::istream& operator>>(std::istream& is, Complex_number<TReal, TImaginary>& x) {
-    char ch;
-    std::string input;
-    is.get(ch);
-    if (ch != '(') {
-        throw ParseException("Error while parsing Complex_number: unknown symbol instead of '(': " + std::string(1, ch));
-    }
-    TReal new_re;
-    is >> new_re;
-    x.template set_re(new_re);
-
-    is.get(ch);
-    if (ch != ',') {
-        throw ParseException("Error while parsing Complex_number: unknown symbol instead of ',': " + std::string(1, ch));
-    }
-
-    TImaginary new_im;
-    is >> new_im;
-    x.template set_im(new_im);
-
-    is.get(ch);
-    if (ch != ')') {
-        throw ParseException("Error while parsing Complex_number: unknown symbol instead of ')': " + std::string(1, ch));
-    }
-
-    return is;
-}
-
 template<typename TRealLeft, typename TImaginaryLeft, typename TRealRight, typename TImaginaryRight>
 bool operator==(Complex_number<TRealLeft, TImaginaryLeft> lhs, const Complex_number<TRealRight, TImaginaryRight> &rhs) {
     auto left_casted_modulus = lhs.modulus();
@@ -449,4 +422,5 @@ template<typename TRealLeft, typename TImaginaryLeft, typename TRealRight, typen
 bool operator>=(Complex_number<TRealLeft, TImaginaryLeft> lhs, const Complex_number<TRealRight, TImaginaryRight> &rhs) {
     return !(lhs < rhs);
 }
+
 #endif //COUNTING_STARS_COMPLEX_NUMBER_H

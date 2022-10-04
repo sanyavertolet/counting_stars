@@ -71,3 +71,5 @@ add_test(NAME Matrix_column_coord_test COMMAND Matrix_column_coord_test)
 add_executable(Matrix_row_coord_test src/Pos/Pos.h src/Matrix/Coords/Matrix_row_coord.h src/StringInt/StringInt.h src/StringInt/StringInt.cpp ${exceptions} test/Matrix/Coords/Matrix_row_coord_test.cpp)
 target_link_libraries(Matrix_row_coord_test gtest_main)
 add_test(NAME Matrix_row_coord_test COMMAND Matrix_row_coord_test)
+
+add_executable(main main.cpp src/Pos/Pos.h src/Matrix/Coords/Matrix_row_coord.h src/Rational_number/Rational_number.h src/Rational_number/Rational_number.cpp src/StringInt/StringInt.h src/StringInt/StringInt.cpp ${exceptions})
