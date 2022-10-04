@@ -24,24 +24,20 @@ bool operator!=(const Vector<bool> &lhs, const Vector<bool> &rhs) {
     return !(lhs == rhs);
 }
 
-Vector<bool> operator+(const Vector<bool> &lhs, const Vector<bool> &rhs) {
-    Vector<bool> result;
-    result.data = lhs.data | rhs.data;
-    return result;
+Vector<bool> operator+(Vector<bool> lhs, const Vector<bool> &rhs) {
+    return (lhs += rhs);
 }
 
-Vector<bool> operator*(const Vector<bool> &lhs, const Vector<bool> &rhs) {
-    Vector<bool> result;
-    result.data = lhs.data & rhs.data;
-    return result;
+Vector<bool> operator*(Vector<bool> lhs, const Vector<bool> &rhs) {
+    return (lhs *= rhs);
 }
 
 std::string to_string(Vector<bool> vector) {
     std::stringstream ss;
     std::string type_name;
-    ss << "vector bit " << Vector<bool>::max_index << std::endl << std::endl;
-    for (int i = 0; i < Vector<bool>::max_index; ++i) {
-        unsigned long long value = (vector.data >> i) & 1;
+    ss << "vector bit " << vector.dim << std::endl << std::endl;
+    for (int i = 0; i < vector.dim; ++i) {
+        unsigned long long value = (vector.data[Vector<bool>::get_element_page(i)] >> (i % Vector<bool>::bits_per_uint)) & 1;
         if (value) {
             ss << i + 1 << " " << value << std::endl;
         }

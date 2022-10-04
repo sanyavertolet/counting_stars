@@ -12,6 +12,7 @@
 #include <fstream>
 #include <sstream>
 #include <utility>
+#include <vector>
 #include <set>
 
 #include "../exceptions/exceptions.h"
@@ -411,13 +412,13 @@ private:
     static constexpr double default_precision = 0.0000000001;
 
     template<typename TComplexReal = double, typename TComplexImaginary = double>
-    static std::string get_type_name(TValue type) {
+    static std::string get_type_name(TValue) {
         std::string type_name;
-        if (typeid(type) == typeid(Rational_number)) {
+        if (typeid(TValue) == typeid(Rational_number)) {
             type_name = "rational";
-        } else if (typeid(type) == typeid(bool)) {
+        } else if (typeid(TValue) == typeid(bool)) {
             type_name = "bit";
-        } else if (typeid(type) == typeid(Complex_number<TComplexReal, TComplexImaginary>)) {
+        } else if (typeid(TValue) == typeid(Complex_number<TComplexReal, TComplexImaginary>)) {
             type_name = "complex";
         } else {
             type_name = "<" + std::string(typeid(TValue).name()) + ">";
@@ -461,17 +462,22 @@ Vector<TValue> parse_from_ifstream(std::ifstream &is);
 template<>
 class Vector<bool> {
 public:
+    using index_type = unsigned long long;
     /**
      * Default constructor
      */
-    Vector(): data(0u) { }
+    Vector(): dim(0), data({}) { }
 
     /**
      * Constructor that allows to set default value to data.
      *
      * @param is_zeroes flag to set default value for each element of Vector.
      */
-    explicit Vector(bool is_zeroes): data(is_zeroes ? 0 : -1) { }
+    explicit Vector(index_type d): dim(d), data({}) {
+        for (auto i = 0llu; i < d; ++i) {
+            data.push_back(0u);
+        }
+    }
 
     /**
      * Constructor from file.
@@ -484,8 +490,19 @@ public:
 //            throw FileNotFoundException();
             throw std::runtime_error("FileNotFoundException: " + std::string(file_path));
         }
-        data = 0u;
+//        data = 0u;
         //todo: implement
+    }
+
+    /**
+     * @return amount of elements in data.
+     */
+    [[nodiscard]] index_type get_pages() const {
+        return std::ceil((long double)(dim) / double(bits_per_uint));
+    }
+
+    static index_type get_element_page(index_type index) {
+        return std::floor((long double)(index) / double(bits_per_uint));
     }
 
     /**
@@ -495,10 +512,12 @@ public:
      */
     [[nodiscard]] int get_size() const {
         int result = 0;
-        uint64_t tmp = data;
-        while (tmp) {
-            result += int(tmp & 1u);
-            tmp >>= 1;
+        std::vector<uint64_t> tmp = data;
+        for (auto i = 0; i < get_pages(); ++i) {
+            while (tmp[i]) {
+                result += int(tmp[i] & 1u);
+                tmp[i] >>= 1;
+            }
         }
         return result;
     }
@@ -544,7 +563,12 @@ public:
      */
     Vector<bool> operator~() {
         Vector<bool> result = *this;
-        result.data ^= -1;
+        for (int i = 0; i < get_pages(); ++i) {
+            result.data[i] ^= -1;
+        }
+        auto extra_cells = bits_per_uint - (dim % bits_per_uint);
+        result.data[get_pages() - 1] <<= extra_cells;
+        result.data[get_pages() - 1] >>= extra_cells;
         return result;
     }
 
@@ -555,11 +579,11 @@ public:
      * @return value of element on position [index].
      */
     bool operator()(int index) const {
-        if (index >= max_index) {
+        if (index >= dim) {
             throw OutOfRangeException("Index " + std::to_string(index) + " is out of range, ["
-                                      + std::to_string(max_index) + "] is maximal possible index.");
+                                      + std::to_string(dim) + "] is maximal possible index.");
         }
-        return (data & (1 << index)) >> index;
+        return (data[get_element_page(index)] & (1 << (index % bits_per_uint))) >> (index % bits_per_uint);
     }
 
     /**
@@ -570,11 +594,13 @@ public:
      * @return value of element on position [index].
      */
     bool operator()(int index, bool value) {
-        if (index >= max_index) {
+        if (index >= dim) {
             throw OutOfRangeException("Index " + std::to_string(index) + " is out of range ("
-                                      + std::to_string(max_index) + " is maximum possible index).");
+                                      + std::to_string(dim) + " is maximum possible index).");
         }
-        data ^= 1 << index;
+        if (data[get_element_page(index)] >> (index % bits_per_uint) != value) {
+            data[get_element_page(index)] ^= 1 << (index % bits_per_uint);
+        }
         return value;
     }
 
@@ -585,7 +611,12 @@ public:
      * @return this Vector OR [rhs].
      */
     Vector<bool>& operator+=(const Vector<bool> &rhs) {
-        data |= rhs.data;
+        if (dim != rhs.dim) {
+            throw IllegalDimException();
+        }
+        for (int i = 0; i < dim; ++i) {
+            data[i] |= rhs.data[i];
+        }
         return *this;
     }
 
@@ -596,7 +627,12 @@ public:
      * @return this Vector AND [rhs].
      */
     Vector<bool>& operator*=(const Vector<bool> &rhs) {
-        data &= rhs.data;
+        if (dim != rhs.dim) {
+            throw IllegalDimException();
+        }
+        for (int i = 0; i < dim; ++i) {
+            data[i] &= rhs.data[i];
+        }
         return *this;
     }
 
@@ -607,7 +643,7 @@ public:
      * @param rhs right operand.
      * @return [lhs] OR [rhs].
      */
-    friend Vector<bool> operator+(const Vector<bool> &lhs, const Vector<bool> &rhs);
+    friend Vector<bool> operator+(Vector<bool> lhs, const Vector<bool> &rhs);
 
     /**
      * Multiply operator - AND.
@@ -616,7 +652,7 @@ public:
      * @param rhs right operand.
      * @return [lhs] AND [rhs].
      */
-    friend Vector<bool> operator*(const Vector<bool> &lhs, const Vector<bool> &rhs);
+    friend Vector<bool> operator*(Vector<bool> lhs, const Vector<bool> &rhs);
 
     /**
      * std::to_string implementation for Vector
@@ -626,16 +662,20 @@ public:
      */
     friend std::string to_string(Vector<bool> vector);
 
-private:
-    /**
-     * Data is stored as uint64_t where i-th bit is 1 if i-th value is true and 0 if value is false.
-     */
-    uint64_t data;
-
     /**
      * Maximum possible Vector length.
      */
-    static constexpr int max_index = 64;
+    static constexpr int bits_per_uint = 64;
+private:
+    /**
+     * Data is stored as vector of uint64_t where i-th bit is 1 if i-th value is true and 0 if value is false.
+     */
+    std::vector<uint64_t> data;
+
+    /**
+     * Vector dimension.
+     */
+    unsigned long long dim;
 };
 
 #endif //COUNTING_STARS_VECTOR_H
