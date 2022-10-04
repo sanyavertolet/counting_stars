@@ -1,6 +1,10 @@
-//
-// Created by Александр Фролов on 04.10.2022.
-//
+/**
+ * File containing Pos class implementation.
+ *
+ * Pos describes position in matrix.
+ *
+ * @author sanyavertolet
+ */
 
 #include "Pos.h"
 

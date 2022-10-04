@@ -398,7 +398,7 @@ private:
      * @param maximal max border to check overflow.
      * @return this StringInt, casted to long long.
      */
-    long long downcast_to(const std::string& type_name, long long minimal, long long maximal) const;
+    [[nodiscard]] long long downcast_to(const std::string& type_name, long long minimal, long long maximal) const;
 
     /**
      * Internal enum class used as return value of compare_as_numbers method.

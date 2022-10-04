@@ -1,5 +1,5 @@
 /**
- * Header containing Pos class declaration and implementation.
+ * Header containing Pos class declaration.
  *
  * Pos describes position in matrix.
  *
