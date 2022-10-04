@@ -53,7 +53,7 @@ target_link_libraries(Vector_test gtest_main)
 add_test(NAME Vector_test COMMAND Vector_test)
 
 
-add_executable(Pos_test src/Pos/Pos.h test/Pos/Pos_test.cpp src/StringInt/StringInt.h src/StringInt/StringInt.cpp ${exceptions})
+add_executable(Pos_test src/Pos/Pos.h src/Pos/Pos.cpp test/Pos/Pos_test.cpp src/StringInt/StringInt.h src/StringInt/StringInt.cpp ${exceptions})
 target_link_libraries(Pos_test gtest_main)
 add_test(NAME Pos_test COMMAND Pos_test)
 

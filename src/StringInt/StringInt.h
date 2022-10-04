@@ -573,4 +573,16 @@ StringInt operator*(StringInt lhs, const StringInt&);
  */
 StringInt operator/(StringInt lhs, const StringInt&);
 
+namespace std {
+    template <>
+    struct hash<StringInt> {
+        std::size_t operator()(const StringInt& x) const noexcept {
+            using std::size_t;
+            using std::hash;
+            using std::string;
+            return (hash<string>()(x.get_val()) ^ (hash<char>()(x.get_sign()) << 1));
+        }
+    };
+}
+
 #endif //COUNTING_STARS_STRINGINT_H

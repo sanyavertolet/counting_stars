@@ -11,6 +11,7 @@
 
 #include <string>
 #include <utility>
+#include <functional>
 
 #include "../StringInt/StringInt.h"
 #include "../exceptions/exceptions.h"
@@ -27,7 +28,7 @@ public:
     /**
      * Default constructor.
      */
-    Pos() : i(0), j(0) { }
+    Pos();
 
     /**
      * Constructor from pair of coordinates.
@@ -35,9 +36,7 @@ public:
      * @param row index of a row.
      * @param col index of a column.
      */
-    Pos(StringInt row, StringInt col) :
-    i(row >= -1 ? std::move(row) : throw IllegalStateException("Row index should be positive or -1: " + std::string(row))),
-    j(col >= -1 ? std::move(col) : throw IllegalStateException("Column index should be positive or -1: " + std::string(col))) {}
+    Pos(StringInt row, StringInt col);
 
     /**
      * [i] setter.
@@ -45,12 +44,7 @@ public:
      * @param new_i new row index.
      * @throws OutOfRangeException on negative index.
      */
-    void set_i(const StringInt& new_i) {
-        if (new_i < 0) {
-            throw IllegalStateException("Row index should be positive or -1: " + std::string(new_i));
-        }
-        i = new_i;
-    }
+    void set_i(const StringInt& new_i);
 
     /**
      * [j] setter.
@@ -58,38 +52,27 @@ public:
      * @param new_j new column index.
      * @throws OutOfRangeException on negative index.
      */
-    void set_j(const StringInt& new_j) {
-        if (new_j < 0) {
-            throw IllegalStateException("Column index should be positive or -1: " + std::string(new_j));
-        }
-        j = new_j;
-    }
+    void set_j(const StringInt& new_j);
 
     /**
      * [i] getter.
      * @return row index.
      */
-    [[nodiscard]] StringInt get_i() const {
-        return i;
-    }
+    [[nodiscard]] StringInt get_i() const;
 
     /**
      * [j] getter.
      *
      * @return column index.
      */
-    [[nodiscard]] StringInt get_j() const {
-        return j;
-    }
+    [[nodiscard]] StringInt get_j() const;
 
     /**
      * Transparent operator.
      *
      * @return Pos with swapped coordinates.
      */
-    Pos operator~() {
-        return {j, i};
-    }
+    Pos operator~();
 
     /**
      * Eq operator.
@@ -98,9 +81,7 @@ public:
      * @param rhs right operand.
      * @return true if lhs and rhs are equal, false otherwise.
      */
-    friend bool operator==(const Pos& lhs, const Pos& rhs) {
-        return lhs.i == rhs.i && lhs.j == rhs.j;
-    }
+    friend bool operator==(const Pos& lhs, const Pos& rhs);
 
     /**
      * Neq operator.
@@ -109,9 +90,7 @@ public:
      * @param rhs right operand.
      * @return true if lhs and rhs are not equal, false otherwise.
      */
-    friend bool operator!=(const Pos& lhs, const Pos& rhs) {
-        return !(lhs == rhs);
-    }
+    friend bool operator!=(const Pos& lhs, const Pos& rhs);
 
     /**
      * Less operator.
@@ -120,9 +99,7 @@ public:
      * @param rhs right operand.
      * @return true if lhs is less than rhs, false otherwise.
      */
-    friend bool operator<(const Pos& lhs, const Pos& rhs) {
-        return lhs.i < rhs.i && lhs.j < rhs.j;
-    }
+    friend bool operator<(const Pos& lhs, const Pos& rhs);
 
     /**
      * Greater operator.
@@ -131,9 +108,7 @@ public:
      * @param rhs right operand.
      * @return true if lhs is greater than rhs, false otherwise.
      */
-    friend bool operator>(const Pos& lhs, const Pos& rhs) {
-        return rhs < lhs;
-    }
+    friend bool operator>(const Pos& lhs, const Pos& rhs);
 
     /**
      * Leq operator.
@@ -142,9 +117,7 @@ public:
      * @param rhs right operand.
      * @return true if lhs is less than rhs or equal to it, false otherwise.
      */
-    friend bool operator<=(const Pos& lhs, const Pos& rhs) {
-        return lhs < rhs || lhs == rhs;
-    }
+    friend bool operator<=(const Pos& lhs, const Pos& rhs);
 
     /**
      * Geq operator.
@@ -153,9 +126,7 @@ public:
      * @param rhs right operand.
      * @return true if lhs is greater than rhs or equal to it, false otherwise.
      */
-    friend bool operator>=(const Pos& lhs, const Pos& rhs) {
-        return lhs > rhs || lhs == rhs;
-    }
+    friend bool operator>=(const Pos& lhs, const Pos& rhs);
 
     /**
      * Distance operator.
@@ -163,18 +134,14 @@ public:
      * @param rhs right operand.
      * @return Manhattan distance between two Pos.
      */
-    StringInt operator-(const Pos& rhs) const {
-        return abs(i - rhs.i) + abs(j - rhs.j);
-    }
+    StringInt operator-(const Pos& rhs) const;
 
     /**
      * std::string cast operator.
      *
      * @return string representation of this Pos.
      */
-    operator std::string() const {
-        return "(" + std::string(i) + ";" + std::string(j) + ")";
-    }
+    operator std::string() const;
 private:
     /**
      * Index of a row.
@@ -187,8 +154,13 @@ private:
     StringInt j;
 };
 
-std::string to_string(const Pos& pos) {
-    return std::string(pos);
+std::string to_string(const Pos& pos);
+
+namespace std {
+    template <>
+    struct hash<Pos> {
+        std::size_t operator()(const Pos& pos) const;
+    };
 }
 
 #endif //COUNTING_STARS_POS_H

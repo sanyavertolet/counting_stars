@@ -4,6 +4,8 @@
  * @author sanyavertolet
  */
 
+#include <unordered_set>
+
 #include "gtest/gtest.h"
 #include "../../src/StringInt/StringInt.h"
 
@@ -57,4 +59,12 @@ TEST(StringInt_constructor_test, from_string_constructor_test)
     ASSERT_THROW(StringInt("+-123"), IllegalDigitException);
     ASSERT_THROW(StringInt("--123"), IllegalDigitException);
     ASSERT_THROW(StringInt("-123321123321123321L"), IllegalDigitException);
+}
+
+TEST(StringInt_constructor_test, has_std_hash)
+{
+    std::unordered_set<StringInt> set;
+    set.insert(1);
+    ASSERT_EQ(set.count(1), 1);
+    ASSERT_EQ(set.size(), 1);
 }

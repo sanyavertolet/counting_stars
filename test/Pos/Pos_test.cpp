@@ -4,8 +4,10 @@
  * @author sanyavertolet
  */
 
-#include "../../src/Pos/Pos.h"
+#include <unordered_set>
+
 #include "gtest/gtest.h"
+#include "../../src/Pos/Pos.h"
 
 class Pos_test : public testing::Test { };
 
@@ -40,4 +42,14 @@ TEST(Pos_test, general_test)
     ASSERT_EQ(Pos(25, 25) - Pos(25, 25), 0);
 
     ASSERT_THROW(Pos(-2, -2), IllegalStateException);
+}
+
+TEST(Pos_test, has_std_hash)
+{
+    std::unordered_set<Pos> set;
+    set.insert({1, 1});
+    set.insert({2, 2});
+    set.insert({3, 3});
+    ASSERT_EQ(set.count({3, 3}), 1);
+    ASSERT_EQ(set.size(), 3);
 }
