@@ -23,7 +23,7 @@ public:
     IllegalDimException() : message("Matrices dimensions doesn't match") {}
     explicit IllegalDimException(const char* msg) : message(msg) {}
     explicit IllegalDimException(const std::string& msg) : message(msg.c_str()) {}
-    [[nodiscard]] const char* what() const _NOEXCEPT override {
+    [[nodiscard]] const char* what() const noexcept override {
         return message;
     }
     explicit IllegalDimException(const std::string& lhs, const std::string & rhs) {

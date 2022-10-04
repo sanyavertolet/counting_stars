@@ -23,7 +23,7 @@ public:
     CastException() : message("Could not cast properly.") {}
     explicit CastException(const char* msg) : message(msg) {}
     explicit CastException(const std::string& msg) : message(msg.c_str()) {}
-    [[nodiscard]] const char* what() const _NOEXCEPT override {
+    [[nodiscard]] const char* what() const noexcept override {
         return message;
     }
 };

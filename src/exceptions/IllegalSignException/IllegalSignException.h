@@ -22,7 +22,7 @@ private:
 public:
     explicit IllegalSignException(const char* msg) : message(msg) {}
     explicit IllegalSignException(const std::string& msg) : message(msg.c_str()) {}
-    [[nodiscard]] const char* what() const _NOEXCEPT override {
+    [[nodiscard]] const char* what() const noexcept override {
         return message;
     }
 };

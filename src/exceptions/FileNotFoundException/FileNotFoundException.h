@@ -27,7 +27,7 @@ public:
     explicit FileNotFoundException(const std::string& file_path) {
         message = (default_message + ": " + file_path).c_str();
     }
-    [[nodiscard]] const char* what() const _NOEXCEPT override {
+    [[nodiscard]] const char* what() const noexcept override {
         return message;
     }
 };

@@ -1,5 +1,5 @@
 /**
- * Tests for [Matrix_column_coords].
+ * Tests for [Matrix_column_coord].
  *
  * @author sanyavertolet
  */

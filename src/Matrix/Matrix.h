@@ -340,7 +340,7 @@ public:
      */
     template<typename TValueRight>
     auto& operator+=(const Matrix<TValueRight> &rhs) {
-        *this = *this + rhs;
+        *this = (*this + rhs);
         return *this;
     }
 
@@ -353,7 +353,7 @@ public:
      */
     template<typename TValueRight>
     auto& operator-=(const Matrix<TValueRight> &rhs) {
-        *this = *this - rhs;
+        *this = (*this - rhs);
         return *this;
     }
 

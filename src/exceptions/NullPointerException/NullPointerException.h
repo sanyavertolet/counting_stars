@@ -27,7 +27,7 @@ public:
     explicit NullPointerException(const std::string& msg) {
         message = (default_message + ": " + msg).c_str();
     }
-    [[nodiscard]] const char* what() const _NOEXCEPT override {
+    [[nodiscard]] const char* what() const noexcept override {
         return message;
     }
 };

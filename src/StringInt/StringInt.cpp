@@ -16,7 +16,7 @@ StringInt::StringInt(const std::string& number) {
     if (number[0] == '+' || number[0] == '-') {
         sign = number[0];
         set_val(number.substr(1));
-    } else if (isnumber(number[0])) {
+    } else if (isdigit(number[0])) {
         sign = '+';
         set_val(number);
     } else {
@@ -98,7 +98,7 @@ void StringInt::set_sign(char s) {
 
 void StringInt::set_val(const std::string& v) {
     for (char i : v) {
-        if (!isnumber(i)) {
+        if (!isdigit(i)) {
             throw IllegalDigitException("Val should contain only digits, got '" + std::string(1, i) + "' symbol.");
         }
     }
