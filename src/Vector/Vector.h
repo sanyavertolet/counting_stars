@@ -43,7 +43,7 @@ public:
      * @param default_value value that should be set as default value for each element.
      */
     explicit Vector(
-            StringInt required_dim = -1,
+            StringInt required_dim,
             double default_value = 0,
             double required_precision = default_precision
                     ): dim(std::move(required_dim)), mass_transform(default_value), precision(required_precision), data({}) { }

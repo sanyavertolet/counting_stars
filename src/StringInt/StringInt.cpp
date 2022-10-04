@@ -309,7 +309,7 @@ long long StringInt::downcast_to(const std::string& type_name, long long minimal
 }
 
 StringInt::operator std::string() const {
-    return (sign == -1 ? std::string(1, sign) : "") +  val;
+    return (sign == '-' ? std::string(1, sign) : "") +  val;
 }
 
 // ================================== UTILITY METHODS ===================================
