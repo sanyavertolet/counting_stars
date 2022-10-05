@@ -1,0 +1,10 @@
+digraph "Rational_number::set_denominator"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="Rational_number::set\l_denominator",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="denominator setter."];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="StringInt::get_sign",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classStringInt.html#a8cb6b9175fda26bad6be2adec5ca6f57",tooltip="sign getter."];
+}

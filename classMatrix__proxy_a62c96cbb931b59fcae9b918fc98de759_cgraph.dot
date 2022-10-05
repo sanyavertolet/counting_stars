@@ -1,0 +1,16 @@
+digraph "Matrix_proxy::operator Matrix&lt; TMatrixValue &gt;"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="Matrix_proxy::operator\l Matrix\< TMatrixValue \>",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Vector cast operator from row/column slice."];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="Matrix_proxy::get_dim",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classMatrix__proxy.html#a47c8e2b7923a162d5d542926d69034f8",tooltip="dim getter."];
+  Node2 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="Pos::get_i",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classPos.html#afeea819c9f21be202f907dd9797209f1",tooltip="[i] getter."];
+  Node2 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="Pos::get_j",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classPos.html#abc4d294c12c25bed750be0777b7523da",tooltip="[j] getter."];
+  Node1 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="Matrix::get_sub_matrix\l_values",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classMatrix.html#a71a3a96fd491ac388035ee9584b50460",tooltip="Get all the recorded values from sub-matrix."];
+}

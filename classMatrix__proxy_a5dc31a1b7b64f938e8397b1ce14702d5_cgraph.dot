@@ -1,0 +1,10 @@
+digraph "Matrix_proxy::operator()"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="Matrix_proxy::operator()",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Access operator for rectangle slice from two StringInt."];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="Matrix_proxy::operator()",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classMatrix__proxy.html#a17837e1038c1817885f2a15c16a3086c",tooltip="Access operator for a row/column slice."];
+}
