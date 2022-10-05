@@ -1,0 +1,7 @@
+<map id="Matrix_proxy::operator Matrix&lt; TMatrixValue &gt;" name="Matrix_proxy::operator Matrix&lt; TMatrixValue &gt;">
+<area shape="rect" id="node1" title="Vector cast operator from row/column slice." alt="" coords="5,53,189,94"/>
+<area shape="rect" id="node2" href="$classMatrix__proxy.html#a47c8e2b7923a162d5d542926d69034f8" title="dim getter." alt="" coords="240,31,408,57"/>
+<area shape="rect" id="node5" href="$classMatrix.html#a71a3a96fd491ac388035ee9584b50460" title="Get all the recorded values from sub&#45;matrix." alt="" coords="237,82,411,123"/>
+<area shape="rect" id="node3" href="$classPos.html#afeea819c9f21be202f907dd9797209f1" title="[i] getter." alt="" coords="459,5,544,32"/>
+<area shape="rect" id="node4" href="$classPos.html#abc4d294c12c25bed750be0777b7523da" title="[j] getter." alt="" coords="459,56,544,83"/>
+</map>

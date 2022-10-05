@@ -1,0 +1,8 @@
+<map id="Rational_number::Rational_number" name="Rational_number::Rational_number">
+<area shape="rect" id="node1" title="Constructor for casting from std::string." alt="" coords="5,90,200,131"/>
+<area shape="rect" id="node2" href="$classStringInt.html#a8bd96a0c693236b47bca74bc922efa92" title="val getter." alt="" coords="262,5,395,32"/>
+<area shape="rect" id="node3" href="$classRational__number.html#ad245c32d03f01ad39d60bef228f98794" title="denominator setter." alt="" coords="248,57,409,98"/>
+<area shape="rect" id="node5" href="$classRational__number.html#a75b23ec7229fe63be06c924e7f06c83d" title="numerator setter." alt="" coords="248,122,409,163"/>
+<area shape="rect" id="node6" href="$classStringInt.html#abf4c106f451a9ffb064901a8c85191ca" title="sign setter." alt="" coords="259,188,398,215"/>
+<area shape="rect" id="node4" href="$classStringInt.html#a8cb6b9175fda26bad6be2adec5ca6f57" title="sign getter." alt="" coords="457,64,597,91"/>
+</map>
