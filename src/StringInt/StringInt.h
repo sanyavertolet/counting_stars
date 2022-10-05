@@ -573,6 +573,8 @@ StringInt operator*(StringInt lhs, const StringInt&);
  */
 StringInt operator/(StringInt lhs, const StringInt&);
 
+std::string to_string(const StringInt& stringint);
+
 namespace std {
     template <>
     struct hash<StringInt> {

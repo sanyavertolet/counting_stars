@@ -20,6 +20,8 @@
 #include "../Rational_number/Rational_number.h"
 #include "../Complex_number/Complex_number.h"
 
+#include "../Matrix/Matrix_proxy.h"
+
 /**
  * Template class that implements vector.
  *
@@ -63,6 +65,11 @@ public:
             throw FileNotFoundException(file_path);
         }
         //todo: implement
+    }
+
+    explicit Vector(const Matrix_proxy<TValue>& proxy): mass_transform(0), precision(proxy.get_precision()) {
+        dim = std::max(proxy.get_dim().get_i(), proxy.get_dim().get_j());
+        data = proxy.get_values_as_map();
     }
 
     /**

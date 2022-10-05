@@ -16,6 +16,9 @@
 #include "../StringInt/StringInt.h"
 #include "../exceptions/exceptions.h"
 
+class Pos;
+std::string to_string(const Pos& pos, bool is_pretty_print = true);
+
 /**
  * Class that defines position in Matrix.
  *
@@ -73,6 +76,18 @@ public:
      * @return Pos with swapped coordinates.
      */
     Pos operator~();
+
+    /**
+     * Friend operator that prints Matrix to std::ostream.
+     *
+     * @param os output stream.
+     * @param x Matrix to print.
+     * @return os.
+     */
+    friend std::ostream& operator<<(std::ostream& os, Pos const& pos) {
+        os << to_string(pos);
+        return os;
+    }
 
     /**
      * Eq operator.
@@ -135,13 +150,6 @@ public:
      * @return Manhattan distance between two Pos.
      */
     StringInt operator-(const Pos& rhs) const;
-
-    /**
-     * std::string cast operator.
-     *
-     * @return string representation of this Pos.
-     */
-    operator std::string() const;
 private:
     /**
      * Index of a row.
@@ -154,7 +162,7 @@ private:
     StringInt j;
 };
 
-std::string to_string(const Pos& pos);
+bool operator==(const Pos& lhs, const Pos& rhs);
 
 namespace std {
     template <>

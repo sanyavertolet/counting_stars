@@ -84,10 +84,6 @@ public:
         bool is_right_ok = dot.get_j() <= brhs.get_j() || brhs.get_j() == -1;
         return is_top_ok && is_bottom_ok && is_left_ok && is_right_ok;
     }
-
-    explicit operator std::string() const {
-        return "[" + to_string(tlhs) + " - " + to_string(brhs) + "]";
-    }
 private:
     /**
      * top-left Pos of a slice rectangle.
@@ -101,7 +97,7 @@ private:
 };
 
 std::string to_string(const Matrix_coords& coords) {
-    return std::string(coords);
+    return "[" + to_string(coords.get_tlhs()) + " - " + to_string(coords.get_brhs()) + "]";
 }
 
 #endif //COUNTING_STARS_MATRIX_COORDS_H

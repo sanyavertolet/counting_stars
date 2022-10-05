@@ -68,12 +68,12 @@ StringInt Pos::operator-(const Pos& rhs) const {
     return abs(i - rhs.i) + abs(j - rhs.j);
 }
 
-Pos::operator std::string() const {
-    return "(" + std::string(i) + ";" + std::string(j) + ")";
-}
-
-std::string to_string(const Pos& pos) {
-    return std::string(pos);
+std::string to_string(const Pos& pos, bool is_pretty_print) {
+    if (is_pretty_print) {
+        return "(" + to_string(pos.get_i()) + ";" + to_string(pos.get_j()) + ")";
+    } else {
+        return to_string(pos.get_i()) + "\t" + to_string(pos.get_j());
+    }
 }
 
 std::size_t std::hash<Pos>::operator()(const Pos& pos) const {

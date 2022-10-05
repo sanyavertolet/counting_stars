@@ -515,3 +515,7 @@ void StringInt::remove_leading_zeros(std::string& number) {
         number.erase(number.begin());
     }
 }
+
+std::string to_string(const StringInt& stringint) {
+    return std::string(stringint);
+}

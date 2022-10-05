@@ -20,7 +20,7 @@
 
 #include "NullPointerException/NullPointerException.h"
 
-#include "OutOfIntegerDivision/OutOfIntegerDivisionException.h"
+#include "OutOfIntegerDivisionException/OutOfIntegerDivisionException.h"
 #include "OutOfRangeException/OutOfRangeException.h"
 #include "OverflowException/OverflowException.h"
 
