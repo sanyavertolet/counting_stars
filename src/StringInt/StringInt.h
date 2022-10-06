@@ -573,6 +573,12 @@ StringInt operator*(StringInt lhs, const StringInt&);
  */
 StringInt operator/(StringInt lhs, const StringInt&);
 
+/**
+ * Convert StringInt to std::string.
+ *
+ * @param stringint Stringing.
+ * @return string representation of stringint.
+ */
 std::string to_string(const StringInt& stringint);
 
 namespace std {

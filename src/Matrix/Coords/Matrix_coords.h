@@ -1,5 +1,5 @@
 /**
- * Header containing Matrix_coords class declaration and implementation.
+ * Header containing Matrix_coords class declaration.
  *
  * @author sanyavertolet
  */
@@ -50,26 +50,21 @@ public:
      * @param r right index.
      */
     Matrix_coords(const StringInt& t, const StringInt& l, const StringInt& b, const StringInt& r):
-            tlhs({t, l}), brhs({b, r}) {
-    }
+            tlhs({t, l}), brhs({b, r}) { }
 
     /**
      * tlhs getter.
      *
      * @return tlhs.
      */
-    [[nodiscard]] Pos get_tlhs() const {
-        return tlhs;
-    }
+    [[nodiscard]] Pos get_tlhs() const;
 
     /**
      * brhs getter.
      *
      * @return brhs.
      */
-    [[nodiscard]] Pos get_brhs() const {
-        return brhs;
-    }
+    [[nodiscard]] Pos get_brhs() const;
 
     /**
      * Check if dot is inside Matrix_coords.
@@ -77,13 +72,7 @@ public:
      * @param dot Pos with coordinates.
      * @return true if dot is in Matrix_coords, false otherwise.
      */
-    [[nodiscard]] bool has(const Pos& dot) const {
-        bool is_top_ok = tlhs.get_i() <= dot.get_i();
-        bool is_left_ok = tlhs.get_j() <= dot.get_j();
-        bool is_bottom_ok = dot.get_i() <= brhs.get_i() || brhs.get_i() == -1;
-        bool is_right_ok = dot.get_j() <= brhs.get_j() || brhs.get_j() == -1;
-        return is_top_ok && is_bottom_ok && is_left_ok && is_right_ok;
-    }
+    [[nodiscard]] bool has(const Pos& dot) const;
 private:
     /**
      * top-left Pos of a slice rectangle.
@@ -96,8 +85,11 @@ private:
     Pos brhs;
 };
 
-std::string to_string(const Matrix_coords& coords) {
-    return "[" + to_string(coords.get_tlhs()) + " - " + to_string(coords.get_brhs()) + "]";
-}
+/**
+ * Cast Matrix_coords to std::string.
+ * @param coords Matrix_coords.
+ * @return string representation of coords.
+ */
+std::string to_string(const Matrix_coords& coords);
 
 #endif //COUNTING_STARS_MATRIX_COORDS_H

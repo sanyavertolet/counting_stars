@@ -63,6 +63,6 @@ TEST(StringInt_cast_test, to_StringInt_cast_check)
     ASSERT_EQ(string_int, StringInt('-', "5"));
     string_int = -123123123ll;
     ASSERT_EQ(string_int, StringInt('-', "123123123"));
-    string_int = 123123123ull;
+    string_int = 123123123ll;
     ASSERT_EQ(string_int, StringInt('+', "123123123"));
 }

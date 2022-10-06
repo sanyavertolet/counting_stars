@@ -7,6 +7,8 @@
 #ifndef COUNTING_STARS_MATRIX_PROXY_H
 #define COUNTING_STARS_MATRIX_PROXY_H
 
+#include <unordered_map>
+
 #include "../Pos/Pos.h"
 
 #include "Coords/Matrix_coords.h"
@@ -82,13 +84,16 @@ public:
      *
      * @return dim of a given slice.
      */
-    Pos get_dim() const {
+    [[nodiscard]] Pos get_dim() const {
         if (matrix == nullptr) {
             throw NullPointerException();
         }
         return {abs(to.get_i() - from.get_i() + 1), abs(to.get_j() - from.get_j() + 1)};
     }
 
+    /**
+     * @return values of current slice stored in std::map where StringInt is a key.
+     */
     std::map<StringInt, TMatrixValue> get_values_as_map() const {
         if (matrix == nullptr) {
             throw NullPointerException();
@@ -101,6 +106,16 @@ public:
             case Matrix_proxy_type::RECTANGLE:
                 throw IllegalStateException("Cannot get rectangle slice values as std::map");
         }
+    }
+
+    /**
+     * @return values of current slash as std::unordered_map where Pos is a key.
+     */
+    std::unordered_map<Pos, TMatrixValue> get_values_as_hash_map() const {
+        if (matrix == nullptr) {
+            throw NullPointerException();
+        }
+        return matrix->get_sub_matrix_values(Matrix_coords(from, to));
     }
 
     /**
@@ -160,51 +175,11 @@ public:
         return operator()({i, j});
     }
 
-#ifdef __COUNTING_STARS_DEBUG___
-
-    void print_content() {
-        std::cerr << "from{" << to_string(from) << "} <---|---> to {" << to_string(to) << "}" << std::endl;
-        for (auto [key, value]: matrix->get_sub_matrix_values(Matrix_coords(from, to))) {
-            std::cerr << "[" << to_string(key) << "] = " << value << std::endl;
-        }
-    }
-
-#endif //__COUNTING_STARS_DEBUG___
-
     /**
-     * Vector cast operator from row/column slice.
+     * Proxy type getter.
      *
-     * @return slice converted to Vector.
+     * @return type of a proxy
      */
-//    operator Vector<TMatrixValue>() {
-//        if (matrix == nullptr) {
-//            throw NullPointerException();
-//        }
-//        Vector<TMatrixValue> result(get_dim(), matrix->get_mass_transform(), matrix->get_precision());
-//        if (type == Matrix_proxy_type::RECTANGLE) {
-//            throw IllegalStateException("Cannot cast rectangle slice to Vector.");
-//        } else if (type == Matrix_proxy_type::ROW) {
-//            result = matrix->get_row_values();
-//        } else {
-//            result = matrix->get_column_values();
-//        }
-//        return result;
-//    }
-
-    /**
-     * Matrix cast operator.
-     *
-     * @return slice converted to Matrix.
-     */
-    operator Matrix<TMatrixValue>() {
-        if (matrix == nullptr) {
-            throw NullPointerException();
-        }
-        Matrix<TMatrixValue> result(get_dim(), matrix->get_mass_transform(), matrix->get_precision());
-        result = matrix->get_sub_matrix_values(Matrix_coords(from, to));
-        return result;
-    }
-
     Matrix_proxy_type get_slice_type() {
         return type;
     }

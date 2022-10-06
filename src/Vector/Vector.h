@@ -251,7 +251,7 @@ public:
             data[index] = mass_transform;
         }
         if (data[index] <= TValue(precision)) {
-            data[index] = 0;
+            data[index] = TValue(0);
         }
         return data[index];
     }
@@ -439,7 +439,7 @@ private:
     void delete_zero_elements() {
         std::set<StringInt> to_delete;
         if (mass_transform <= TValue(precision)) {
-            mass_transform = 0;
+            mass_transform = TValue(0);
         }
         for (auto [key, value] : data) {
             if (value <= TValue(precision)) {
@@ -497,7 +497,6 @@ public:
 //            throw FileNotFoundException();
             throw std::runtime_error("FileNotFoundException: " + std::string(file_path));
         }
-//        data = 0u;
         //todo: implement
     }
 

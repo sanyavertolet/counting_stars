@@ -1,5 +1,5 @@
 /**
- * Header containing Matrix_row_coord class declaration and implementation.
+ * Header containing Matrix_row_coord class declaration.
  *
  * @author sanyavertolet
  */
@@ -20,24 +20,21 @@ public:
     /**
      * Default constructor.
      */
-    Matrix_row_coord(): row_index(0) { }
+    Matrix_row_coord();
 
     /**
      * Constructor from StringInt.
      *
      * @param index index of a row.
      */
-    Matrix_row_coord(StringInt index):
-    row_index(index >= 0 ? std::move(index) : throw IllegalStateException("Row index must not be negative.")) { }
+    Matrix_row_coord(StringInt index);
 
     /**
      * row_index getter.
      *
      * @return row_index.
      */
-    [[nodiscard]] StringInt get_row_index() const {
-        return row_index;
-    }
+    [[nodiscard]] StringInt get_row_index() const;
 
     /**
      * Check if dot is inside Matrix_row_coords.
@@ -45,9 +42,7 @@ public:
      * @param dot Pos with coordinates.
      * @return true if dot is in Matrix_row_coords, false otherwise.
      */
-    [[nodiscard]] bool has(const Pos& dot) const {
-        return dot.get_i() == row_index;
-    }
+    [[nodiscard]] bool has(const Pos& dot) const;
 private:
     /**
      * index of a Matrix row.

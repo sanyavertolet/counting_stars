@@ -1,5 +1,5 @@
 /**
- * Header containing Matrix_column_coord class declaration and implementation.
+ * Header containing Matrix_column_coord class declaration.
  *
  * @author sanyavertolet
  */
@@ -20,24 +20,21 @@ public:
     /**
      * Default constructor.
      */
-    Matrix_column_coord(): column_index(0) { }
+    Matrix_column_coord();
 
     /**
      * Constructor StringInt.
      *
      * @param index index of a column.
      */
-    explicit Matrix_column_coord(StringInt index):
-    column_index(index >= 0 ? std::move(index) : throw IllegalStateException("index must not be negative")) { }
+    explicit Matrix_column_coord(StringInt index);
 
     /**
      * column_index getter.
      *
      * @return index of a Matrix column.
      */
-    [[nodiscard]] StringInt get_column_index() const {
-        return column_index;
-    }
+    [[nodiscard]] StringInt get_column_index() const;
 
     /**
      * Check if dot is inside Matrix_column_coords.
@@ -45,9 +42,7 @@ public:
      * @param dot Pos with coordinates.
      * @return true if dot is in Matrix_column_coords, false otherwise.
      */
-    [[nodiscard]] bool has(const Pos& dot) const {
-        return dot.get_j() == column_index;
-    }
+    [[nodiscard]] bool has(const Pos& dot) const;
 private:
     /**
      * index of a Matrix column.

@@ -407,7 +407,6 @@ public:
      * @return this simplified Rational_number.
      */
     Rational_number& make_canonical();
-
 private:
     /**
      * numerator of this Rational_number

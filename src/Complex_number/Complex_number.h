@@ -11,6 +11,12 @@
 #include <iostream>
 #include "../exceptions/exceptions.h"
 
+/**
+ * Template class that implements Complex_number.
+ *
+ * @tparam TReal real part type, which is double by default.
+ * @tparam TImaginary imaginary part type, which is double by default.
+ */
 template<typename TReal = double, typename TImaginary = double>
 class Complex_number {
 public:
@@ -329,7 +335,7 @@ private:
  * @return sum of lhs and rhs.
  */
 template <typename TRealLeft, typename TImaginaryLeft, typename TRealRight, typename TImaginaryRight>
-auto operator+(Complex_number<TRealLeft, TImaginaryLeft> lhs,const Complex_number<TRealRight, TImaginaryRight> &rhs) {
+auto operator+(Complex_number<TRealLeft, TImaginaryLeft> lhs, const Complex_number<TRealRight, TImaginaryRight> &rhs) {
     auto new_re = lhs.get_re() + rhs.get_re();
     auto new_im = lhs.get_im() + rhs.get_im();
     return Complex_number<decltype(new_re), decltype(new_im)>(new_re, new_im);

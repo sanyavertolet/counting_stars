@@ -292,7 +292,7 @@ StringInt::operator char() const {
 
 StringInt::operator long double() const {
     if (static_cast<long long>(LDBL_MAX) < *this || *this < static_cast<long long>(LDBL_MIN)) {
-        throw OverflowException(operator std::string() + " overflows long long.");
+        throw OverflowException(operator std::string() + " overflows long double.");
     }
     return (long double)((long long)(*this));
 }
@@ -303,7 +303,7 @@ long long StringInt::downcast_to(const std::string& type_name, long long minimal
     }
     long long value_as_num = 0;
     for (char digit : val) {
-        value_as_num = value_as_num * 10 + digit;
+        value_as_num = value_as_num * 10 + digit - '0';
     }
     return value_as_num;
 }

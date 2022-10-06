@@ -18,9 +18,14 @@ set(Rational_number src/Rational_number/Rational_number.h src/Rational_number/Ra
 set(Complex_number src/Complex_number/Complex_number.h)
 set(Vector src/Vector/Vector.h src/Vector/Vector.cpp src/Vector/Vector.bool.cpp)
 set(Pos src/Pos/Pos.h src/Pos/Pos.cpp)
-set(Matrix src/Matrix/Matrix.h src/Matrix/Coords/Matrix_coords.h src/Matrix/Coords/Matrix_row_coord.h src/Matrix/Coords/Matrix_column_coord.h src/Matrix/Matrix_proxy.h)
+set(Matrix src/Matrix/Matrix.h src/Matrix/Coords/Matrix_coords.h src/Matrix/Coords/Matrix_row_coord.h src/Matrix/Coords/Matrix_column_coord.h src/Matrix/Matrix_proxy.h src/Matrix/Coords/Matrix_coords.cpp src/Matrix/Coords/Matrix_row_coord.cpp src/Matrix/Coords/Matrix_column_coord.cpp)
 
 add_library(counting_stars ${StringInt} ${Rational_number} ${Complex_number} ${Vector} ${Pos} ${Matrix} ${exceptions})
+
+add_executable(tests test/StringInt/StringInt_constructor_test.cpp test/StringInt/StringInt_operators_test.cpp test/StringInt/StringInt_cast_test.cpp test/Rational_number/Rational_number_constructor_test.cpp test/Rational_number/Rational_number_operators_test.cpp test/Complex_number/Complex_number_constructor_test.cpp test/Complex_number/Complex_number_operators_test.cpp test/Vector/Vector_test.cpp test/Matrix/Coords/Matrix_coords_test.cpp test/Matrix/Coords/Matrix_row_coord_test.cpp test/Matrix/Coords/Matrix_column_coord_test.cpp test/Pos/Pos_test.cpp test/Matrix/Matrix_test.cpp)
+target_link_libraries(tests counting_stars)
+target_link_libraries(tests gtest_main)
+add_test(NAME tests COMMAND tests)
 
 add_executable(StringInt_test test/StringInt/StringInt_constructor_test.cpp test/StringInt/StringInt_operators_test.cpp test/StringInt/StringInt_cast_test.cpp)
 target_link_libraries(StringInt_test counting_stars)

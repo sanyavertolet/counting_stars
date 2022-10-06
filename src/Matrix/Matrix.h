@@ -24,6 +24,41 @@
 
 #include "../Pos/Pos.h"
 
+template<typename TValue>
+class Matrix;
+
+template <typename T>
+std::ostream& operator<<(std::ostream& os, Matrix<T> const& x);
+
+template<typename TValueLeft, typename TValueRight>
+bool operator==(const Matrix<TValueLeft> &lhs, const Matrix<TValueRight> &rhs);
+
+template<typename TValueLeft, typename TValueRight>
+bool operator!=(const Matrix<TValueLeft> &lhs, const Matrix<TValueRight> &rhs);
+
+template<typename TValueLeft, typename TValueRight>
+auto operator-(const Matrix<TValueLeft> &lhs, const Matrix<TValueRight> &rhs);
+
+template<typename TValueLeft, typename TValueRight>
+auto operator*(Matrix<TValueLeft> lhs, Matrix<TValueRight> rhs);
+
+template<typename TValueLeft, typename TValueRight>
+auto operator+(Matrix<TValueLeft> lhs, const TValueRight& rhs);
+
+template<typename TValueLeft, typename TValueRight>
+auto operator-(Matrix<TValueLeft> lhs, const TValueRight& rhs);
+
+template<typename TValueLeft, typename TValueRight>
+auto operator*(Matrix<TValueLeft> lhs, const TValueRight& rhs);
+
+template<typename TValueLeft, typename TValueRight>
+auto operator+(const Matrix<TValueLeft> &lhs, const Matrix<TValueRight> &rhs);
+
+template<typename TValueLeft, typename TValueRight>
+auto operator/(Matrix<TValueLeft> lhs, const TValueRight& rhs);
+
+template <typename T>
+std::string to_string(Matrix<T> matrix);
 
 /**
  * Class that defined sparse Matrix.
@@ -66,10 +101,24 @@ public:
     dim(std::move(rhs.dim)), precision(std::move(rhs.precision)), mass_transform(std::move(rhs.mass_transform)), data(std::move(rhs.data)) {
         rhs.dim = Pos();
         rhs.precision = TValue();
-        mass_transform = TValue();
-        data = {};
+        rhs.mass_transform = TValue();
+        rhs.data = {};
     }
 
+    /**
+     * Constructor from Matrix_proxy.
+     *
+     * @param proxy Matrix_proxy.
+     */
+    Matrix(Matrix_proxy<TValue> proxy): dim(proxy.get_dim()), precision(proxy.get_precision()) {
+        data = proxy.get_values_as_hash_map();
+    }
+
+    /**
+     * Constructor from file.
+     *
+     * @param file_path path to file with Matrix
+     */
     explicit Matrix(const char* file_path): precision(0), mass_transform(0), data({}) {
         // todo: depends on Matrix parser.
         throw FileNotFoundException(file_path);
@@ -142,10 +191,20 @@ public:
         dim = new_dim;
     }
 
+    /**
+     * dim getter.
+     *
+     * @return dim of a current matrix.
+     */
     [[nodiscard]] Pos get_dim() const {
         return dim;
     }
 
+    /**
+     * precision setter.
+     *
+     * @param new_precision new precision value.
+     */
     void set_precision(TValue new_precision) {
         if (new_precision < 0) {
             throw IllegalSignException("precision should not be negative.");
@@ -153,14 +212,29 @@ public:
         precision = new_precision;
     }
 
+    /**
+     * precision getter.
+     *
+     * @return precision.
+     */
     TValue get_precision() const {
         return precision;
     }
 
+    /**
+     * mass_transform getter.
+     *
+     * @return mass_transform
+     */
     TValue get_mass_transform() const {
         return mass_transform;
     }
 
+    /**
+     * Get amount of present values in data.
+     *
+     * @return amount of values present in data.
+     */
     [[nodiscard]] StringInt get_size() const {
         return data.size();
     }
@@ -172,10 +246,8 @@ public:
      * @param x Matrix to print.
      * @return os.
      */
-    friend std::ostream& operator<<(std::ostream& os, Matrix const& x) {
-        os << to_string(x);
-        return os;
-    }
+    template<typename T>
+    friend std::ostream& operator<<(std::ostream& os, Matrix<T> const& x);
 
     /**
      * Friend operator that reads Matrix from std::istream.
@@ -196,15 +268,7 @@ public:
      * @return true of lhs and rhs are equal, false otherwise.
      */
     template<typename TValueLeft, typename TValueRight>
-    friend bool operator==(const Matrix<TValueLeft> &lhs, const Matrix<TValueRight> &rhs) {
-        if (lhs.dim != rhs.dim || lhs.get_size() != rhs.get_size() || lhs.mass_transform != rhs.mass_transform) {
-            return false;
-        }
-        auto predicate = [](auto lhs, auto rhs) {
-            return decltype(lhs + rhs)(lhs) == decltype(lhs + rhs)(rhs);
-        };
-        return std::equal(lhs.data.begin(), lhs.data.end(), rhs.data.begin(), predicate);
-    }
+    friend bool operator==(const Matrix<TValueLeft> &lhs, const Matrix<TValueRight> &rhs);
 
     /**
      * Neq operator.
@@ -216,9 +280,7 @@ public:
      * @return true of lhs and rhs are not equal, false otherwise.
      */
     template<typename TValueLeft, typename TValueRight>
-    friend bool operator!=(const Matrix<TValueLeft> &lhs, const Matrix<TValueRight> &rhs) {
-        return !(lhs == rhs);
-    }
+    friend bool operator!=(const Matrix<TValueLeft> &lhs, const Matrix<TValueRight> &rhs);
 
     /**
      * Unary minus operator.
@@ -263,7 +325,7 @@ public:
             data[pos] = mass_transform;
         }
         if (data[pos] <= precision) {
-            data[pos] = 0;
+            data[pos] = TValue(0);
         }
         return data[pos];
     }
@@ -377,23 +439,7 @@ public:
      * @return sum of lhs and rhs.
      */
     template<typename TValueLeft, typename TValueRight>
-    friend auto operator+(const Matrix<TValueLeft> &lhs, const Matrix<TValueRight> &rhs) {
-        if (lhs.dim != rhs.dim) {
-            throw IllegalDimException(lhs.dim, rhs.dim);
-        }
-        Matrix<decltype(TValueLeft() + TValueRight())> result(lhs.dim, lhs.mass_transform + rhs.mass_transform);
-        for (auto &[key, value]: lhs.data) {
-            result.data[key] = value;
-        }
-        for (auto &[key, value]: rhs.data) {
-            if (result.data.find(key) != result.data.end()) {
-                result.data[key] += value;
-            } else {
-                result.data[key] = value;
-            }
-        }
-        return result;
-    }
+    friend auto operator+(const Matrix<TValueLeft> &lhs, const Matrix<TValueRight> &rhs);
 
     /**
      * Minus operator.
@@ -405,24 +451,7 @@ public:
      * @return lhs, decreased by rhs.
      */
     template<typename TValueLeft, typename TValueRight>
-    friend auto operator-(const Matrix<TValueLeft> &lhs, const Matrix<TValueRight> &rhs) {
-        if (lhs.dim != rhs.dim) {
-            throw IllegalDimException(lhs.dim, rhs.dim);
-        }
-        Matrix<decltype(TValueLeft() + TValueRight())> result(lhs.dim, lhs.mass_transform - rhs.mass_transform);
-        for (auto &[key, value]: lhs.data) {
-            result.data[key] = value;
-        }
-        for (auto &[key, value]: rhs.data) {
-            if (result.data.find(key) != result.data.end()) {
-                result.data[key] -= value;
-            } else {
-                result.data[key] = -value;
-            }
-        }
-        result.delete_zero_elements();
-        return result;
-    }
+    friend auto operator-(const Matrix<TValueLeft> &lhs, const Matrix<TValueRight> &rhs);
 
     /**
      * Multiply operator.
@@ -434,25 +463,7 @@ public:
      * @return lhs, multiplied by rhs.
      */
     template<typename TValueLeft, typename TValueRight>
-    friend auto operator*(Matrix<TValueLeft> lhs, Matrix<TValueRight> rhs) {
-        if (lhs.dim.get_j() != rhs.dim.get_i()) {
-            throw IllegalDimException(lhs.dim, rhs.dim);
-        }
-        lhs.apply_mass_transform();
-        rhs.apply_mass_transform();
-        Matrix<decltype(TValueLeft() + TValueRight())> result({ lhs.dim.get_i(), rhs.dim.get_j() });
-        for (StringInt i = 0; i < lhs.dim.get_i(); ++i) {
-            for (StringInt j = 0; j < rhs.dim.get_j(); ++j) {
-                decltype(TValueLeft() + TValueRight()) cell_result(0);
-                for (StringInt k = 0; k < lhs.dim.get_j(); ++k) {
-                    cell_result += lhs.data[{i, k}] * rhs.data[{k, j}];
-                }
-                result.data[{i, j}] = cell_result;
-            }
-        }
-        result.delete_zero_elements();
-        return result;
-    }
+    friend auto operator*(Matrix<TValueLeft> lhs, Matrix<TValueRight> rhs);
 
     /**
      * Mass plus operator.
@@ -464,14 +475,7 @@ public:
      * @return lhs where each element is increased by rhs.
      */
     template<typename TValueLeft, typename TValueRight>
-    friend auto operator+(Matrix<TValueLeft> lhs, const TValueRight& rhs) {
-        lhs.mass_transform += rhs;
-        for (auto &[key, value] : lhs.data) {
-            value += rhs;
-        }
-        lhs.delete_zero_elements();
-        return lhs;
-    }
+    friend auto operator+(Matrix<TValueLeft> lhs, const TValueRight& rhs);
 
     /**
      * Mass minus operator.
@@ -483,14 +487,7 @@ public:
      * @return lhs where each element is decreased by rhs.
      */
     template<typename TValueLeft, typename TValueRight>
-    friend auto operator-(Matrix<TValueLeft> lhs, const TValueRight& rhs) {
-        lhs.mass_transform -= rhs;
-        for (auto &[key, value] : lhs.data) {
-            value -= rhs;
-        }
-        lhs.delete_zero_elements();
-        return lhs;
-    }
+    friend auto operator-(Matrix<TValueLeft> lhs, const TValueRight& rhs);
 
     /**
      * Mass multiply operator.
@@ -502,14 +499,7 @@ public:
      * @return lhs where each element is multiplied by rhs.
      */
     template<typename TValueLeft, typename TValueRight>
-    friend auto operator*(Matrix<TValueLeft> lhs, const TValueRight& rhs) {
-        lhs.mass_transform *= rhs;
-        for (auto &[key, value] : lhs.data) {
-            value *= rhs;
-        }
-        lhs.delete_zero_elements();
-        return lhs;
-    }
+    friend auto operator*(Matrix<TValueLeft> lhs, const TValueRight& rhs);
 
     /**
      * Mass divide operator.
@@ -521,17 +511,7 @@ public:
      * @return lhs where each element is divided by rhs.
      */
     template<typename TValueLeft, typename TValueRight>
-    friend auto operator/(Matrix<TValueLeft> lhs, const TValueRight& rhs) {
-        if (rhs == 0) {
-            throw DivisionByZeroException();
-        }
-        lhs.mass_transform /= rhs;
-        for (auto &[key, value] : lhs.data) {
-            value /= rhs;
-        }
-        lhs.delete_zero_elements();
-        return lhs;
-    }
+    friend auto operator/(Matrix<TValueLeft> lhs, const TValueRight& rhs);
 
     /**
      * std::to_string implementation for Matrix.
@@ -539,15 +519,8 @@ public:
      * @param matrix Matrix to be converted to string.
      * @return std::string representation of matrix.
      */
-    friend std::string to_string(Matrix matrix) {
-        std::stringstream ss;
-        std::string type_name;
-        ss << "matrix " << typeid(TValue()).name() << " " << to_string(matrix.dim, false) << std::endl << std::endl;
-        for (auto [key, value]: matrix.data) {
-            ss << to_string(key, false) << "\t\t" <<  value << std::endl;
-        }
-        return ss.str();
-    }
+    template<typename T>
+    friend std::string to_string(Matrix<T> matrix);
 
     /**
      * Get all the recorded values from row by its index.
@@ -555,14 +528,14 @@ public:
      * @param column_index index of a requested row.
      * @return r-value reference to subset of data map corresponding to requested row.
      */
-    std::map<StringInt, TValue>&& get_row_values(const StringInt& row_index) const {
+    std::map<StringInt, TValue> get_row_values(const StringInt& row_index) const {
         std::map<StringInt, TValue> values;
         for (auto &[key, value] : data) {
             if (key.get_i() == row_index) {
                 values.insert({key.get_j(), value});
             }
         }
-        return std::move(values);
+        return values;
     }
 
     /**
@@ -571,14 +544,14 @@ public:
      * @param column_index index of a requested column.
      * @return r-value reference to subset of data map corresponding to requested column.
      */
-    std::map<StringInt, TValue>&& get_column_values(const StringInt& column_index) const {
+    std::map<StringInt, TValue> get_column_values(const StringInt& column_index) const {
         std::map<StringInt, TValue> values;
         for (auto &[key, value] : data) {
             if (key.get_j() == column_index) {
                 values.insert({key.get_i(), value});
             }
         }
-        return std::move(values);
+        return values;
     }
 
     /**
@@ -587,8 +560,8 @@ public:
      * @param sub_matrix_coords coordinates of a sub-matrix.
      * @return r-value reference to subset of data map corresponding to requested coordinates.
      */
-    std::map<Pos, const TValue&> get_sub_matrix_values(const Matrix_coords& sub_matrix_coords) const {
-        std::map<Pos, const TValue&> values;
+    std::unordered_map<Pos, TValue> get_sub_matrix_values(const Matrix_coords& sub_matrix_coords) const {
+        std::unordered_map<Pos, TValue> values;
         for (auto &[key, value] : data) {
             if (sub_matrix_coords.has(key)) {
                 values.insert({key, value});
@@ -642,7 +615,7 @@ private:
     /**
      * All the proxies that are related to this matrix.
      */
-   std::set<Matrix_proxy<TValue>*> proxies;
+    std::set<Matrix_proxy<TValue>*> proxies;
 
     /**
      * Internal method to perform lazy initialization of values by applying mass transform to them.
@@ -664,7 +637,7 @@ private:
     void delete_zero_elements() {
         std::set<Pos> to_delete;
         if (mass_transform <= precision) {
-            mass_transform = 0;
+            mass_transform = TValue(0);
         }
         for (auto [key, value] : data) {
             if (value <= TValue(precision)) {
@@ -676,5 +649,141 @@ private:
         }
     }
 };
+
+template <typename TValue>
+std::ostream& operator<<(std::ostream& os, Matrix<TValue> const& x) {
+    os << to_string(x);
+    return os;
+}
+
+template<typename TValueLeft, typename TValueRight>
+bool operator==(const Matrix<TValueLeft> &lhs, const Matrix<TValueRight> &rhs) {
+    if (lhs.dim != rhs.dim || lhs.get_size() != rhs.get_size() || lhs.mass_transform != rhs.mass_transform) {
+        return false;
+    }
+    auto predicate = [](auto lhs, auto rhs) {
+        return decltype(lhs + rhs)(lhs) == decltype(lhs + rhs)(rhs);
+    };
+    return std::equal(lhs.data.begin(), lhs.data.end(), rhs.data.begin(), predicate);
+}
+
+template<typename TValueLeft, typename TValueRight>
+bool operator!=(const Matrix<TValueLeft> &lhs, const Matrix<TValueRight> &rhs) {
+    return !(lhs == rhs);
+}
+
+template<typename TValueLeft, typename TValueRight>
+auto operator-(const Matrix<TValueLeft> &lhs, const Matrix<TValueRight> &rhs) {
+    if (lhs.dim != rhs.dim) {
+        throw IllegalDimException(lhs.dim, rhs.dim);
+    }
+    Matrix<decltype(TValueLeft() + TValueRight())> result(lhs.dim, lhs.mass_transform - rhs.mass_transform);
+    for (auto &[key, value]: lhs.data) {
+        result.data[key] = value;
+    }
+    for (auto &[key, value]: rhs.data) {
+        if (result.data.find(key) != result.data.end()) {
+            result.data[key] -= value;
+        } else {
+            result.data[key] = -value;
+        }
+    }
+    result.delete_zero_elements();
+    return result;
+}
+
+template<typename TValueLeft, typename TValueRight>
+auto operator*(Matrix<TValueLeft> lhs, Matrix<TValueRight> rhs) {
+    if (lhs.dim.get_j() != rhs.dim.get_i()) {
+        throw IllegalDimException(lhs.dim, rhs.dim);
+    }
+    lhs.apply_mass_transform();
+    rhs.apply_mass_transform();
+    Matrix<decltype(TValueLeft() + TValueRight())> result({ lhs.dim.get_i(), rhs.dim.get_j() });
+    for (StringInt i = 0; i < lhs.dim.get_i(); ++i) {
+        for (StringInt j = 0; j < rhs.dim.get_j(); ++j) {
+            decltype(TValueLeft() + TValueRight()) cell_result(0);
+            for (StringInt k = 0; k < lhs.dim.get_j(); ++k) {
+                cell_result += lhs.data[{i, k}] * rhs.data[{k, j}];
+            }
+            result.data[{i, j}] = cell_result;
+        }
+    }
+    result.delete_zero_elements();
+    return result;
+}
+
+template<typename TValueLeft, typename TValueRight>
+auto operator+(Matrix<TValueLeft> lhs, const TValueRight& rhs) {
+    lhs.mass_transform += rhs;
+    for (auto &[key, value] : lhs.data) {
+        value += rhs;
+    }
+    lhs.delete_zero_elements();
+    return lhs;
+}
+
+template<typename TValueLeft, typename TValueRight>
+auto operator-(Matrix<TValueLeft> lhs, const TValueRight& rhs) {
+    lhs.mass_transform -= rhs;
+    for (auto &[key, value] : lhs.data) {
+        value -= rhs;
+    }
+    lhs.delete_zero_elements();
+    return lhs;
+}
+
+template<typename TValueLeft, typename TValueRight>
+auto operator*(Matrix<TValueLeft> lhs, const TValueRight& rhs) {
+    lhs.mass_transform *= rhs;
+    for (auto &[key, value] : lhs.data) {
+        value *= rhs;
+    }
+    lhs.delete_zero_elements();
+    return lhs;
+}
+
+template<typename TValueLeft, typename TValueRight>
+auto operator+(const Matrix<TValueLeft> &lhs, const Matrix<TValueRight> &rhs) {
+    if (lhs.dim != rhs.dim) {
+        throw IllegalDimException(lhs.dim, rhs.dim);
+    }
+    Matrix<decltype(TValueLeft() + TValueRight())> result(lhs.dim, lhs.mass_transform + rhs.mass_transform);
+    for (auto &[key, value]: lhs.data) {
+        result.data[key] = value;
+    }
+    for (auto &[key, value]: rhs.data) {
+        if (result.data.find(key) != result.data.end()) {
+            result.data[key] += value;
+        } else {
+            result.data[key] = value;
+        }
+    }
+    return result;
+}
+
+template<typename TValueLeft, typename TValueRight>
+auto operator/(Matrix<TValueLeft> lhs, const TValueRight& rhs) {
+    if (rhs == 0) {
+        throw DivisionByZeroException();
+    }
+    lhs.mass_transform /= rhs;
+    for (auto &[key, value] : lhs.data) {
+        value /= rhs;
+    }
+    lhs.delete_zero_elements();
+    return lhs;
+}
+
+template <typename TValue>
+std::string to_string(Matrix<TValue> matrix) {
+    std::stringstream ss;
+    std::string type_name;
+    ss << "matrix " << typeid(TValue()).name() << " " << to_string(matrix.dim, false) << std::endl << std::endl;
+    for (auto [key, value]: matrix.data) {
+        ss << to_string(key, false) << "\t\t" <<  value << std::endl;
+    }
+    return ss.str();
+}
 
 #endif //COUNTING_STARS_MATRIX_H
