@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['illegaldigitexception_31',['IllegalDigitException',['../classIllegalDigitException.html',1,'']]],
-  ['illegaldimexception_32',['IllegalDimException',['../classIllegalDimException.html',1,'']]],
-  ['illegalsignexception_33',['IllegalSignException',['../classIllegalSignException.html',1,'']]],
-  ['illegalstateexception_34',['IllegalStateException',['../classIllegalStateException.html',1,'']]]
+  ['illegaldigitexception_35',['IllegalDigitException',['../classIllegalDigitException.html',1,'']]],
+  ['illegaldimexception_36',['IllegalDimException',['../classIllegalDimException.html',1,'']]],
+  ['illegalsignexception_37',['IllegalSignException',['../classIllegalSignException.html',1,'']]],
+  ['illegalstateexception_38',['IllegalStateException',['../classIllegalStateException.html',1,'']]]
 ];

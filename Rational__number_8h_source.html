@@ -187,36 +187,35 @@ $(function() {
 <div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;    [[nodiscard]] <a class="code" href="classStringInt.html">StringInt</a> <a class="code" href="classRational__number.html#ab62aeba965af04577e73009c6208e8a8">round</a>() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160; </div>
 <div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;    <a class="code" href="classRational__number.html">Rational_number</a>&amp; <a class="code" href="classRational__number.html#a3b7da00ab3a73290c9a0e85e524dae66">make_canonical</a>();</div>
-<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160; </div>
-<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;    <a class="code" href="classStringInt.html">StringInt</a> numerator;</div>
-<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160; </div>
-<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;    <a class="code" href="classStringInt.html">StringInt</a> denominator;</div>
-<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160; </div>
-<div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160;    [[nodiscard]]</div>
-<div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160;    <a class="code" href="classStringInt.html">StringInt</a> cast_to_integer(</div>
-<div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160;            <span class="keyword">const</span> std::string&amp; type_name,</div>
-<div class="line"><a name="l00435"></a><span class="lineno">  435</span>&#160;            <span class="keyword">const</span> <a class="code" href="classStringInt.html">StringInt</a>&amp; min,</div>
-<div class="line"><a name="l00436"></a><span class="lineno">  436</span>&#160;            <span class="keyword">const</span> <a class="code" href="classStringInt.html">StringInt</a>&amp; max,</div>
-<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;            <span class="keywordtype">bool</span> ignore_exceptions = <span class="keyword">false</span>,</div>
-<div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160;            <span class="keywordtype">bool</span> ignore_overflows = <span class="keyword">false</span></div>
-<div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160;                    ) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160; </div>
-<div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160;    [[nodiscard]]</div>
-<div class="line"><a name="l00451"></a><span class="lineno">  451</span>&#160;    <span class="keywordtype">long</span> <span class="keywordtype">double</span> cast_to_floating(<span class="keyword">const</span> std::string&amp; type_name, <span class="keyword">const</span> <span class="keywordtype">long</span> <span class="keywordtype">double</span>&amp; min, <span class="keyword">const</span> <span class="keywordtype">long</span> <span class="keywordtype">double</span>&amp; max) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00452"></a><span class="lineno">  452</span>&#160; </div>
-<div class="line"><a name="l00457"></a><span class="lineno">  457</span>&#160;    <span class="keywordtype">void</span> validate() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160;};</div>
-<div class="line"><a name="l00459"></a><span class="lineno">  459</span>&#160; </div>
-<div class="line"><a name="l00465"></a><span class="lineno">  465</span>&#160;<a class="code" href="classRational__number.html">Rational_number</a> operator+(<a class="code" href="classRational__number.html">Rational_number</a> lhs, <span class="keyword">const</span> <a class="code" href="classRational__number.html">Rational_number</a>&amp; rhs);</div>
-<div class="line"><a name="l00466"></a><span class="lineno">  466</span>&#160; </div>
-<div class="line"><a name="l00472"></a><span class="lineno">  472</span>&#160;<a class="code" href="classRational__number.html">Rational_number</a> operator-(<a class="code" href="classRational__number.html">Rational_number</a> lhs, <span class="keyword">const</span> <a class="code" href="classRational__number.html">Rational_number</a>&amp; rhs);</div>
-<div class="line"><a name="l00473"></a><span class="lineno">  473</span>&#160; </div>
-<div class="line"><a name="l00479"></a><span class="lineno">  479</span>&#160;<a class="code" href="classRational__number.html">Rational_number</a> operator*(<a class="code" href="classRational__number.html">Rational_number</a> lhs, <span class="keyword">const</span> <a class="code" href="classRational__number.html">Rational_number</a>&amp; rhs);</div>
-<div class="line"><a name="l00480"></a><span class="lineno">  480</span>&#160; </div>
-<div class="line"><a name="l00486"></a><span class="lineno">  486</span>&#160;<a class="code" href="classRational__number.html">Rational_number</a> operator/(<a class="code" href="classRational__number.html">Rational_number</a> lhs, <span class="keyword">const</span> <a class="code" href="classRational__number.html">Rational_number</a>&amp; rhs);</div>
-<div class="line"><a name="l00487"></a><span class="lineno">  487</span>&#160; </div>
-<div class="line"><a name="l00488"></a><span class="lineno">  488</span>&#160;<span class="preprocessor">#endif //COUNTING_STARS_RATIONAL_NUMBER_H</span></div>
+<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;    <a class="code" href="classStringInt.html">StringInt</a> numerator;</div>
+<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160; </div>
+<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;    <a class="code" href="classStringInt.html">StringInt</a> denominator;</div>
+<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160; </div>
+<div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160;    [[nodiscard]]</div>
+<div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160;    <a class="code" href="classStringInt.html">StringInt</a> cast_to_integer(</div>
+<div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160;            <span class="keyword">const</span> std::string&amp; type_name,</div>
+<div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160;            <span class="keyword">const</span> <a class="code" href="classStringInt.html">StringInt</a>&amp; min,</div>
+<div class="line"><a name="l00435"></a><span class="lineno">  435</span>&#160;            <span class="keyword">const</span> <a class="code" href="classStringInt.html">StringInt</a>&amp; max,</div>
+<div class="line"><a name="l00436"></a><span class="lineno">  436</span>&#160;            <span class="keywordtype">bool</span> ignore_exceptions = <span class="keyword">false</span>,</div>
+<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;            <span class="keywordtype">bool</span> ignore_overflows = <span class="keyword">false</span></div>
+<div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160;                    ) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160; </div>
+<div class="line"><a name="l00449"></a><span class="lineno">  449</span>&#160;    [[nodiscard]]</div>
+<div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160;    <span class="keywordtype">long</span> <span class="keywordtype">double</span> cast_to_floating(<span class="keyword">const</span> std::string&amp; type_name, <span class="keyword">const</span> <span class="keywordtype">long</span> <span class="keywordtype">double</span>&amp; min, <span class="keyword">const</span> <span class="keywordtype">long</span> <span class="keywordtype">double</span>&amp; max) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00451"></a><span class="lineno">  451</span>&#160; </div>
+<div class="line"><a name="l00456"></a><span class="lineno">  456</span>&#160;    <span class="keywordtype">void</span> validate() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00457"></a><span class="lineno">  457</span>&#160;};</div>
+<div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160; </div>
+<div class="line"><a name="l00464"></a><span class="lineno">  464</span>&#160;<a class="code" href="classRational__number.html">Rational_number</a> operator+(<a class="code" href="classRational__number.html">Rational_number</a> lhs, <span class="keyword">const</span> <a class="code" href="classRational__number.html">Rational_number</a>&amp; rhs);</div>
+<div class="line"><a name="l00465"></a><span class="lineno">  465</span>&#160; </div>
+<div class="line"><a name="l00471"></a><span class="lineno">  471</span>&#160;<a class="code" href="classRational__number.html">Rational_number</a> operator-(<a class="code" href="classRational__number.html">Rational_number</a> lhs, <span class="keyword">const</span> <a class="code" href="classRational__number.html">Rational_number</a>&amp; rhs);</div>
+<div class="line"><a name="l00472"></a><span class="lineno">  472</span>&#160; </div>
+<div class="line"><a name="l00478"></a><span class="lineno">  478</span>&#160;<a class="code" href="classRational__number.html">Rational_number</a> operator*(<a class="code" href="classRational__number.html">Rational_number</a> lhs, <span class="keyword">const</span> <a class="code" href="classRational__number.html">Rational_number</a>&amp; rhs);</div>
+<div class="line"><a name="l00479"></a><span class="lineno">  479</span>&#160; </div>
+<div class="line"><a name="l00485"></a><span class="lineno">  485</span>&#160;<a class="code" href="classRational__number.html">Rational_number</a> operator/(<a class="code" href="classRational__number.html">Rational_number</a> lhs, <span class="keyword">const</span> <a class="code" href="classRational__number.html">Rational_number</a>&amp; rhs);</div>
+<div class="line"><a name="l00486"></a><span class="lineno">  486</span>&#160; </div>
+<div class="line"><a name="l00487"></a><span class="lineno">  487</span>&#160;<span class="preprocessor">#endif //COUNTING_STARS_RATIONAL_NUMBER_H</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclassRational__number_html_a3e0981492044f126bec36609067a6cfd"><div class="ttname"><a href="classRational__number.html#a3e0981492044f126bec36609067a6cfd">Rational_number::operator&lt;&lt;</a></div><div class="ttdeci">friend std::ostream &amp; operator&lt;&lt;(std::ostream &amp;os, Rational_number const &amp;x)</div><div class="ttdoc">Friend operator that prints Rational_number to std::ostream.</div><div class="ttdef"><b>Definition:</b> Rational_number.cpp:205</div></div>
 <div class="ttc" id="aclassRational__number_html_a9983d53c4826c4726aeebb542f97843c"><div class="ttname"><a href="classRational__number.html#a9983d53c4826c4726aeebb542f97843c">Rational_number::operator&gt;=</a></div><div class="ttdeci">friend bool operator&gt;=(const Rational_number &amp;lhs, const Rational_number &amp;rhs)</div><div class="ttdoc">Friend geq operator.</div><div class="ttdef"><b>Definition:</b> Rational_number.cpp:243</div></div>

@@ -233,21 +233,21 @@ $(function() {
 <div class="line"><a name="l00568"></a><span class="lineno">  568</span>&#160; </div>
 <div class="line"><a name="l00574"></a><span class="lineno">  574</span>&#160;<a class="code" href="classStringInt.html">StringInt</a> operator/(<a class="code" href="classStringInt.html">StringInt</a> lhs, <span class="keyword">const</span> <a class="code" href="classStringInt.html">StringInt</a>&amp;);</div>
 <div class="line"><a name="l00575"></a><span class="lineno">  575</span>&#160; </div>
-<div class="line"><a name="l00576"></a><span class="lineno">  576</span>&#160;std::string to_string(<span class="keyword">const</span> <a class="code" href="classStringInt.html">StringInt</a>&amp; stringint);</div>
-<div class="line"><a name="l00577"></a><span class="lineno">  577</span>&#160; </div>
-<div class="line"><a name="l00578"></a><span class="lineno">  578</span>&#160;<span class="keyword">namespace </span>std {</div>
-<div class="line"><a name="l00579"></a><span class="lineno">  579</span>&#160;    <span class="keyword">template</span> &lt;&gt;</div>
-<div class="line"><a name="l00580"></a><span class="lineno"><a class="line" href="structstd_1_1hash_3_01StringInt_01_4.html">  580</a></span>&#160;    <span class="keyword">struct </span>hash&lt;<a class="code" href="classStringInt.html">StringInt</a>&gt; {</div>
-<div class="line"><a name="l00581"></a><span class="lineno">  581</span>&#160;        std::size_t operator()(<span class="keyword">const</span> <a class="code" href="classStringInt.html">StringInt</a>&amp; x) <span class="keyword">const</span> noexcept {</div>
-<div class="line"><a name="l00582"></a><span class="lineno">  582</span>&#160;            <span class="keyword">using</span> std::size_t;</div>
-<div class="line"><a name="l00583"></a><span class="lineno">  583</span>&#160;            <span class="keyword">using</span> std::hash;</div>
-<div class="line"><a name="l00584"></a><span class="lineno">  584</span>&#160;            <span class="keyword">using</span> std::string;</div>
-<div class="line"><a name="l00585"></a><span class="lineno">  585</span>&#160;            <span class="keywordflow">return</span> (hash&lt;string&gt;()(x.<a class="code" href="classStringInt.html#a8bd96a0c693236b47bca74bc922efa92">get_val</a>()) ^ (hash&lt;char&gt;()(x.<a class="code" href="classStringInt.html#a8cb6b9175fda26bad6be2adec5ca6f57">get_sign</a>()) &lt;&lt; 1));</div>
-<div class="line"><a name="l00586"></a><span class="lineno">  586</span>&#160;        }</div>
-<div class="line"><a name="l00587"></a><span class="lineno">  587</span>&#160;    };</div>
-<div class="line"><a name="l00588"></a><span class="lineno">  588</span>&#160;}</div>
-<div class="line"><a name="l00589"></a><span class="lineno">  589</span>&#160; </div>
-<div class="line"><a name="l00590"></a><span class="lineno">  590</span>&#160;<span class="preprocessor">#endif //COUNTING_STARS_STRINGINT_H</span></div>
+<div class="line"><a name="l00582"></a><span class="lineno">  582</span>&#160;std::string to_string(<span class="keyword">const</span> <a class="code" href="classStringInt.html">StringInt</a>&amp; stringint);</div>
+<div class="line"><a name="l00583"></a><span class="lineno">  583</span>&#160; </div>
+<div class="line"><a name="l00584"></a><span class="lineno">  584</span>&#160;<span class="keyword">namespace </span>std {</div>
+<div class="line"><a name="l00585"></a><span class="lineno">  585</span>&#160;    <span class="keyword">template</span> &lt;&gt;</div>
+<div class="line"><a name="l00586"></a><span class="lineno"><a class="line" href="structstd_1_1hash_3_01StringInt_01_4.html">  586</a></span>&#160;    <span class="keyword">struct </span>hash&lt;<a class="code" href="classStringInt.html">StringInt</a>&gt; {</div>
+<div class="line"><a name="l00587"></a><span class="lineno">  587</span>&#160;        std::size_t operator()(<span class="keyword">const</span> <a class="code" href="classStringInt.html">StringInt</a>&amp; x) <span class="keyword">const</span> noexcept {</div>
+<div class="line"><a name="l00588"></a><span class="lineno">  588</span>&#160;            <span class="keyword">using</span> std::size_t;</div>
+<div class="line"><a name="l00589"></a><span class="lineno">  589</span>&#160;            <span class="keyword">using</span> std::hash;</div>
+<div class="line"><a name="l00590"></a><span class="lineno">  590</span>&#160;            <span class="keyword">using</span> std::string;</div>
+<div class="line"><a name="l00591"></a><span class="lineno">  591</span>&#160;            <span class="keywordflow">return</span> (hash&lt;string&gt;()(x.<a class="code" href="classStringInt.html#a8bd96a0c693236b47bca74bc922efa92">get_val</a>()) ^ (hash&lt;char&gt;()(x.<a class="code" href="classStringInt.html#a8cb6b9175fda26bad6be2adec5ca6f57">get_sign</a>()) &lt;&lt; 1));</div>
+<div class="line"><a name="l00592"></a><span class="lineno">  592</span>&#160;        }</div>
+<div class="line"><a name="l00593"></a><span class="lineno">  593</span>&#160;    };</div>
+<div class="line"><a name="l00594"></a><span class="lineno">  594</span>&#160;}</div>
+<div class="line"><a name="l00595"></a><span class="lineno">  595</span>&#160; </div>
+<div class="line"><a name="l00596"></a><span class="lineno">  596</span>&#160;<span class="preprocessor">#endif //COUNTING_STARS_STRINGINT_H</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclassStringInt_html_a8cd41e990495a4bca79cdfa56e6a18b2"><div class="ttname"><a href="classStringInt.html#a8cd41e990495a4bca79cdfa56e6a18b2">StringInt::operator&gt;</a></div><div class="ttdeci">friend bool operator&gt;(const StringInt &amp;lhs, const StringInt &amp;rhs)</div><div class="ttdoc">Friend greater operator.</div><div class="ttdef"><b>Definition:</b> StringInt.cpp:183</div></div>
 <div class="ttc" id="aclassDivisionByZeroException_html"><div class="ttname"><a href="classDivisionByZeroException.html">DivisionByZeroException</a></div><div class="ttdoc">Header file that describes DivisionByZeroException.</div><div class="ttdef"><b>Definition:</b> DivisionByZeroException.h:18</div></div>
