@@ -12,8 +12,11 @@ bool operator==(const Vector<TValueLeft> &lhs, const Vector<TValueRight> &rhs) {
     auto predicate = [](auto lhs, auto rhs) {
         return decltype(lhs + rhs)(lhs) == decltype(lhs + rhs)(rhs);
     };
-    return lhs.dim == rhs.dim && lhs.get_size() == rhs.get_size() && lhs.mass_transform == rhs.mass_transform && std::equal(lhs.data.begin(), lhs.data.end(), rhs.data.begin(), predicate);
+    return lhs.capacity == rhs.capacity && lhs.get_size() == rhs.get_size() && lhs.mass_transform == rhs.mass_transform && std::equal(lhs.data.begin(), lhs.data.end(), rhs.data.begin(), predicate);
 }
+
+template<typename TValue>
+static typename Vector<TValue>::precision_type default_precision = 0;
 
 template<typename TValueLeft, typename TValueRight>
 bool operator!=(const Vector<TValueLeft> &lhs, const Vector<TValueRight> &rhs) {

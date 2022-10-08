@@ -23,7 +23,7 @@ TEST(Vector_test, int_test)
     ASSERT_EQ(int_vector(2), 6);
     ASSERT_EQ(int_vector(3), 0);
     ASSERT_EQ(int_vector.get_size(), 2);
-    ASSERT_EQ(int_vector.get_dim(), -1);
+    ASSERT_EQ(int_vector.get_capacity(), -1);
     int_vector.set_precision(10.0);
     ASSERT_EQ(int_vector.get_size(), 0);
 }
@@ -40,7 +40,7 @@ TEST(Vector_test, long_double_test)
     ASSERT_EQ(long_double_vector(3), 0);
     ASSERT_EQ(long_double_vector(StringInt("9999999999999999999")), 99.5);
     ASSERT_EQ(long_double_vector.get_size(), 2);
-    ASSERT_EQ(long_double_vector.get_dim(), -1);
+    ASSERT_EQ(long_double_vector.get_capacity(), -1);
     long_double_vector.set_precision(10.0);
     ASSERT_EQ(long_double_vector.get_size(), 1);
 }
@@ -57,7 +57,7 @@ TEST(Vector_test, StringInt_test)
     ASSERT_EQ(stringint_vector(3), 0);
     ASSERT_EQ(stringint_vector(StringInt("9999999999999999999")), 123123123);
     ASSERT_EQ(stringint_vector.get_size(), 2);
-    ASSERT_EQ(stringint_vector.get_dim(), -1);
+    ASSERT_EQ(stringint_vector.get_capacity(), -1);
     stringint_vector.set_precision(123123999);
     ASSERT_EQ(stringint_vector.get_size(), 1);
 }
@@ -79,7 +79,7 @@ TEST(Vector_test, Rational_number_test)
     ASSERT_EQ(rational_number_vector(StringInt("9999999999999999999")).get_numerator(), 123123123);
     ASSERT_EQ(rational_number_vector(StringInt("9999999999999999999")).get_denominator(), 2);
     ASSERT_EQ(rational_number_vector.get_size(), 2);
-    ASSERT_EQ(rational_number_vector.get_dim(), -1);
+    ASSERT_EQ(rational_number_vector.get_capacity(), -1);
     rational_number_vector.set_precision(123123999);
     ASSERT_EQ(rational_number_vector.get_size(), 1);
 }

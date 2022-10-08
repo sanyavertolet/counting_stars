@@ -406,3 +406,10 @@ void Rational_number::validate() const {
         throw DivisionByZeroException("Denominator of rational number should not be null: " + std::string(numerator) + "/" + std::string(denominator));
     }
 }
+
+Rational_number abs(Rational_number number) {
+    auto positive_numerator = number.get_numerator();
+    positive_numerator.set_sign('+');
+    number.set_numerator(positive_numerator);
+    return number;
+}

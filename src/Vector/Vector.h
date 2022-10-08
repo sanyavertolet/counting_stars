@@ -26,30 +26,32 @@
  * Template class that implements vector.
  *
  * If TValue is bool, data is stored as uint64_t value, otherwise it is stored as std::map<StringIng, TValue>.
- * If dim is negative, vector is considered to be endless, otherwise it has maximum of dim elements.
+ * If capacity is negative, vector is considered to be endless, otherwise it has maximum of capacity elements.
  *
  * @tparam TValue type of stored data.
  */
 template<typename TValue>
 class Vector {
 public:
+    using index_type = StringInt;
+    using precision_type = decltype(abs(std::declval<TValue>()));
     /**
      * Default constructor.
      */
-    Vector(): precision(0), dim(-1), mass_transform(0), data({}) {}
+    Vector(): precision(0), capacity(-1), mass_transform(0), data({}) {}
 
     /**
      * Constructor for almost any case.
      *
+     * @param required_capacity capacity of vector.
      * @param required_precision precision of contained elements, default is default_precision.
-     * @param required_dim dimension of vector, default -1.
      * @param default_value value that should be set as default value for each element.
      */
     explicit Vector(
-            StringInt required_dim,
+            index_type required_capacity,
             double default_value = 0,
-            double required_precision = default_precision
-                    ): dim(std::move(required_dim)), mass_transform(default_value), precision(required_precision), data({}) { }
+            precision_type required_precision = default_precision
+                    ): capacity(std::move(required_capacity)), mass_transform(default_value), precision(required_precision), data({}) { }
 
     /**
      * Constructor from file.
@@ -58,7 +60,7 @@ public:
      * @param required_precision precision of contained elements, default is default_precision.
      * @param default_value value that should be set as default value for each element.
      */
-    Vector(const char* file_path, TValue required_precision = default_precision, TValue default_value = 0):
+    Vector(const char* file_path, precision_type required_precision = default_precision, TValue default_value = 0):
             mass_transform(default_value), precision(required_precision) {
         std::ifstream infile(file_path);
         if (infile.bad()) {
@@ -68,7 +70,7 @@ public:
     }
 
     explicit Vector(const Matrix_proxy<TValue>& proxy): mass_transform(0), precision(proxy.get_precision()) {
-        dim = std::max(proxy.get_dim().get_i(), proxy.get_dim().get_j());
+        capacity = std::max(proxy.get_capacity().get_i(), proxy.get_capacity().get_j());
         data = proxy.get_values_as_map();
     }
 
@@ -77,15 +79,15 @@ public:
      *
      * @param rhs instance to copy.
      */
-    Vector(const Vector& rhs): dim(rhs.dim), mass_transform(rhs.mass_transform), precision(rhs.precision), data(rhs.data) { }
+    Vector(const Vector& rhs): capacity(rhs.capacity), mass_transform(rhs.mass_transform), precision(rhs.precision), data(rhs.data) { }
 
     /**
      * Move constructor.
      *
      * @param rhs instance to move.
      */
-    Vector(Vector&& rhs) noexcept : dim(rhs.dim), mass_transform(rhs.mass_transform), precision(rhs.precision), data(rhs.data) {
-        rhs.dim = StringInt();
+    Vector(Vector&& rhs) noexcept : capacity(rhs.capacity), mass_transform(rhs.mass_transform), precision(rhs.precision), data(rhs.data) {
+        rhs.capacity = StringInt();
         rhs.mass_transform = TValue();
         rhs.precision = TValue();
         rhs.data = {};
@@ -99,7 +101,7 @@ public:
      */
     Vector& operator=(const Vector& rhs) {
         Vector tmp(rhs);
-        std::swap(dim, tmp.dim);
+        std::swap(capacity, tmp.capacity);
         std::swap(mass_transform, tmp.mass_transform);
         std::swap(precision, tmp.precision);
         std::swap(data, tmp.data);
@@ -113,8 +115,8 @@ public:
      * @return this Vector filled with rhs fields.
      */
     Vector& operator=(Vector&& rhs) noexcept {
-        dim = std::move(rhs.dim);
-        rhs.dim = StringInt();
+        capacity = std::move(rhs.capacity);
+        rhs.capacity = StringInt();
         mass_transform = std::move(rhs.mass_transform);
         rhs.mass_transform = TValue();
         precision = std::move(rhs.precision);
@@ -130,7 +132,7 @@ public:
      * @param rhs instance to copy.
      * @return this Vector with data filled with rhs.
      */
-    Vector& operator=(std::map<StringInt, TValue>&& data_to_move) noexcept {
+    Vector& operator=(std::map<index_type, TValue>&& data_to_move) noexcept {
         data = std::move(data_to_move);
         data_to_move = {};
         return *this;
@@ -141,7 +143,7 @@ public:
      *
      * @param new_precision new double to be set as precision.
      */
-    void set_precision(TValue new_precision) {
+    void set_precision(precision_type new_precision) {
         precision = new_precision;
         delete_zero_elements();
     }
@@ -151,7 +153,7 @@ public:
      *
      * @return current precision.
      */
-    TValue get_precision() {
+    precision_type get_precision() {
         return precision;
     }
 
@@ -160,18 +162,18 @@ public:
      *
      * @return number of not-null elements.
      */
-    StringInt get_size() {
+    index_type get_size() {
         delete_zero_elements();
-        return StringInt(data.size());
+        return index_type(data.size());
     }
 
     /**
-     * Get dimension of this Vector.
+     * Get capacity of this Vector.
      *
-     * @return dimension of this Vector.
+     * @return capacity of this Vector.
      */
-    StringInt get_dim() {
-        return dim;
+    index_type get_capacity() {
+        return capacity;
     }
 
     /**
@@ -242,8 +244,8 @@ public:
      */
     TValue& operator()(const StringInt& index) {
         delete_zero_elements();
-        if (dim >= 0) {
-            if (index >= dim) {
+        if (capacity >= 0) {
+            if (index >= capacity) {
                 throw OutOfRangeException("OutOfRangeException");
             }
         }
@@ -379,7 +381,7 @@ public:
     friend std::string to_string(Vector vector) {
         std::stringstream ss;
         std::string type_name;
-        ss << "vector " << get_type_name(TValue()) << " " << vector.dim << std::endl << std::endl;
+        ss << "vector " << get_type_name(TValue()) << " " << vector.capacity << std::endl << std::endl;
         for (auto [key, value]: vector.data) {
             ss << (key + 1) << "\t" <<  value << std::endl;
         }
@@ -389,21 +391,21 @@ public:
 private:
     /**
      * Number of maximum stored elements.
-     * If dim is negative, Vector is considered to be endless.
+     * If capacity is negative, Vector is considered to be endless.
      */
-    StringInt dim;
+    StringInt capacity;
 
     /**
      * Internal value to decrease memory usage.
-     * If mass operation is applied to Vector, mass transform is changed in order not to store all [dim] elements.
+     * If mass operation is applied to Vector, mass transform is changed in order not to store all [capacity] elements.
      */
     TValue mass_transform;
 
     /**
      * Precision of elements in this Vector.
-     * If a number is less then precision, value is considered to be zero.
+     * If a number is less then precision, value is considered to be zero and should not be stored in data.
      */
-    TValue precision;
+    precision_type precision;
 
     /**
      * Data stored as ordered map.
@@ -416,7 +418,7 @@ private:
     /**
      * Constant that defines default precision.
      */
-    static constexpr double default_precision = 0.0000000001;
+    static precision_type default_precision;
 
     template<typename TComplexReal = double, typename TComplexImaginary = double>
     static std::string get_type_name(TValue) {
@@ -437,12 +439,12 @@ private:
      * Internal method to delete elements from [data] that are less than [precision].
      */
     void delete_zero_elements() {
-        std::set<StringInt> to_delete;
-        if (mass_transform <= TValue(precision)) {
+        std::set<index_type> to_delete;
+        if (abs(mass_transform) <= precision) {
             mass_transform = TValue(0);
         }
         for (auto [key, value] : data) {
-            if (value <= TValue(precision)) {
+            if (abs(value) <= precision) {
                 to_delete.insert(key);
             }
         }
@@ -464,7 +466,7 @@ Vector<TValue> parse_from_ifstream(std::ifstream &is);
 
 /**
  * Vector implementation for bool.
- * In this case dim is considered to be 64 and the data is stored as uint64_t.
+ * In this case data is stored as std::vector of uint64_t.
  */
 template<>
 class Vector<bool> {
@@ -473,14 +475,14 @@ public:
     /**
      * Default constructor
      */
-    Vector(): dim(0), data({}) { }
+    Vector(): capacity(0), data({}) { }
 
     /**
      * Constructor that allows to set default value to data.
      *
      * @param is_zeroes flag to set default value for each element of Vector.
      */
-    explicit Vector(index_type d): dim(d), data({}) {
+    explicit Vector(index_type d): capacity(d), data({}) {
         for (auto i = 0llu; i < d; ++i) {
             data.push_back(0u);
         }
@@ -504,7 +506,7 @@ public:
      * @return amount of elements in data.
      */
     [[nodiscard]] index_type get_pages() const {
-        return std::ceil((long double)(dim) / double(bits_per_uint));
+        return std::ceil((long double)(capacity) / double(bits_per_uint));
     }
 
     static index_type get_element_page(index_type index) {
@@ -572,7 +574,7 @@ public:
         for (int i = 0; i < get_pages(); ++i) {
             result.data[i] ^= -1;
         }
-        auto extra_cells = bits_per_uint - (dim % bits_per_uint);
+        auto extra_cells = bits_per_uint - (capacity % bits_per_uint);
         result.data[get_pages() - 1] <<= extra_cells;
         result.data[get_pages() - 1] >>= extra_cells;
         return result;
@@ -585,9 +587,9 @@ public:
      * @return value of element on position [index].
      */
     bool operator()(int index) const {
-        if (index >= dim) {
+        if (index >= capacity) {
             throw OutOfRangeException("Index " + std::to_string(index) + " is out of range, ["
-                                      + std::to_string(dim) + "] is maximal possible index.");
+                                      + std::to_string(capacity) + "] is maximal possible index.");
         }
         return (data[get_element_page(index)] & (1 << (index % bits_per_uint))) >> (index % bits_per_uint);
     }
@@ -600,9 +602,9 @@ public:
      * @return value of element on position [index].
      */
     bool operator()(int index, bool value) {
-        if (index >= dim) {
+        if (index >= capacity) {
             throw OutOfRangeException("Index " + std::to_string(index) + " is out of range ("
-                                      + std::to_string(dim) + " is maximum possible index).");
+                                      + std::to_string(capacity) + " is maximum possible index).");
         }
         if (data[get_element_page(index)] >> (index % bits_per_uint) != value) {
             data[get_element_page(index)] ^= 1 << (index % bits_per_uint);
@@ -617,10 +619,10 @@ public:
      * @return this Vector OR [rhs].
      */
     Vector<bool>& operator+=(const Vector<bool> &rhs) {
-        if (dim != rhs.dim) {
-            throw IllegalDimException();
+        if (capacity != rhs.capacity) {
+            throw IllegalCapacityException();
         }
-        for (int i = 0; i < dim; ++i) {
+        for (int i = 0; i < capacity; ++i) {
             data[i] |= rhs.data[i];
         }
         return *this;
@@ -633,10 +635,10 @@ public:
      * @return this Vector AND [rhs].
      */
     Vector<bool>& operator*=(const Vector<bool> &rhs) {
-        if (dim != rhs.dim) {
-            throw IllegalDimException();
+        if (capacity != rhs.capacity) {
+            throw IllegalCapacityException();
         }
-        for (int i = 0; i < dim; ++i) {
+        for (int i = 0; i < capacity; ++i) {
             data[i] &= rhs.data[i];
         }
         return *this;
@@ -679,9 +681,9 @@ private:
     std::vector<uint64_t> data;
 
     /**
-     * Vector dimension.
+     * Vector capacity.
      */
-    unsigned long long dim;
+    unsigned long long capacity;
 };
 
 #endif //COUNTING_STARS_VECTOR_H

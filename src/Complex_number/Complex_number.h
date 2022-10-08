@@ -429,4 +429,16 @@ bool operator>=(Complex_number<TRealLeft, TImaginaryLeft> lhs, const Complex_num
     return !(lhs < rhs);
 }
 
+/**
+ *
+ * @tparam TRealLeft type of real part of a Complex_number.
+ * @tparam TImaginaryLeft type of imaginary part of a Complex_number.
+ * @param number
+ * @return modulus of a number.
+ */
+template<typename TReal, typename TImaginary>
+auto abs(Complex_number<TReal, TImaginary> number) {
+    return number.modulus();
+}
+
 #endif //COUNTING_STARS_COMPLEX_NUMBER_H

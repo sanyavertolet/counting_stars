@@ -14,7 +14,7 @@
 #include "FileNotFoundException/FileNotFoundException.h"
 
 #include "IllegalDigitException/IllegalDigitException.h"
-#include "IllegalDimException/IllegalDimException.h"
+#include "IllegalCapacityException/IllegalCapacityException.h"
 #include "IllegalSignException/IllegalSignException.h"
 #include "IllegalStateException/IllegalStateException.h"
 

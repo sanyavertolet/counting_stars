@@ -64,16 +64,18 @@ std::string to_string(Matrix<T> matrix);
  * Class that defined sparse Matrix.
  *
  * @tparam TValue type of stored data.
- * @param dim Pos of maximum row and column number.
+ * @param capacity Pos of maximum row and column number.
  * @param precision value defining a zero - everything that is less this value is considered to be zero.
  */
 template<typename TValue>
 class Matrix {
 public:
+    using index_type = Pos;
+    using precision_type = decltype(abs(std::declval<TValue>()));
     /**
      * Default constructor.
      */
-    Matrix() : dim(1000, 1000), mass_transform(0), data({}), precision(0) { }
+    Matrix() : capacity(1000, 1000), mass_transform(0), data({}), precision(0) { }
 
     /**
      * Constructor for all the cases.
@@ -82,15 +84,15 @@ public:
      * @param default_val value that is considered to be assigned to all the stored values by default.
      * @param required_precision value defining a zero - everything that is less this value is considered to be zero.
      */
-    explicit Matrix(Pos max_position, TValue default_val = 0, TValue required_precision = 0) :
-    dim(std::move(max_position)), mass_transform(default_val), precision(required_precision), data({}) { }
+    explicit Matrix(index_type max_position, TValue default_val = 0, precision_type required_precision = 0) :
+            capacity(std::move(max_position)), mass_transform(default_val), precision(required_precision), data({}) { }
 
     /**
      * Copy constructor.
      *
      * @param rhs instance to copy.
      */
-    Matrix(Matrix& rhs) : dim(rhs.dim), precision(rhs.precision), mass_transform(rhs.mass_transform), data(rhs.data) { }
+    Matrix(Matrix& rhs) : capacity(rhs.capacity), precision(rhs.precision), mass_transform(rhs.mass_transform), data(rhs.data) { }
 
     /**
      * Move constructor.
@@ -98,8 +100,8 @@ public:
      * @param rhs instance to move.
      */
     Matrix(Matrix&& rhs) noexcept :
-    dim(std::move(rhs.dim)), precision(std::move(rhs.precision)), mass_transform(std::move(rhs.mass_transform)), data(std::move(rhs.data)) {
-        rhs.dim = Pos();
+            capacity(std::move(rhs.capacity)), precision(std::move(rhs.precision)), mass_transform(std::move(rhs.mass_transform)), data(std::move(rhs.data)) {
+        rhs.capacity = Pos();
         rhs.precision = TValue();
         rhs.mass_transform = TValue();
         rhs.data = {};
@@ -110,7 +112,7 @@ public:
      *
      * @param proxy Matrix_proxy.
      */
-    Matrix(Matrix_proxy<TValue> proxy): dim(proxy.get_dim()), precision(proxy.get_precision()) {
+    Matrix(Matrix_proxy<TValue> proxy): capacity(proxy.get_capacity()), precision(proxy.get_precision()) {
         data = proxy.get_values_as_hash_map();
     }
 
@@ -142,7 +144,7 @@ public:
      */
     Matrix& operator=(const Matrix& rhs) {
         Matrix tmp(rhs);
-        std::swap(dim, tmp.dim);
+        std::swap(capacity, tmp.capacity);
         std::swap(precision, tmp.precision);
         std::swap(mass_transform, tmp.mass_transform);
         std::swap(data, tmp.data);
@@ -156,8 +158,8 @@ public:
      * @return this Matrix filled with rhs fields.
      */
     Matrix& operator=(Matrix&& rhs) noexcept {
-        dim = std::move(rhs.dim);
-        rhs.dim = Pos();
+        capacity = std::move(rhs.capacity);
+        rhs.capacity = Pos();
         precision = std::move(rhs.precision);
         rhs.precision = TValue();
         mass_transform = std::move(rhs.mass_transform);
@@ -172,32 +174,32 @@ public:
      * @param rhs instance to move.
      * @return this Matrix filled with rhs fields.
      */
-    Matrix& operator=(std::unordered_map<Pos, TValue>&& rhs) noexcept {
+    Matrix& operator=(std::unordered_map<index_type, TValue>&& rhs) noexcept {
         data = std::move(rhs);
         rhs = {};
     }
 
     /**
-     * Change matrix dimension.
+     * Change matrix capacity.
      *
-     * @param new_dim
+     * @param new_capacity
      * @param swallow_exception
-     * @throws OutOfRangeException if new matrix dimension leads to possible data loss.
+     * @throws IllegalCapacityException if new matrix capacity leads to possible data loss.
      */
-    void set_dim(const Pos& new_dim, bool swallow_exception = false) {
-        if (!swallow_exception && new_dim.get_i() < dim.get_i() || new_dim.get_j() < dim.get_j()) {
-            throw OutOfRangeException("New dim is smaller by at least one coordinate.\n\tOld: " + to_string(dim) + "\n\tNew: " + to_string(new_dim));
+    void set_capacity(const index_type& new_capacity, bool swallow_exception = false) {
+        if (!swallow_exception && new_capacity.get_i() < capacity.get_i() || new_capacity.get_j() < capacity.get_j()) {
+            throw IllegalCapacityException("New capacity is smaller by at least one coordinate.\n\tOld: " + to_string(capacity) + "\n\tNew: " + to_string(new_capacity));
         }
-        dim = new_dim;
+        capacity = new_capacity;
     }
 
     /**
-     * dim getter.
+     * capacity getter.
      *
-     * @return dim of a current matrix.
+     * @return capacity of a current matrix.
      */
-    [[nodiscard]] Pos get_dim() const {
-        return dim;
+    [[nodiscard]] index_type get_capacity() const {
+        return capacity;
     }
 
     /**
@@ -217,7 +219,7 @@ public:
      *
      * @return precision.
      */
-    TValue get_precision() const {
+    precision_type get_precision() const {
         return precision;
     }
 
@@ -235,7 +237,7 @@ public:
      *
      * @return amount of values present in data.
      */
-    [[nodiscard]] StringInt get_size() const {
+    [[nodiscard]] size_t get_size() const {
         return data.size();
     }
 
@@ -303,7 +305,7 @@ public:
      * @return transposed Matrix.
      */
     Matrix operator~() {
-        Matrix transposed(~dim);
+        Matrix transposed(~capacity);
         for(auto [key, value] : data) {
             transposed.data.insert(~key, value);
         }
@@ -316,15 +318,15 @@ public:
      * @param pos Pos index of required element.
      * @return element of this Matrix on position pos.
      */
-    TValue& operator()(Pos pos) {
+    TValue& operator()(index_type pos) {
         delete_zero_elements();
-        if (!(pos < dim)) {
+        if (!(pos < capacity)) {
             throw OutOfRangeException("OutOfRangeException");
         }
         if (data.find(pos) == data.end()) {
             data[pos] = mass_transform;
         }
-        if (data[pos] <= precision) {
+        if (abs(data[pos]) <= precision) {
             data[pos] = TValue(0);
         }
         return data[pos];
@@ -358,7 +360,7 @@ public:
      * @return slice of this Matrix on positions coords.
      */
     Matrix_proxy<TValue> operator[](const Matrix_coords& coords) {
-        if (coords.has(dim)) {
+        if (coords.has(capacity)) {
             throw OutOfRangeException();
         }
         return Matrix_proxy<TValue>(this, coords);
@@ -371,7 +373,7 @@ public:
      * @return slice of this Matrix on positions row.
      */
     Matrix_proxy<TValue> operator[](const Matrix_row_coord& row) {
-        if (row.get_row_index() < 0 || dim.get_j() <= row.get_row_index()) {
+        if (row.get_row_index() < 0 || capacity.get_j() <= row.get_row_index()) {
             throw OutOfRangeException();
         }
         return Matrix_proxy<TValue>(this, row);
@@ -384,7 +386,7 @@ public:
      * @return slice of this Matrix on positions column.
      */
     Matrix_proxy<TValue> operator[](const Matrix_column_coord& column) {
-        if (column.get_column_index() < 0 || dim.get_i() <= column.get_column_index()) {
+        if (column.get_column_index() < 0 || capacity.get_i() <= column.get_column_index()) {
             throw OutOfRangeException();
         }
         return Matrix_proxy<TValue>(this, column);
@@ -560,8 +562,8 @@ public:
      * @param sub_matrix_coords coordinates of a sub-matrix.
      * @return r-value reference to subset of data map corresponding to requested coordinates.
      */
-    std::unordered_map<Pos, TValue> get_sub_matrix_values(const Matrix_coords& sub_matrix_coords) const {
-        std::unordered_map<Pos, TValue> values;
+    std::unordered_map<index_type, TValue> get_sub_matrix_values(const Matrix_coords& sub_matrix_coords) const {
+        std::unordered_map<index_type, TValue> values;
         for (auto &[key, value] : data) {
             if (sub_matrix_coords.has(key)) {
                 values.insert({key, value});
@@ -591,16 +593,16 @@ private:
     /**
      * Pos of maximum row and column number.
      */
-    Pos dim;
+    index_type capacity;
 
     /**
      * Value defining a zero - everything that is less this value is considered to be zero.
      */
-    TValue precision;
+    precision_type precision;
 
     /**
      * Internal value to decrease memory usage.
-     * If mass operation is applied to Matrix, mass transform is changed in order not to store all [dim] elements.
+     * If mass operation is applied to Matrix, mass transform is changed in order not to store all [capacity] elements.
      */
     TValue mass_transform;
 
@@ -610,7 +612,7 @@ private:
      * key - Pos describing index of a stored value.
      * value - TValue that should be stored.
      */
-    std::unordered_map<Pos, TValue> data;
+    std::unordered_map<index_type, TValue> data;
 
     /**
      * All the proxies that are related to this matrix.
@@ -621,8 +623,8 @@ private:
      * Internal method to perform lazy initialization of values by applying mass transform to them.
      */
     void apply_mass_transform() {
-        for (StringInt i = 0; i < dim.get_i(); ++i) {
-            for (StringInt j = 0; j < dim.get_j(); ++j) {
+        for (StringInt i = 0; i < capacity.get_i(); ++i) {
+            for (StringInt j = 0; j < capacity.get_j(); ++j) {
                 if (data.find({i, j}) == data.end()) {
                     data[{i, j}] = mass_transform;
                 }
@@ -635,12 +637,12 @@ private:
      * Internal method to delete elements from [data] that are less than [precision].
      */
     void delete_zero_elements() {
-        std::set<Pos> to_delete;
-        if (mass_transform <= precision) {
+        std::set<index_type> to_delete;
+        if (abs(mass_transform) <= precision) {
             mass_transform = TValue(0);
         }
         for (auto [key, value] : data) {
-            if (value <= TValue(precision)) {
+            if (abs(value) <= precision) {
                 to_delete.insert(key);
             }
         }
@@ -658,7 +660,7 @@ std::ostream& operator<<(std::ostream& os, Matrix<TValue> const& x) {
 
 template<typename TValueLeft, typename TValueRight>
 bool operator==(const Matrix<TValueLeft> &lhs, const Matrix<TValueRight> &rhs) {
-    if (lhs.dim != rhs.dim || lhs.get_size() != rhs.get_size() || lhs.mass_transform != rhs.mass_transform) {
+    if (lhs.capacity != rhs.capacity || lhs.get_size() != rhs.get_size() || lhs.mass_transform != rhs.mass_transform) {
         return false;
     }
     auto predicate = [](auto lhs, auto rhs) {
@@ -674,10 +676,10 @@ bool operator!=(const Matrix<TValueLeft> &lhs, const Matrix<TValueRight> &rhs) {
 
 template<typename TValueLeft, typename TValueRight>
 auto operator-(const Matrix<TValueLeft> &lhs, const Matrix<TValueRight> &rhs) {
-    if (lhs.dim != rhs.dim) {
-        throw IllegalDimException(lhs.dim, rhs.dim);
+    if (lhs.capacity != rhs.capacity) {
+        throw IllegalCapacityException(lhs.capacity, rhs.capacity);
     }
-    Matrix<decltype(TValueLeft() + TValueRight())> result(lhs.dim, lhs.mass_transform - rhs.mass_transform);
+    Matrix<decltype(TValueLeft() + TValueRight())> result(lhs.capacity, lhs.mass_transform - rhs.mass_transform);
     for (auto &[key, value]: lhs.data) {
         result.data[key] = value;
     }
@@ -694,16 +696,16 @@ auto operator-(const Matrix<TValueLeft> &lhs, const Matrix<TValueRight> &rhs) {
 
 template<typename TValueLeft, typename TValueRight>
 auto operator*(Matrix<TValueLeft> lhs, Matrix<TValueRight> rhs) {
-    if (lhs.dim.get_j() != rhs.dim.get_i()) {
-        throw IllegalDimException(lhs.dim, rhs.dim);
+    if (lhs.capacity.get_j() != rhs.capacity.get_i()) {
+        throw IllegalCapacityException(lhs.capacity, rhs.capacity);
     }
     lhs.apply_mass_transform();
     rhs.apply_mass_transform();
-    Matrix<decltype(TValueLeft() + TValueRight())> result({ lhs.dim.get_i(), rhs.dim.get_j() });
-    for (StringInt i = 0; i < lhs.dim.get_i(); ++i) {
-        for (StringInt j = 0; j < rhs.dim.get_j(); ++j) {
+    Matrix<decltype(TValueLeft() + TValueRight())> result({lhs.capacity.get_i(), rhs.capacity.get_j() });
+    for (StringInt i = 0; i < lhs.capacity.get_i(); ++i) {
+        for (StringInt j = 0; j < rhs.capacity.get_j(); ++j) {
             decltype(TValueLeft() + TValueRight()) cell_result(0);
-            for (StringInt k = 0; k < lhs.dim.get_j(); ++k) {
+            for (StringInt k = 0; k < lhs.capacity.get_j(); ++k) {
                 cell_result += lhs.data[{i, k}] * rhs.data[{k, j}];
             }
             result.data[{i, j}] = cell_result;
@@ -745,10 +747,10 @@ auto operator*(Matrix<TValueLeft> lhs, const TValueRight& rhs) {
 
 template<typename TValueLeft, typename TValueRight>
 auto operator+(const Matrix<TValueLeft> &lhs, const Matrix<TValueRight> &rhs) {
-    if (lhs.dim != rhs.dim) {
-        throw IllegalDimException(lhs.dim, rhs.dim);
+    if (lhs.capacity != rhs.capacity) {
+        throw IllegalCapacityException(lhs.capacity, rhs.capacity);
     }
-    Matrix<decltype(TValueLeft() + TValueRight())> result(lhs.dim, lhs.mass_transform + rhs.mass_transform);
+    Matrix<decltype(TValueLeft() + TValueRight())> result(lhs.capacity, lhs.mass_transform + rhs.mass_transform);
     for (auto &[key, value]: lhs.data) {
         result.data[key] = value;
     }
@@ -779,7 +781,7 @@ template <typename TValue>
 std::string to_string(Matrix<TValue> matrix) {
     std::stringstream ss;
     std::string type_name;
-    ss << "matrix " << typeid(TValue()).name() << " " << to_string(matrix.dim, false) << std::endl << std::endl;
+    ss << "matrix " << typeid(TValue()).name() << " " << to_string(matrix.capacity, false) << std::endl << std::endl;
     for (auto [key, value]: matrix.data) {
         ss << to_string(key, false) << "\t\t" <<  value << std::endl;
     }

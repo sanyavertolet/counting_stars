@@ -27,6 +27,7 @@ enum class Matrix_proxy_type {
 template<typename TMatrixValue>
 class Matrix_proxy {
 public:
+    using presicion_type = decltype(abs(std::declval<TMatrixValue>()));
     /**
      * Constructor for row slice.
      *
@@ -34,7 +35,7 @@ public:
      * @param coords Matrix_row_coord.
      */
     Matrix_proxy(Matrix<TMatrixValue>* m, const Matrix_row_coord& coords):
-            type(Matrix_proxy_type::ROW), matrix(m), from(coords.get_row_index(), 0), to(coords.get_row_index(), m->get_dim().get_j()) {
+            type(Matrix_proxy_type::ROW), matrix(m), from(coords.get_row_index(), 0), to(coords.get_row_index(), m->get_capacity().get_j()) {
         matrix->add_proxy(this);
     }
 
@@ -45,7 +46,7 @@ public:
      * @param coords Matrix_column_coord.
      */
     Matrix_proxy(Matrix<TMatrixValue>* m, const Matrix_column_coord& coords):
-            type(Matrix_proxy_type::COLUMN), matrix(m), from(0, coords.get_column_index()), to(m->get_dim().get_i(), coords.get_column_index()) {
+            type(Matrix_proxy_type::COLUMN), matrix(m), from(0, coords.get_column_index()), to(m->get_capacity().get_i(), coords.get_column_index()) {
         matrix->add_proxy(this);
     }
 
@@ -65,10 +66,10 @@ public:
             from.set_j(0);
         }
         if (to.get_i() == -1) {
-            to.set_i(m->get_dim().get_i() - 1);
+            to.set_i(m->get_capacity().get_i() - 1);
         }
         if (to.get_j() == -1) {
-            to.set_j(m->get_dim().get_j() - 1);
+            to.set_j(m->get_capacity().get_j() - 1);
         }
     }
 
@@ -80,11 +81,11 @@ public:
     }
 
     /**
-     * dim getter.
+     * capacity getter.
      *
-     * @return dim of a given slice.
+     * @return capacity of a given slice.
      */
-    [[nodiscard]] Pos get_dim() const {
+    [[nodiscard]] Pos get_capacity() const {
         if (matrix == nullptr) {
             throw NullPointerException();
         }
@@ -121,7 +122,7 @@ public:
     /**
      * @return precision of matrix.
      */
-    TMatrixValue get_precision() const {
+    presicion_type get_precision() const {
         if (matrix == nullptr) {
             throw NullPointerException();
         }

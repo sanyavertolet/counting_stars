@@ -35,8 +35,8 @@ Vector<bool> operator*(Vector<bool> lhs, const Vector<bool> &rhs) {
 std::string to_string(Vector<bool> vector) {
     std::stringstream ss;
     std::string type_name;
-    ss << "vector bit " << vector.dim << std::endl << std::endl;
-    for (int i = 0; i < vector.dim; ++i) {
+    ss << "vector bit " << vector.capacity << std::endl << std::endl;
+    for (int i = 0; i < vector.capacity; ++i) {
         unsigned long long value = (vector.data[Vector<bool>::get_element_page(i)] >> (i % Vector<bool>::bits_per_uint)) & 1;
         if (value) {
             ss << i + 1 << " " << value << std::endl;

@@ -1,5 +1,5 @@
 /**
- * File that describes IllegalDimException static fields.
+ * File that describes NullPointerException static fields.
  *
  * @author sanyavertolet
  */

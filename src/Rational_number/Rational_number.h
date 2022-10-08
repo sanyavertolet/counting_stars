@@ -484,4 +484,12 @@ Rational_number operator*(Rational_number lhs, const Rational_number& rhs);
  */
 Rational_number operator/(Rational_number lhs, const Rational_number& rhs);
 
+/**
+ * Get Rational_number with sign '+'.
+ *
+ * @param number
+ * @return current Rational_number with sign '+'.
+ */
+Rational_number abs(Rational_number number);
+
 #endif //COUNTING_STARS_RATIONAL_NUMBER_H
