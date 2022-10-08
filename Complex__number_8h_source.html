@@ -281,7 +281,12 @@ $(function() {
 <div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;    <span class="keywordflow">return</span> !(lhs &lt; rhs);</div>
 <div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160;}</div>
 <div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160; </div>
-<div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160;<span class="preprocessor">#endif //COUNTING_STARS_COMPLEX_NUMBER_H</span></div>
+<div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> TReal, <span class="keyword">typename</span> TImaginary&gt;</div>
+<div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160;<span class="keyword">auto</span> abs(<a class="code" href="classComplex__number.html">Complex_number&lt;TReal, TImaginary&gt;</a> number) {</div>
+<div class="line"><a name="l00441"></a><span class="lineno">  441</span>&#160;    <span class="keywordflow">return</span> number.<a class="code" href="classComplex__number.html#ad38c825056e20dec37b38f800887ead1">modulus</a>();</div>
+<div class="line"><a name="l00442"></a><span class="lineno">  442</span>&#160;}</div>
+<div class="line"><a name="l00443"></a><span class="lineno">  443</span>&#160; </div>
+<div class="line"><a name="l00444"></a><span class="lineno">  444</span>&#160;<span class="preprocessor">#endif //COUNTING_STARS_COMPLEX_NUMBER_H</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclassComplex__number_html"><div class="ttname"><a href="classComplex__number.html">Complex_number</a></div><div class="ttdoc">Header containing Complex_number class declaration and implementation (partially).</div><div class="ttdef"><b>Definition:</b> Complex_number.h:21</div></div>
 <div class="ttc" id="aclassCastException_html"><div class="ttname"><a href="classCastException.html">CastException</a></div><div class="ttdoc">Header file that describes CastException.</div><div class="ttdef"><b>Definition:</b> CastException.h:18</div></div>

@@ -1,12 +1,12 @@
 var searchData=
 [
-  ['set_5fdenominator_190',['set_denominator',['../classRational__number.html#ad245c32d03f01ad39d60bef228f98794',1,'Rational_number']]],
-  ['set_5fdim_191',['set_dim',['../classMatrix.html#a12abb68f45ba630e43e87f82db9bf21c',1,'Matrix']]],
+  ['set_5fcapacity_190',['set_capacity',['../classMatrix.html#a1a4f348367c7fcbbdfae710922d576d5',1,'Matrix']]],
+  ['set_5fdenominator_191',['set_denominator',['../classRational__number.html#ad245c32d03f01ad39d60bef228f98794',1,'Rational_number']]],
   ['set_5fi_192',['set_i',['../classPos.html#ab3e4b289a029b62e389154018535b0fd',1,'Pos']]],
   ['set_5fim_193',['set_im',['../classComplex__number.html#a81127d4eac5ac8ad58e80f2255768592',1,'Complex_number']]],
   ['set_5fj_194',['set_j',['../classPos.html#af5f50b16c42aec5f4976a77cc8315f2d',1,'Pos']]],
   ['set_5fnumerator_195',['set_numerator',['../classRational__number.html#a75b23ec7229fe63be06c924e7f06c83d',1,'Rational_number']]],
-  ['set_5fprecision_196',['set_precision',['../classMatrix.html#ada92eb9a893aacf4a11b01e7b28dfc60',1,'Matrix::set_precision()'],['../classVector.html#a09786467eeea8340f3be2afff4cf055c',1,'Vector::set_precision()']]],
+  ['set_5fprecision_196',['set_precision',['../classMatrix.html#ada92eb9a893aacf4a11b01e7b28dfc60',1,'Matrix::set_precision()'],['../classVector.html#ab439cbcd8e088c9cd769ec0ba4bd38e6',1,'Vector::set_precision()']]],
   ['set_5fre_197',['set_re',['../classComplex__number.html#ab3a38d12db80f6d88a31179b3bafc989',1,'Complex_number']]],
   ['set_5fsign_198',['set_sign',['../classStringInt.html#abf4c106f451a9ffb064901a8c85191ca',1,'StringInt']]],
   ['set_5fval_199',['set_val',['../classStringInt.html#a78c5f9e01fe70bcea9ba63312e3040d2',1,'StringInt']]],

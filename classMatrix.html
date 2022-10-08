@@ -63,6 +63,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#friends">Friends</a> &#124;
 <a href="classMatrix-members.html">List of all members</a>  </div>
@@ -76,15 +77,24 @@ $(function() {
 
 <p><code>#include &lt;<a class="el" href="Matrix_8h_source.html">Matrix.h</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:a3649ea0c91c3723f4c7e8295a7e56d7a"><td class="memItemLeft" align="right" valign="top"><a id="a3649ea0c91c3723f4c7e8295a7e56d7a"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>index_type</b> = <a class="el" href="classPos.html">Pos</a></td></tr>
+<tr class="separator:a3649ea0c91c3723f4c7e8295a7e56d7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a05d9219149e0c97d81eb59fbbd4a244a"><td class="memItemLeft" align="right" valign="top"><a id="a05d9219149e0c97d81eb59fbbd4a244a"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>precision_type</b> = decltype(abs(std::declval&lt; TValue &gt;()))</td></tr>
+<tr class="separator:a05d9219149e0c97d81eb59fbbd4a244a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a1738d6ff13134bf01256b6b27df691d5"><td class="memItemLeft" align="right" valign="top"><a id="a1738d6ff13134bf01256b6b27df691d5"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMatrix.html#a1738d6ff13134bf01256b6b27df691d5">Matrix</a> ()</td></tr>
 <tr class="memdesc:a1738d6ff13134bf01256b6b27df691d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor. <br /></td></tr>
 <tr class="separator:a1738d6ff13134bf01256b6b27df691d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae0e8de7da06845b39fce1ed5877d3375"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMatrix.html#ae0e8de7da06845b39fce1ed5877d3375">Matrix</a> (<a class="el" href="classPos.html">Pos</a> max_position, TValue default_val=0, TValue required_precision=0)</td></tr>
-<tr class="memdesc:ae0e8de7da06845b39fce1ed5877d3375"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for all the cases.  <a href="classMatrix.html#ae0e8de7da06845b39fce1ed5877d3375">More...</a><br /></td></tr>
-<tr class="separator:ae0e8de7da06845b39fce1ed5877d3375"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e6ce342d5182361f928a78fd0d6a122"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMatrix.html#a8e6ce342d5182361f928a78fd0d6a122">Matrix</a> (<a class="el" href="classPos.html">index_type</a> max_position, TValue default_val=0, precision_type required_precision=0)</td></tr>
+<tr class="memdesc:a8e6ce342d5182361f928a78fd0d6a122"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for all the cases.  <a href="classMatrix.html#a8e6ce342d5182361f928a78fd0d6a122">More...</a><br /></td></tr>
+<tr class="separator:a8e6ce342d5182361f928a78fd0d6a122"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6f628a21af3feb156044e03fa8ad35d3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMatrix.html#a6f628a21af3feb156044e03fa8ad35d3">Matrix</a> (<a class="el" href="classMatrix.html">Matrix</a> &amp;rhs)</td></tr>
 <tr class="memdesc:a6f628a21af3feb156044e03fa8ad35d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy constructor.  <a href="classMatrix.html#a6f628a21af3feb156044e03fa8ad35d3">More...</a><br /></td></tr>
 <tr class="separator:a6f628a21af3feb156044e03fa8ad35d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -106,36 +116,36 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ab80562612a2c72a7091d2840a2a671e4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMatrix.html">Matrix</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMatrix.html#ab80562612a2c72a7091d2840a2a671e4">operator=</a> (<a class="el" href="classMatrix.html">Matrix</a> &amp;&amp;rhs) noexcept</td></tr>
 <tr class="memdesc:ab80562612a2c72a7091d2840a2a671e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move operator.  <a href="classMatrix.html#ab80562612a2c72a7091d2840a2a671e4">More...</a><br /></td></tr>
 <tr class="separator:ab80562612a2c72a7091d2840a2a671e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeeef7f0dffb94f1ddd11a75df50a8625"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMatrix.html">Matrix</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMatrix.html#aeeef7f0dffb94f1ddd11a75df50a8625">operator=</a> (std::unordered_map&lt; <a class="el" href="classPos.html">Pos</a>, TValue &gt; &amp;&amp;rhs) noexcept</td></tr>
-<tr class="memdesc:aeeef7f0dffb94f1ddd11a75df50a8625"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move operator.  <a href="classMatrix.html#aeeef7f0dffb94f1ddd11a75df50a8625">More...</a><br /></td></tr>
-<tr class="separator:aeeef7f0dffb94f1ddd11a75df50a8625"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a12abb68f45ba630e43e87f82db9bf21c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMatrix.html#a12abb68f45ba630e43e87f82db9bf21c">set_dim</a> (const <a class="el" href="classPos.html">Pos</a> &amp;new_dim, bool swallow_exception=false)</td></tr>
-<tr class="memdesc:a12abb68f45ba630e43e87f82db9bf21c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Change matrix dimension.  <a href="classMatrix.html#a12abb68f45ba630e43e87f82db9bf21c">More...</a><br /></td></tr>
-<tr class="separator:a12abb68f45ba630e43e87f82db9bf21c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a27f49d4faeb9929aa914fb33c8037c8b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classPos.html">Pos</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMatrix.html#a27f49d4faeb9929aa914fb33c8037c8b">get_dim</a> () const</td></tr>
-<tr class="memdesc:a27f49d4faeb9929aa914fb33c8037c8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">dim getter.  <a href="classMatrix.html#a27f49d4faeb9929aa914fb33c8037c8b">More...</a><br /></td></tr>
-<tr class="separator:a27f49d4faeb9929aa914fb33c8037c8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aedeeb4ee0ae6b23f94c0261b4dc588d1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMatrix.html">Matrix</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMatrix.html#aedeeb4ee0ae6b23f94c0261b4dc588d1">operator=</a> (std::unordered_map&lt; <a class="el" href="classPos.html">index_type</a>, TValue &gt; &amp;&amp;rhs) noexcept</td></tr>
+<tr class="memdesc:aedeeb4ee0ae6b23f94c0261b4dc588d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move operator.  <a href="classMatrix.html#aedeeb4ee0ae6b23f94c0261b4dc588d1">More...</a><br /></td></tr>
+<tr class="separator:aedeeb4ee0ae6b23f94c0261b4dc588d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1a4f348367c7fcbbdfae710922d576d5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMatrix.html#a1a4f348367c7fcbbdfae710922d576d5">set_capacity</a> (const <a class="el" href="classPos.html">index_type</a> &amp;new_capacity, bool swallow_exception=false)</td></tr>
+<tr class="memdesc:a1a4f348367c7fcbbdfae710922d576d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Change matrix capacity.  <a href="classMatrix.html#a1a4f348367c7fcbbdfae710922d576d5">More...</a><br /></td></tr>
+<tr class="separator:a1a4f348367c7fcbbdfae710922d576d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a37016405e7811bd06fd84f4b09ed347f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classPos.html">index_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMatrix.html#a37016405e7811bd06fd84f4b09ed347f">get_capacity</a> () const</td></tr>
+<tr class="memdesc:a37016405e7811bd06fd84f4b09ed347f"><td class="mdescLeft">&#160;</td><td class="mdescRight">capacity getter.  <a href="classMatrix.html#a37016405e7811bd06fd84f4b09ed347f">More...</a><br /></td></tr>
+<tr class="separator:a37016405e7811bd06fd84f4b09ed347f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ada92eb9a893aacf4a11b01e7b28dfc60"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMatrix.html#ada92eb9a893aacf4a11b01e7b28dfc60">set_precision</a> (TValue new_precision)</td></tr>
 <tr class="memdesc:ada92eb9a893aacf4a11b01e7b28dfc60"><td class="mdescLeft">&#160;</td><td class="mdescRight">precision setter.  <a href="classMatrix.html#ada92eb9a893aacf4a11b01e7b28dfc60">More...</a><br /></td></tr>
 <tr class="separator:ada92eb9a893aacf4a11b01e7b28dfc60"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa76ab9704d603288e0e6ebb0314e0def"><td class="memItemLeft" align="right" valign="top">TValue&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMatrix.html#aa76ab9704d603288e0e6ebb0314e0def">get_precision</a> () const</td></tr>
-<tr class="memdesc:aa76ab9704d603288e0e6ebb0314e0def"><td class="mdescLeft">&#160;</td><td class="mdescRight">precision getter.  <a href="classMatrix.html#aa76ab9704d603288e0e6ebb0314e0def">More...</a><br /></td></tr>
-<tr class="separator:aa76ab9704d603288e0e6ebb0314e0def"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa52a18f948b915838ab9b7602c0789dc"><td class="memItemLeft" align="right" valign="top">precision_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMatrix.html#aa52a18f948b915838ab9b7602c0789dc">get_precision</a> () const</td></tr>
+<tr class="memdesc:aa52a18f948b915838ab9b7602c0789dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">precision getter.  <a href="classMatrix.html#aa52a18f948b915838ab9b7602c0789dc">More...</a><br /></td></tr>
+<tr class="separator:aa52a18f948b915838ab9b7602c0789dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3542611482a6b87559b872533cde4cfd"><td class="memItemLeft" align="right" valign="top">TValue&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMatrix.html#a3542611482a6b87559b872533cde4cfd">get_mass_transform</a> () const</td></tr>
 <tr class="memdesc:a3542611482a6b87559b872533cde4cfd"><td class="mdescLeft">&#160;</td><td class="mdescRight">mass_transform getter.  <a href="classMatrix.html#a3542611482a6b87559b872533cde4cfd">More...</a><br /></td></tr>
 <tr class="separator:a3542611482a6b87559b872533cde4cfd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad96025476af7aac3d9080202f93da4f3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classStringInt.html">StringInt</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMatrix.html#ad96025476af7aac3d9080202f93da4f3">get_size</a> () const</td></tr>
-<tr class="memdesc:ad96025476af7aac3d9080202f93da4f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get amount of present values in data.  <a href="classMatrix.html#ad96025476af7aac3d9080202f93da4f3">More...</a><br /></td></tr>
-<tr class="separator:ad96025476af7aac3d9080202f93da4f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3c3ee2902f6b55111a278347e3c9b4c0"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMatrix.html#a3c3ee2902f6b55111a278347e3c9b4c0">get_size</a> () const</td></tr>
+<tr class="memdesc:a3c3ee2902f6b55111a278347e3c9b4c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get amount of present values in data.  <a href="classMatrix.html#a3c3ee2902f6b55111a278347e3c9b4c0">More...</a><br /></td></tr>
+<tr class="separator:a3c3ee2902f6b55111a278347e3c9b4c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2550406f59632f1310030c91ab89bf40"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMatrix.html">Matrix</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMatrix.html#a2550406f59632f1310030c91ab89bf40">operator-</a> ()</td></tr>
 <tr class="memdesc:a2550406f59632f1310030c91ab89bf40"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unary minus operator.  <a href="classMatrix.html#a2550406f59632f1310030c91ab89bf40">More...</a><br /></td></tr>
 <tr class="separator:a2550406f59632f1310030c91ab89bf40"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a13f0310f2b2b0dcedb7605d591358ed2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMatrix.html">Matrix</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMatrix.html#a13f0310f2b2b0dcedb7605d591358ed2">operator~</a> ()</td></tr>
 <tr class="memdesc:a13f0310f2b2b0dcedb7605d591358ed2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transposition operator.  <a href="classMatrix.html#a13f0310f2b2b0dcedb7605d591358ed2">More...</a><br /></td></tr>
 <tr class="separator:a13f0310f2b2b0dcedb7605d591358ed2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab3e20338f7e626f68aa245cd7f06d732"><td class="memItemLeft" align="right" valign="top">TValue &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMatrix.html#ab3e20338f7e626f68aa245cd7f06d732">operator()</a> (<a class="el" href="classPos.html">Pos</a> pos)</td></tr>
-<tr class="memdesc:ab3e20338f7e626f68aa245cd7f06d732"><td class="mdescLeft">&#160;</td><td class="mdescRight">Access operator.  <a href="classMatrix.html#ab3e20338f7e626f68aa245cd7f06d732">More...</a><br /></td></tr>
-<tr class="separator:ab3e20338f7e626f68aa245cd7f06d732"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a225aac5df42ce4c19ab07dd50b99b333"><td class="memItemLeft" align="right" valign="top">TValue &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMatrix.html#a225aac5df42ce4c19ab07dd50b99b333">operator()</a> (<a class="el" href="classPos.html">index_type</a> pos)</td></tr>
+<tr class="memdesc:a225aac5df42ce4c19ab07dd50b99b333"><td class="mdescLeft">&#160;</td><td class="mdescRight">Access operator.  <a href="classMatrix.html#a225aac5df42ce4c19ab07dd50b99b333">More...</a><br /></td></tr>
+<tr class="separator:a225aac5df42ce4c19ab07dd50b99b333"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af2e84351944cd98d82b0f6de665729b9"><td class="memItemLeft" align="right" valign="top">TValue &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMatrix.html#af2e84351944cd98d82b0f6de665729b9">operator()</a> (const <a class="el" href="classStringInt.html">StringInt</a> &amp;i, const <a class="el" href="classStringInt.html">StringInt</a> &amp;j)</td></tr>
 <tr class="memdesc:af2e84351944cd98d82b0f6de665729b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Access operator.  <a href="classMatrix.html#af2e84351944cd98d82b0f6de665729b9">More...</a><br /></td></tr>
 <tr class="separator:af2e84351944cd98d82b0f6de665729b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -166,9 +176,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a002a24a0db138ceba56ab00520b7bde5"><td class="memItemLeft" align="right" valign="top">std::map&lt; <a class="el" href="classStringInt.html">StringInt</a>, TValue &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMatrix.html#a002a24a0db138ceba56ab00520b7bde5">get_column_values</a> (const <a class="el" href="classStringInt.html">StringInt</a> &amp;column_index) const</td></tr>
 <tr class="memdesc:a002a24a0db138ceba56ab00520b7bde5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get all the recorded values from column by its index.  <a href="classMatrix.html#a002a24a0db138ceba56ab00520b7bde5">More...</a><br /></td></tr>
 <tr class="separator:a002a24a0db138ceba56ab00520b7bde5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aea1d7a5d19496e0c992e51206c57c086"><td class="memItemLeft" align="right" valign="top">std::unordered_map&lt; <a class="el" href="classPos.html">Pos</a>, TValue &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMatrix.html#aea1d7a5d19496e0c992e51206c57c086">get_sub_matrix_values</a> (const <a class="el" href="classMatrix__coords.html">Matrix_coords</a> &amp;sub_matrix_coords) const</td></tr>
-<tr class="memdesc:aea1d7a5d19496e0c992e51206c57c086"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get all the recorded values from sub-matrix.  <a href="classMatrix.html#aea1d7a5d19496e0c992e51206c57c086">More...</a><br /></td></tr>
-<tr class="separator:aea1d7a5d19496e0c992e51206c57c086"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f62d963f149bfcff3cc920b7bb2f19f"><td class="memItemLeft" align="right" valign="top">std::unordered_map&lt; <a class="el" href="classPos.html">index_type</a>, TValue &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMatrix.html#a7f62d963f149bfcff3cc920b7bb2f19f">get_sub_matrix_values</a> (const <a class="el" href="classMatrix__coords.html">Matrix_coords</a> &amp;sub_matrix_coords) const</td></tr>
+<tr class="memdesc:a7f62d963f149bfcff3cc920b7bb2f19f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get all the recorded values from sub-matrix.  <a href="classMatrix.html#a7f62d963f149bfcff3cc920b7bb2f19f">More...</a><br /></td></tr>
+<tr class="separator:a7f62d963f149bfcff3cc920b7bb2f19f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a640f5eba8af60ac804e871d37d8698a2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMatrix.html#a640f5eba8af60ac804e871d37d8698a2">add_proxy</a> (<a class="el" href="classMatrix__proxy.html">Matrix_proxy</a>&lt; TValue &gt; *proxy)</td></tr>
 <tr class="memdesc:a640f5eba8af60ac804e871d37d8698a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Link proxy object with this <a class="el" href="classMatrix.html" title="Header containing Matrix class declaration.">Matrix</a>.  <a href="classMatrix.html#a640f5eba8af60ac804e871d37d8698a2">More...</a><br /></td></tr>
 <tr class="separator:a640f5eba8af60ac804e871d37d8698a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -242,14 +252,14 @@ class Matrix&lt; TValue &gt;</h3>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">dim</td><td><a class="el" href="classPos.html">Pos</a> of maximum row and column number. </td></tr>
+    <tr><td class="paramname">capacity</td><td><a class="el" href="classPos.html">Pos</a> of maximum row and column number. </td></tr>
     <tr><td class="paramname">precision</td><td>value defining a zero - everything that is less this value is considered to be zero. </td></tr>
   </table>
   </dd>
 </dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="ae0e8de7da06845b39fce1ed5877d3375"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae0e8de7da06845b39fce1ed5877d3375">&#9670;&nbsp;</a></span>Matrix() <span class="overload">[1/5]</span></h2>
+<a id="a8e6ce342d5182361f928a78fd0d6a122"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8e6ce342d5182361f928a78fd0d6a122">&#9670;&nbsp;</a></span>Matrix() <span class="overload">[1/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -262,7 +272,7 @@ template&lt;typename TValue &gt; </div>
         <tr>
           <td class="memname"><a class="el" href="classMatrix.html">Matrix</a>&lt; TValue &gt;::<a class="el" href="classMatrix.html">Matrix</a> </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classPos.html">Pos</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="classPos.html">index_type</a>&#160;</td>
           <td class="paramname"><em>max_position</em>, </td>
         </tr>
         <tr>
@@ -274,7 +284,7 @@ template&lt;typename TValue &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">TValue&#160;</td>
+          <td class="paramtype">precision_type&#160;</td>
           <td class="paramname"><em>required_precision</em> = <code>0</code>&#160;</td>
         </tr>
         <tr>
@@ -513,6 +523,36 @@ template&lt;typename TValue &gt; </div>
 
 </div>
 </div>
+<a id="a37016405e7811bd06fd84f4b09ed347f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a37016405e7811bd06fd84f4b09ed347f">&#9670;&nbsp;</a></span>get_capacity()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TValue &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classPos.html">index_type</a> <a class="el" href="classMatrix.html">Matrix</a>&lt; TValue &gt;::get_capacity </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>capacity getter. </p>
+<dl class="section return"><dt>Returns</dt><dd>capacity of a current matrix. </dd></dl>
+
+</div>
+</div>
 <a id="a002a24a0db138ceba56ab00520b7bde5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a002a24a0db138ceba56ab00520b7bde5">&#9670;&nbsp;</a></span>get_column_values()</h2>
 
@@ -550,36 +590,6 @@ template&lt;typename TValue &gt; </div>
 
 </div>
 </div>
-<a id="a27f49d4faeb9929aa914fb33c8037c8b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a27f49d4faeb9929aa914fb33c8037c8b">&#9670;&nbsp;</a></span>get_dim()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename TValue &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classPos.html">Pos</a> <a class="el" href="classMatrix.html">Matrix</a>&lt; TValue &gt;::get_dim </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>dim getter. </p>
-<dl class="section return"><dt>Returns</dt><dd>dim of a current matrix. </dd></dl>
-
-</div>
-</div>
 <a id="a3542611482a6b87559b872533cde4cfd"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3542611482a6b87559b872533cde4cfd">&#9670;&nbsp;</a></span>get_mass_transform()</h2>
 
@@ -610,8 +620,8 @@ template&lt;typename TValue &gt; </div>
 
 </div>
 </div>
-<a id="aa76ab9704d603288e0e6ebb0314e0def"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa76ab9704d603288e0e6ebb0314e0def">&#9670;&nbsp;</a></span>get_precision()</h2>
+<a id="aa52a18f948b915838ab9b7602c0789dc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa52a18f948b915838ab9b7602c0789dc">&#9670;&nbsp;</a></span>get_precision()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -622,7 +632,7 @@ template&lt;typename TValue &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">TValue <a class="el" href="classMatrix.html">Matrix</a>&lt; TValue &gt;::get_precision </td>
+          <td class="memname">precision_type <a class="el" href="classMatrix.html">Matrix</a>&lt; TValue &gt;::get_precision </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -677,8 +687,8 @@ template&lt;typename TValue &gt; </div>
 
 </div>
 </div>
-<a id="ad96025476af7aac3d9080202f93da4f3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad96025476af7aac3d9080202f93da4f3">&#9670;&nbsp;</a></span>get_size()</h2>
+<a id="a3c3ee2902f6b55111a278347e3c9b4c0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3c3ee2902f6b55111a278347e3c9b4c0">&#9670;&nbsp;</a></span>get_size()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -689,7 +699,7 @@ template&lt;typename TValue &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classStringInt.html">StringInt</a> <a class="el" href="classMatrix.html">Matrix</a>&lt; TValue &gt;::get_size </td>
+          <td class="memname">size_t <a class="el" href="classMatrix.html">Matrix</a>&lt; TValue &gt;::get_size </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -707,8 +717,8 @@ template&lt;typename TValue &gt; </div>
 
 </div>
 </div>
-<a id="aea1d7a5d19496e0c992e51206c57c086"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aea1d7a5d19496e0c992e51206c57c086">&#9670;&nbsp;</a></span>get_sub_matrix_values()</h2>
+<a id="a7f62d963f149bfcff3cc920b7bb2f19f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7f62d963f149bfcff3cc920b7bb2f19f">&#9670;&nbsp;</a></span>get_sub_matrix_values()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -719,7 +729,7 @@ template&lt;typename TValue &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::unordered_map&lt;<a class="el" href="classPos.html">Pos</a>, TValue&gt; <a class="el" href="classMatrix.html">Matrix</a>&lt; TValue &gt;::get_sub_matrix_values </td>
+          <td class="memname">std::unordered_map&lt;<a class="el" href="classPos.html">index_type</a>, TValue&gt; <a class="el" href="classMatrix.html">Matrix</a>&lt; TValue &gt;::get_sub_matrix_values </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classMatrix__coords.html">Matrix_coords</a> &amp;&#160;</td>
           <td class="paramname"><em>sub_matrix_coords</em></td><td>)</td>
@@ -792,8 +802,8 @@ template&lt;typename TValue &gt; </div>
 
 </div>
 </div>
-<a id="ab3e20338f7e626f68aa245cd7f06d732"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab3e20338f7e626f68aa245cd7f06d732">&#9670;&nbsp;</a></span>operator()() <span class="overload">[2/2]</span></h2>
+<a id="a225aac5df42ce4c19ab07dd50b99b333"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a225aac5df42ce4c19ab07dd50b99b333">&#9670;&nbsp;</a></span>operator()() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -806,7 +816,7 @@ template&lt;typename TValue &gt; </div>
         <tr>
           <td class="memname">TValue&amp; <a class="el" href="classMatrix.html">Matrix</a>&lt; TValue &gt;::operator() </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classPos.html">Pos</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="classPos.html">index_type</a>&#160;</td>
           <td class="paramname"><em>pos</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1068,8 +1078,8 @@ template&lt;typename TValue &gt; </div>
 
 </div>
 </div>
-<a id="aeeef7f0dffb94f1ddd11a75df50a8625"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aeeef7f0dffb94f1ddd11a75df50a8625">&#9670;&nbsp;</a></span>operator=() <span class="overload">[3/3]</span></h2>
+<a id="aedeeb4ee0ae6b23f94c0261b4dc588d1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aedeeb4ee0ae6b23f94c0261b4dc588d1">&#9670;&nbsp;</a></span>operator=() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1082,7 +1092,7 @@ template&lt;typename TValue &gt; </div>
         <tr>
           <td class="memname"><a class="el" href="classMatrix.html">Matrix</a>&amp; <a class="el" href="classMatrix.html">Matrix</a>&lt; TValue &gt;::operator= </td>
           <td>(</td>
-          <td class="paramtype">std::unordered_map&lt; <a class="el" href="classPos.html">Pos</a>, TValue &gt; &amp;&amp;&#160;</td>
+          <td class="paramtype">std::unordered_map&lt; <a class="el" href="classPos.html">index_type</a>, TValue &gt; &amp;&amp;&#160;</td>
           <td class="paramname"><em>rhs</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1290,8 +1300,8 @@ template&lt;typename TValue &gt; </div>
 
 </div>
 </div>
-<a id="a12abb68f45ba630e43e87f82db9bf21c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a12abb68f45ba630e43e87f82db9bf21c">&#9670;&nbsp;</a></span>set_dim()</h2>
+<a id="a1a4f348367c7fcbbdfae710922d576d5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1a4f348367c7fcbbdfae710922d576d5">&#9670;&nbsp;</a></span>set_capacity()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1302,10 +1312,10 @@ template&lt;typename TValue &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="classMatrix.html">Matrix</a>&lt; TValue &gt;::set_dim </td>
+          <td class="memname">void <a class="el" href="classMatrix.html">Matrix</a>&lt; TValue &gt;::set_capacity </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="classPos.html">Pos</a> &amp;&#160;</td>
-          <td class="paramname"><em>new_dim</em>, </td>
+          <td class="paramtype">const <a class="el" href="classPos.html">index_type</a> &amp;&#160;</td>
+          <td class="paramname"><em>new_capacity</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -1326,17 +1336,17 @@ template&lt;typename TValue &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Change matrix dimension. </p>
+<p>Change matrix capacity. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">new_dim</td><td></td></tr>
+    <tr><td class="paramname">new_capacity</td><td></td></tr>
     <tr><td class="paramname">swallow_exception</td><td></td></tr>
   </table>
   </dd>
 </dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname"><a class="el" href="classOutOfRangeException.html" title="Header file that describes OutOfRangeException.">OutOfRangeException</a></td><td>if new matrix dimension leads to possible data loss. </td></tr>
+    <tr><td class="paramname"><a class="el" href="classIllegalCapacityException.html" title="Header file that describes IllegalCapacityException.">IllegalCapacityException</a></td><td>if new matrix capacity leads to possible data loss. </td></tr>
   </table>
   </dd>
 </dl>

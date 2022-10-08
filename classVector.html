@@ -63,6 +63,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#friends">Friends</a> &#124;
 <a href="classVector-members.html">List of all members</a>  </div>
@@ -76,18 +77,27 @@ $(function() {
 
 <p><code>#include &lt;<a class="el" href="Vector_8h_source.html">Vector.h</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:aa87d4b92efcf3fa60824760b8d620cdb"><td class="memItemLeft" align="right" valign="top"><a id="aa87d4b92efcf3fa60824760b8d620cdb"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>index_type</b> = <a class="el" href="classStringInt.html">StringInt</a></td></tr>
+<tr class="separator:aa87d4b92efcf3fa60824760b8d620cdb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5395504c79b8ced041727f25c5603dea"><td class="memItemLeft" align="right" valign="top"><a id="a5395504c79b8ced041727f25c5603dea"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>precision_type</b> = decltype(abs(std::declval&lt; TValue &gt;()))</td></tr>
+<tr class="separator:a5395504c79b8ced041727f25c5603dea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:aa16d15503ebe13635c29ea06f50c3a86"><td class="memItemLeft" align="right" valign="top"><a id="aa16d15503ebe13635c29ea06f50c3a86"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVector.html#aa16d15503ebe13635c29ea06f50c3a86">Vector</a> ()</td></tr>
 <tr class="memdesc:aa16d15503ebe13635c29ea06f50c3a86"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor. <br /></td></tr>
 <tr class="separator:aa16d15503ebe13635c29ea06f50c3a86"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a157d20f020cbbea5adb1222689a9cc2f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVector.html#a157d20f020cbbea5adb1222689a9cc2f">Vector</a> (<a class="el" href="classStringInt.html">StringInt</a> required_dim, double default_value=0, double required_precision=default_precision)</td></tr>
-<tr class="memdesc:a157d20f020cbbea5adb1222689a9cc2f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for almost any case.  <a href="classVector.html#a157d20f020cbbea5adb1222689a9cc2f">More...</a><br /></td></tr>
-<tr class="separator:a157d20f020cbbea5adb1222689a9cc2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8e6f82d436079d0aff8aad43f853d22a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVector.html#a8e6f82d436079d0aff8aad43f853d22a">Vector</a> (const char *file_path, TValue required_precision=default_precision, TValue default_value=0)</td></tr>
-<tr class="memdesc:a8e6f82d436079d0aff8aad43f853d22a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor from file.  <a href="classVector.html#a8e6f82d436079d0aff8aad43f853d22a">More...</a><br /></td></tr>
-<tr class="separator:a8e6f82d436079d0aff8aad43f853d22a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a20fed5c654c680da20a93a8aaec7dbd1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVector.html#a20fed5c654c680da20a93a8aaec7dbd1">Vector</a> (<a class="el" href="classStringInt.html">index_type</a> required_capacity, double default_value=0, precision_type required_precision=default_precision)</td></tr>
+<tr class="memdesc:a20fed5c654c680da20a93a8aaec7dbd1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for almost any case.  <a href="classVector.html#a20fed5c654c680da20a93a8aaec7dbd1">More...</a><br /></td></tr>
+<tr class="separator:a20fed5c654c680da20a93a8aaec7dbd1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea8db665c90a843748b1e606f6f9d468"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVector.html#aea8db665c90a843748b1e606f6f9d468">Vector</a> (const char *file_path, precision_type required_precision=default_precision, TValue default_value=0)</td></tr>
+<tr class="memdesc:aea8db665c90a843748b1e606f6f9d468"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor from file.  <a href="classVector.html#aea8db665c90a843748b1e606f6f9d468">More...</a><br /></td></tr>
+<tr class="separator:aea8db665c90a843748b1e606f6f9d468"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4922c0812d3be1a946b6394637ab439d"><td class="memItemLeft" align="right" valign="top"><a id="a4922c0812d3be1a946b6394637ab439d"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>Vector</b> (const <a class="el" href="classMatrix__proxy.html">Matrix_proxy</a>&lt; TValue &gt; &amp;proxy)</td></tr>
 <tr class="separator:a4922c0812d3be1a946b6394637ab439d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -103,21 +113,21 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a4bacd0c9f0b0a7ddb2202cc36b104846"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classVector.html">Vector</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVector.html#a4bacd0c9f0b0a7ddb2202cc36b104846">operator=</a> (<a class="el" href="classVector.html">Vector</a> &amp;&amp;rhs) noexcept</td></tr>
 <tr class="memdesc:a4bacd0c9f0b0a7ddb2202cc36b104846"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move operator.  <a href="classVector.html#a4bacd0c9f0b0a7ddb2202cc36b104846">More...</a><br /></td></tr>
 <tr class="separator:a4bacd0c9f0b0a7ddb2202cc36b104846"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6381723fe900f37fd9fd120e9e370ef6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classVector.html">Vector</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVector.html#a6381723fe900f37fd9fd120e9e370ef6">operator=</a> (std::map&lt; <a class="el" href="classStringInt.html">StringInt</a>, TValue &gt; &amp;&amp;data_to_move) noexcept</td></tr>
-<tr class="memdesc:a6381723fe900f37fd9fd120e9e370ef6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move data operator.  <a href="classVector.html#a6381723fe900f37fd9fd120e9e370ef6">More...</a><br /></td></tr>
-<tr class="separator:a6381723fe900f37fd9fd120e9e370ef6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a09786467eeea8340f3be2afff4cf055c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVector.html#a09786467eeea8340f3be2afff4cf055c">set_precision</a> (TValue new_precision)</td></tr>
-<tr class="memdesc:a09786467eeea8340f3be2afff4cf055c"><td class="mdescLeft">&#160;</td><td class="mdescRight">precision setter.  <a href="classVector.html#a09786467eeea8340f3be2afff4cf055c">More...</a><br /></td></tr>
-<tr class="separator:a09786467eeea8340f3be2afff4cf055c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8832219cbb5ac6f9f992e4806baac844"><td class="memItemLeft" align="right" valign="top">TValue&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVector.html#a8832219cbb5ac6f9f992e4806baac844">get_precision</a> ()</td></tr>
-<tr class="memdesc:a8832219cbb5ac6f9f992e4806baac844"><td class="mdescLeft">&#160;</td><td class="mdescRight">precision getter.  <a href="classVector.html#a8832219cbb5ac6f9f992e4806baac844">More...</a><br /></td></tr>
-<tr class="separator:a8832219cbb5ac6f9f992e4806baac844"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5e3ef66b1b8cac5a186383b341d3cb88"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classStringInt.html">StringInt</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVector.html#a5e3ef66b1b8cac5a186383b341d3cb88">get_size</a> ()</td></tr>
-<tr class="memdesc:a5e3ef66b1b8cac5a186383b341d3cb88"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get number of not-null elements.  <a href="classVector.html#a5e3ef66b1b8cac5a186383b341d3cb88">More...</a><br /></td></tr>
-<tr class="separator:a5e3ef66b1b8cac5a186383b341d3cb88"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a39197b2006f30b46e620ce23fde5490c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classStringInt.html">StringInt</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVector.html#a39197b2006f30b46e620ce23fde5490c">get_dim</a> ()</td></tr>
-<tr class="memdesc:a39197b2006f30b46e620ce23fde5490c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get dimension of this <a class="el" href="classVector.html" title="Header containing Vector class declaration.">Vector</a>.  <a href="classVector.html#a39197b2006f30b46e620ce23fde5490c">More...</a><br /></td></tr>
-<tr class="separator:a39197b2006f30b46e620ce23fde5490c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0475696e979d4ff0c6d60108cb475059"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classVector.html">Vector</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVector.html#a0475696e979d4ff0c6d60108cb475059">operator=</a> (std::map&lt; <a class="el" href="classStringInt.html">index_type</a>, TValue &gt; &amp;&amp;data_to_move) noexcept</td></tr>
+<tr class="memdesc:a0475696e979d4ff0c6d60108cb475059"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move data operator.  <a href="classVector.html#a0475696e979d4ff0c6d60108cb475059">More...</a><br /></td></tr>
+<tr class="separator:a0475696e979d4ff0c6d60108cb475059"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab439cbcd8e088c9cd769ec0ba4bd38e6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVector.html#ab439cbcd8e088c9cd769ec0ba4bd38e6">set_precision</a> (precision_type new_precision)</td></tr>
+<tr class="memdesc:ab439cbcd8e088c9cd769ec0ba4bd38e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">precision setter.  <a href="classVector.html#ab439cbcd8e088c9cd769ec0ba4bd38e6">More...</a><br /></td></tr>
+<tr class="separator:ab439cbcd8e088c9cd769ec0ba4bd38e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f89a3d2c3964ca758df2e49ff02c592"><td class="memItemLeft" align="right" valign="top">precision_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVector.html#a5f89a3d2c3964ca758df2e49ff02c592">get_precision</a> ()</td></tr>
+<tr class="memdesc:a5f89a3d2c3964ca758df2e49ff02c592"><td class="mdescLeft">&#160;</td><td class="mdescRight">precision getter.  <a href="classVector.html#a5f89a3d2c3964ca758df2e49ff02c592">More...</a><br /></td></tr>
+<tr class="separator:a5f89a3d2c3964ca758df2e49ff02c592"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a4e3bae1ce66a5553ea4ad8f5afa1d7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classStringInt.html">index_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVector.html#a8a4e3bae1ce66a5553ea4ad8f5afa1d7">get_size</a> ()</td></tr>
+<tr class="memdesc:a8a4e3bae1ce66a5553ea4ad8f5afa1d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get number of not-null elements.  <a href="classVector.html#a8a4e3bae1ce66a5553ea4ad8f5afa1d7">More...</a><br /></td></tr>
+<tr class="separator:a8a4e3bae1ce66a5553ea4ad8f5afa1d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d6ac52262995c211743693b6ddde3d5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classStringInt.html">index_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVector.html#a4d6ac52262995c211743693b6ddde3d5">get_capacity</a> ()</td></tr>
+<tr class="memdesc:a4d6ac52262995c211743693b6ddde3d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get capacity of this <a class="el" href="classVector.html" title="Header containing Vector class declaration.">Vector</a>.  <a href="classVector.html#a4d6ac52262995c211743693b6ddde3d5">More...</a><br /></td></tr>
+<tr class="separator:a4d6ac52262995c211743693b6ddde3d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1b1ab94d845dafd9e2084f5a1d4cc5fc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classVector.html">Vector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVector.html#a1b1ab94d845dafd9e2084f5a1d4cc5fc">operator-</a> ()</td></tr>
 <tr class="memdesc:a1b1ab94d845dafd9e2084f5a1d4cc5fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unary minus operator.  <a href="classVector.html#a1b1ab94d845dafd9e2084f5a1d4cc5fc">More...</a><br /></td></tr>
 <tr class="separator:a1b1ab94d845dafd9e2084f5a1d4cc5fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -183,7 +193,7 @@ class Vector&lt; TValue &gt;</h3>
 
 <p>Header containing <a class="el" href="classVector.html" title="Header containing Vector class declaration.">Vector</a> class declaration. </p>
 <dl class="section author"><dt>Author</dt><dd>sanyavertolet Template class that implements vector.</dd></dl>
-<p>If TValue is bool, data is stored as uint64_t value, otherwise it is stored as std::map&lt;StringIng, TValue&gt;. If dim is negative, vector is considered to be endless, otherwise it has maximum of dim elements.</p>
+<p>If TValue is bool, data is stored as uint64_t value, otherwise it is stored as std::map&lt;StringIng, TValue&gt;. If capacity is negative, vector is considered to be endless, otherwise it has maximum of capacity elements.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">TValue</td><td>type of stored data. </td></tr>
@@ -191,8 +201,8 @@ class Vector&lt; TValue &gt;</h3>
   </dd>
 </dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a157d20f020cbbea5adb1222689a9cc2f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a157d20f020cbbea5adb1222689a9cc2f">&#9670;&nbsp;</a></span>Vector() <span class="overload">[1/4]</span></h2>
+<a id="a20fed5c654c680da20a93a8aaec7dbd1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a20fed5c654c680da20a93a8aaec7dbd1">&#9670;&nbsp;</a></span>Vector() <span class="overload">[1/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -205,8 +215,8 @@ template&lt;typename TValue &gt; </div>
         <tr>
           <td class="memname"><a class="el" href="classVector.html">Vector</a>&lt; TValue &gt;::<a class="el" href="classVector.html">Vector</a> </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classStringInt.html">StringInt</a>&#160;</td>
-          <td class="paramname"><em>required_dim</em>, </td>
+          <td class="paramtype"><a class="el" href="classStringInt.html">index_type</a>&#160;</td>
+          <td class="paramname"><em>required_capacity</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -217,7 +227,7 @@ template&lt;typename TValue &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">double&#160;</td>
+          <td class="paramtype">precision_type&#160;</td>
           <td class="paramname"><em>required_precision</em> = <code>default_precision</code>&#160;</td>
         </tr>
         <tr>
@@ -236,8 +246,8 @@ template&lt;typename TValue &gt; </div>
 <p>Constructor for almost any case. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
+    <tr><td class="paramname">required_capacity</td><td>capacity of vector. </td></tr>
     <tr><td class="paramname">required_precision</td><td>precision of contained elements, default is default_precision. </td></tr>
-    <tr><td class="paramname">required_dim</td><td>dimension of vector, default -1. </td></tr>
     <tr><td class="paramname">default_value</td><td>value that should be set as default value for each element. </td></tr>
   </table>
   </dd>
@@ -245,8 +255,8 @@ template&lt;typename TValue &gt; </div>
 
 </div>
 </div>
-<a id="a8e6f82d436079d0aff8aad43f853d22a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8e6f82d436079d0aff8aad43f853d22a">&#9670;&nbsp;</a></span>Vector() <span class="overload">[2/4]</span></h2>
+<a id="aea8db665c90a843748b1e606f6f9d468"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aea8db665c90a843748b1e606f6f9d468">&#9670;&nbsp;</a></span>Vector() <span class="overload">[2/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -265,7 +275,7 @@ template&lt;typename TValue &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">TValue&#160;</td>
+          <td class="paramtype">precision_type&#160;</td>
           <td class="paramname"><em>required_precision</em> = <code>default_precision</code>, </td>
         </tr>
         <tr>
@@ -372,8 +382,8 @@ template&lt;typename TValue &gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a39197b2006f30b46e620ce23fde5490c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a39197b2006f30b46e620ce23fde5490c">&#9670;&nbsp;</a></span>get_dim()</h2>
+<a id="a4d6ac52262995c211743693b6ddde3d5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4d6ac52262995c211743693b6ddde3d5">&#9670;&nbsp;</a></span>get_capacity()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -384,7 +394,7 @@ template&lt;typename TValue &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classStringInt.html">StringInt</a> <a class="el" href="classVector.html">Vector</a>&lt; TValue &gt;::get_dim </td>
+          <td class="memname"><a class="el" href="classStringInt.html">index_type</a> <a class="el" href="classVector.html">Vector</a>&lt; TValue &gt;::get_capacity </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -397,13 +407,13 @@ template&lt;typename TValue &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Get dimension of this <a class="el" href="classVector.html" title="Header containing Vector class declaration.">Vector</a>. </p>
-<dl class="section return"><dt>Returns</dt><dd>dimension of this <a class="el" href="classVector.html" title="Header containing Vector class declaration.">Vector</a>. </dd></dl>
+<p>Get capacity of this <a class="el" href="classVector.html" title="Header containing Vector class declaration.">Vector</a>. </p>
+<dl class="section return"><dt>Returns</dt><dd>capacity of this <a class="el" href="classVector.html" title="Header containing Vector class declaration.">Vector</a>. </dd></dl>
 
 </div>
 </div>
-<a id="a8832219cbb5ac6f9f992e4806baac844"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8832219cbb5ac6f9f992e4806baac844">&#9670;&nbsp;</a></span>get_precision()</h2>
+<a id="a5f89a3d2c3964ca758df2e49ff02c592"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5f89a3d2c3964ca758df2e49ff02c592">&#9670;&nbsp;</a></span>get_precision()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -414,7 +424,7 @@ template&lt;typename TValue &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">TValue <a class="el" href="classVector.html">Vector</a>&lt; TValue &gt;::get_precision </td>
+          <td class="memname">precision_type <a class="el" href="classVector.html">Vector</a>&lt; TValue &gt;::get_precision </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -432,8 +442,8 @@ template&lt;typename TValue &gt; </div>
 
 </div>
 </div>
-<a id="a5e3ef66b1b8cac5a186383b341d3cb88"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5e3ef66b1b8cac5a186383b341d3cb88">&#9670;&nbsp;</a></span>get_size()</h2>
+<a id="a8a4e3bae1ce66a5553ea4ad8f5afa1d7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8a4e3bae1ce66a5553ea4ad8f5afa1d7">&#9670;&nbsp;</a></span>get_size()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -444,7 +454,7 @@ template&lt;typename TValue &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classStringInt.html">StringInt</a> <a class="el" href="classVector.html">Vector</a>&lt; TValue &gt;::get_size </td>
+          <td class="memname"><a class="el" href="classStringInt.html">index_type</a> <a class="el" href="classVector.html">Vector</a>&lt; TValue &gt;::get_size </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -656,8 +666,8 @@ template&lt;typename TValue &gt; </div>
 
 </div>
 </div>
-<a id="a6381723fe900f37fd9fd120e9e370ef6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6381723fe900f37fd9fd120e9e370ef6">&#9670;&nbsp;</a></span>operator=() <span class="overload">[2/3]</span></h2>
+<a id="a0475696e979d4ff0c6d60108cb475059"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0475696e979d4ff0c6d60108cb475059">&#9670;&nbsp;</a></span>operator=() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -670,7 +680,7 @@ template&lt;typename TValue &gt; </div>
         <tr>
           <td class="memname"><a class="el" href="classVector.html">Vector</a>&amp; <a class="el" href="classVector.html">Vector</a>&lt; TValue &gt;::operator= </td>
           <td>(</td>
-          <td class="paramtype">std::map&lt; <a class="el" href="classStringInt.html">StringInt</a>, TValue &gt; &amp;&amp;&#160;</td>
+          <td class="paramtype">std::map&lt; <a class="el" href="classStringInt.html">index_type</a>, TValue &gt; &amp;&amp;&#160;</td>
           <td class="paramname"><em>data_to_move</em></td><td>)</td>
           <td></td>
         </tr>
@@ -730,8 +740,8 @@ template&lt;typename TValue &gt; </div>
 
 </div>
 </div>
-<a id="a09786467eeea8340f3be2afff4cf055c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a09786467eeea8340f3be2afff4cf055c">&#9670;&nbsp;</a></span>set_precision()</h2>
+<a id="ab439cbcd8e088c9cd769ec0ba4bd38e6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab439cbcd8e088c9cd769ec0ba4bd38e6">&#9670;&nbsp;</a></span>set_precision()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -744,7 +754,7 @@ template&lt;typename TValue &gt; </div>
         <tr>
           <td class="memname">void <a class="el" href="classVector.html">Vector</a>&lt; TValue &gt;::set_precision </td>
           <td>(</td>
-          <td class="paramtype">TValue&#160;</td>
+          <td class="paramtype">precision_type&#160;</td>
           <td class="paramname"><em>new_precision</em></td><td>)</td>
           <td></td>
         </tr>

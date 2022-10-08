@@ -3,8 +3,8 @@
 <area shape="rect" id="node2" href="$classCastException.html" title="Header file that describes CastException." alt="" coords="194,5,309,32"/>
 <area shape="rect" id="node3" href="$classDivisionByZeroException.html" title="Header file that describes DivisionByZeroException." alt="" coords="158,56,345,83"/>
 <area shape="rect" id="node4" href="$classFileNotFoundException.html" title="Header file that describes FileNotFoundException." alt="" coords="166,107,337,133"/>
-<area shape="rect" id="node5" href="$classIllegalDigitException.html" title="Header file that describes IllegalDigitException." alt="" coords="173,157,330,184"/>
-<area shape="rect" id="node6" href="$classIllegalDimException.html" title="Header file that describes IllegalDimException." alt="" coords="175,208,328,235"/>
+<area shape="rect" id="node5" href="$classIllegalCapacityException.html" title="Header file that describes IllegalCapacityException." alt="" coords="160,157,343,184"/>
+<area shape="rect" id="node6" href="$classIllegalDigitException.html" title="Header file that describes IllegalDigitException." alt="" coords="173,208,330,235"/>
 <area shape="rect" id="node7" href="$classIllegalSignException.html" title="Header file that describes IllegalSignException." alt="" coords="174,259,329,285"/>
 <area shape="rect" id="node8" href="$classIllegalStateException.html" title="Header file that describes IllegalDigitException." alt="" coords="171,309,331,336"/>
 <area shape="rect" id="node9" href="$classNullPointerException.html" title="Header file that describes NullPointerException." alt="" coords="172,360,331,387"/>
