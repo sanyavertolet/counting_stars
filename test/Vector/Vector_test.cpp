@@ -31,6 +31,10 @@ TEST(Vector_test, int_test)
     ASSERT_EQ(int_vector.get_capacity(), -1);
     int_vector.set_precision(10.0);
     ASSERT_EQ(int_vector.get_size(), 0);
+    int_vector = Vector<int>(11);
+    int_vector(5) = 10;
+    int_vector(10) = 20;
+    ASSERT_EQ(to_string(int_vector), "vector <i> 11\n\n6 10\n11 20\n");
 }
 
 TEST(Vector_test, long_double_test)
@@ -87,6 +91,41 @@ TEST(Vector_test, Rational_number_test)
     ASSERT_EQ(rational_number_vector.get_capacity(), -1);
     rational_number_vector.set_precision(123123999);
     ASSERT_EQ(rational_number_vector.get_size(), 1);
+    rational_number_vector = Vector<Rational_number>(1000000);
+    std::stringstream ss;
+    rational_number_vector(5) = Rational_number("5/11");
+    rational_number_vector(10000) = Rational_number("-177/98");
+    ss << rational_number_vector;
+    ASSERT_EQ(ss.str(), "vector rational 1000000\n\n6 5/11\n10001 -177/98\n");
+    Vector<Rational_number> new_rational_vector(1000000);
+    ss >> new_rational_vector;
+    ASSERT_EQ(to_string(new_rational_vector), to_string(rational_number_vector));
+}
+
+TEST(Vector_test, Complex_number_test)
+{
+    Vector<Complex_number<double, double>> complex_vector(StringInt("99999999999999999999"));
+    complex_vector(StringInt("9999999999999999999")) = Complex_number<double, double>(123123.123, 2.0);
+    complex_vector(2) = Complex_number<double, double>(1.5, 6.3);
+
+    ASSERT_EQ(complex_vector(0), Complex_number(0));
+    ASSERT_EQ(complex_vector(1), Complex_number(0));
+    ASSERT_EQ(complex_vector(2), Complex_number(1.5, 6.3));
+    ASSERT_EQ(complex_vector(3), Complex_number(0));
+    ASSERT_EQ(complex_vector(StringInt("9999999999999999999")), Complex_number(123123.123, 2.0));
+    ASSERT_EQ(complex_vector.get_size(), 2);
+    ASSERT_EQ(complex_vector.get_capacity(), StringInt("99999999999999999999"));
+    complex_vector.set_precision(1000);
+    ASSERT_EQ(complex_vector.get_size(), 1);
+    complex_vector = Vector<Complex_number<double, double>>(1000000);
+    std::stringstream ss;
+    complex_vector(5) = Complex_number(1.1, 2.2);
+    complex_vector(10000) = Complex_number(3.3, 4.4);
+    ss << complex_vector;
+    ASSERT_EQ(ss.str(), "vector complex 1000000\n\n6 (1,2)\n10001 (3,4)\n");
+    Vector<Complex_number<double, double>> new_complex_vector(1000000);
+    ss >> new_complex_vector;
+    ASSERT_EQ(to_string(new_complex_vector), to_string(complex_vector));
 }
 
 TEST(Vector_test, bool_test)

@@ -152,6 +152,12 @@ std::ostream& operator<<(std::ostream& os, StringInt const& x) {
 std::istream& operator>>(std::istream& is, StringInt& x) {
     std::string number;
     is >> number;
+    if (number.empty()) {
+        is.setstate(std::ios::failbit);
+    }
+    if (is.fail()) {
+        return is;
+    }
     try {
         x = StringInt(number);
     } catch(std::exception& exception) {

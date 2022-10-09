@@ -11,6 +11,12 @@
 #include <iostream>
 #include "../exceptions/exceptions.h"
 
+template<typename TReal, typename TImaginary>
+class Complex_number;
+
+template<typename TReal, typename TImaginary>
+std::string to_string(Complex_number<TReal, TImaginary> number);
+
 /**
  * Template class that implements Complex_number.
  *
@@ -48,7 +54,7 @@ public:
      * @param rhs right operand.
      * @return this Complex_number set with rhs.
      */
-    template <typename TRealRight, typename TImaginaryRight>
+    template <typename TRealRight = double, typename TImaginaryRight = double>
     Complex_number& operator=(Complex_number<TRealRight, TImaginaryRight> &rhs) {
         this->set_re(rhs.get_re());
         this->set_im(rhs.get_im());
@@ -111,7 +117,7 @@ public:
      * @return os.
      */
     friend std::ostream& operator<<(std::ostream& os, Complex_number const& x) {
-        os << std::string(x);
+        os << to_string(x);
         return os;
     }
 
@@ -125,10 +131,10 @@ public:
     friend std::istream& operator>>(std::istream& is, Complex_number& x) {
         char ch;
         std::string input;
-        is.get(ch);
+        while (is.get(ch) && isspace(ch));
         if (ch != '(') {
             is.setstate(std::ios::failbit);
-            throw ParseException("Error while parsing Complex_number: unknown symbol instead of '(': " + std::string(1, ch));
+//            throw ParseException("Error while parsing Complex_number: unknown symbol instead of '(': " + std::string(1, ch));
         }
         TReal new_re;
         is >> new_re;
@@ -137,7 +143,7 @@ public:
         is.get(ch);
         if (ch != ',') {
             is.setstate(std::ios::failbit);
-            throw ParseException("Error while parsing Complex_number: unknown symbol instead of ',': " + std::string(1, ch));
+//            throw ParseException("Error while parsing Complex_number: unknown symbol instead of ',': " + std::string(1, ch));
         }
 
         TImaginary new_im;
@@ -147,7 +153,7 @@ public:
         is.get(ch);
         if (ch != ')') {
             is.setstate(std::ios::failbit);
-            throw ParseException("Error while parsing Complex_number: unknown symbol instead of ')': " + std::string(1, ch));
+//            throw ParseException("Error while parsing Complex_number: unknown symbol instead of ')': " + std::string(1, ch));
         }
 
         return is;
@@ -297,15 +303,6 @@ public:
     }
 
     /**
-     * std::string cast operator.
-     *
-     * @return string representation of this Complex_number.
-     */
-    explicit operator std::string() const {
-        return "(" + std::string(re) + ", " + std::string(im) + ")";
-    }
-
-    /**
      * Get modulus of this Complex_number.
      *
      * @return modulus of this Complex_number.
@@ -442,6 +439,16 @@ bool operator>=(Complex_number<TRealLeft, TImaginaryLeft> lhs, const Complex_num
 template<typename TReal, typename TImaginary>
 auto abs(Complex_number<TReal, TImaginary> number) {
     return number.modulus();
+}
+
+/**
+ * std::string cast operator.
+ *
+ * @return string representation of this Complex_number.
+ */
+template<typename TReal, typename TImaginary>
+std::string to_string(Complex_number<TReal, TImaginary> number) {
+    return "(" + to_string(number.get_re()) + "," + to_string(number.get_im()) + ")";
 }
 
 #endif //COUNTING_STARS_COMPLEX_NUMBER_H

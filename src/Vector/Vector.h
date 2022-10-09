@@ -50,7 +50,7 @@ public:
     explicit Vector(
             index_type required_capacity,
             double default_value = 0,
-            precision_type required_precision = default_precision
+            precision_type required_precision = 0
                     ): capacity(std::move(required_capacity)), mass_transform(default_value), precision(required_precision), data({}) { }
 
     /**
@@ -60,7 +60,7 @@ public:
      * @param required_precision precision of contained elements, default is default_precision.
      * @param default_value value that should be set as default value for each element.
      */
-    Vector(const char* file_path, precision_type required_precision = default_precision, TValue default_value = 0):
+    Vector(const char* file_path, precision_type required_precision = 0, TValue default_value = 0):
             mass_transform(default_value), precision(required_precision) {
         std::ifstream infile(file_path);
         infile >> *this;
@@ -117,7 +117,7 @@ public:
         mass_transform = std::move(rhs.mass_transform);
         rhs.mass_transform = TValue();
         precision = std::move(rhs.precision);
-        rhs.precision = TValue();
+        rhs.precision = Vector::precision_type();
         data = std::move(rhs.data);
         rhs.data = {};
         return *this;
@@ -165,6 +165,17 @@ public:
     }
 
     /**
+     * Set capacity of a Vector.
+     * Notice that this method could rubbish existing data.
+     *
+     * @param new_capacity
+     */
+    void set_capacity(index_type new_capacity) {
+        capacity = std::move(new_capacity);
+        data = {};
+    }
+
+    /**
      * Get capacity of this Vector.
      *
      * @return capacity of this Vector.
@@ -192,7 +203,34 @@ public:
      * @param x Vector to read to.
      * @return is.
      */
-    friend std::istream& operator>>(std::istream& is, Vector<TValue>& x);
+    friend std::istream& operator>>(std::istream& is, Vector<TValue>& x) {
+        std::string structure_name;
+        std::string type_name;
+        is >> structure_name;
+        if (structure_name != "vector") {
+            is.setstate(std::ios::failbit);
+//        throw ParseException(structure_name + " cannot be parsed to vector.");
+        }
+        is >> type_name;
+        if (type_name != "complex" && type_name != "rational") {
+            is.setstate(std::ios::failbit);
+//        throw CastException(type_name + " cannot be stored to vector.");
+        }
+        Vector::index_type capacity_from_input;
+        is >> capacity_from_input;
+        x.set_capacity(capacity_from_input);
+        Vector::index_type index;
+        TValue value;
+        while(is >> index >> value) {
+            if (is.fail()) {
+                return is;
+            }
+            x(index - 1) = value;
+        }
+
+        return is;
+    }
+
 
     /**
      * Eq operator.
@@ -380,7 +418,7 @@ public:
         std::string type_name;
         ss << "vector " << get_type_name(TValue()) << " " << vector.capacity << std::endl << std::endl;
         for (auto [key, value]: vector.data) {
-            ss << (key + 1) << "\t" <<  value << std::endl;
+            ss << (key + 1) << " " <<  value << std::endl;
         }
         return ss.str();
     }
@@ -410,12 +448,7 @@ private:
      * key - StringInt describing index of a number.
      * value - TValue that should be stored.
      */
-    std::map<StringInt, TValue> data;
-
-    /**
-     * Constant that defines default precision.
-     */
-    static precision_type default_precision;
+    std::map<index_type, TValue> data;
 
     template<typename TComplexReal = double, typename TComplexImaginary = double>
     static std::string get_type_name(TValue) {
