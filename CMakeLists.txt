@@ -11,14 +11,14 @@ FetchContent_Declare(
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
-set(exceptions src/exceptions/exceptions.h src/exceptions/IllegalSignException/IllegalSignException.h src/exceptions/IllegalDigitException/IllegalDigitException.h src/exceptions/DivisionByZeroException/DivisionByZeroException.h src/exceptions/ParseException/ParseException.h src/exceptions/CastException/CastException.h src/exceptions/OutOfRangeException/OutOfRangeException.h src/exceptions/OutOfIntegerDivisionException/OutOfIntegerDivisionException.h src/exceptions/OverflowException/OverflowException.h src/exceptions/ParseException/ParseException.h src/exceptions/FileNotFoundException/FileNotFoundException.h src/exceptions/FileNotFoundException/FileNotFoundException.cpp src/exceptions/NullPointerException/NullPointerException.h src/exceptions/NullPointerException/NullPointerException.cpp src/exceptions/IllegalCapacityException/IllegalCapacityException.h src/exceptions/IllegalCapacityException/IllegalCapacityException.cpp)
+set(exceptions src/exceptions/exceptions.h src/exceptions/IllegalSignException/IllegalSignException.h src/exceptions/IllegalDigitException/IllegalDigitException.h src/exceptions/DivisionByZeroException/DivisionByZeroException.h src/exceptions/ParseException/ParseException.h src/exceptions/CastException/CastException.h src/exceptions/OutOfRangeException/OutOfRangeException.h src/exceptions/OutOfIntegerDivisionException/OutOfIntegerDivisionException.h src/exceptions/OverflowException/OverflowException.h src/exceptions/ParseException/ParseException.h src/exceptions/FileNotFoundException/FileNotFoundException.h src/exceptions/FileNotFoundException/FileNotFoundException.cpp src/exceptions/NullPointerException/NullPointerException.h src/exceptions/NullPointerException/NullPointerException.cpp src/exceptions/IllegalCapacityException/IllegalCapacityException.h src/exceptions/IllegalCapacityException/IllegalCapacityException.cpp src/utils.h)
 
-set(StringInt src/StringInt/StringInt.h src/StringInt/StringInt.cpp)
-set(Rational_number src/Rational_number/Rational_number.h src/Rational_number/Rational_number.cpp)
-set(Complex_number src/Complex_number/Complex_number.h)
-set(Vector src/Vector/Vector.h src/Vector/Vector.cpp src/Vector/Vector.bool.cpp)
-set(Pos src/Pos/Pos.h src/Pos/Pos.cpp)
-set(Matrix src/Matrix/Matrix.h src/Matrix/Coords/Matrix_coords.h src/Matrix/Coords/Matrix_row_coord.h src/Matrix/Coords/Matrix_column_coord.h src/Matrix/Matrix_proxy.h src/Matrix/Coords/Matrix_coords.cpp src/Matrix/Coords/Matrix_row_coord.cpp src/Matrix/Coords/Matrix_column_coord.cpp)
+set(StringInt src/StringInt/StringInt.h src/StringInt/StringInt.cpp src/utils.h)
+set(Rational_number src/Rational_number/Rational_number.h src/Rational_number/Rational_number.cpp src/utils.h)
+set(Complex_number src/Complex_number/Complex_number.h src/utils.h)
+set(Vector src/Vector/Vector.h src/Vector/Vector.cpp src/Vector/Vector.bool.cpp src/utils.h)
+set(Pos src/Pos/Pos.h src/Pos/Pos.cpp src/utils.h)
+set(Matrix src/Matrix/Matrix.h src/Matrix/Coords/Matrix_coords.h src/Matrix/Coords/Matrix_row_coord.h src/Matrix/Coords/Matrix_column_coord.h src/Matrix/Matrix_proxy.h src/Matrix/Coords/Matrix_coords.cpp src/Matrix/Coords/Matrix_row_coord.cpp src/Matrix/Coords/Matrix_column_coord.cpp src/utils.h)
 
 add_library(counting_stars ${StringInt} ${Rational_number} ${Complex_number} ${Vector} ${Pos} ${Matrix} ${exceptions})
 

@@ -63,10 +63,7 @@ public:
     Vector(const char* file_path, precision_type required_precision = default_precision, TValue default_value = 0):
             mass_transform(default_value), precision(required_precision) {
         std::ifstream infile(file_path);
-        if (infile.bad()) {
-            throw FileNotFoundException(file_path);
-        }
-        //todo: implement
+        infile >> *this;
     }
 
     explicit Vector(const Matrix_proxy<TValue>& proxy): mass_transform(0), precision(proxy.get_precision()) {
@@ -482,10 +479,8 @@ public:
      *
      * @param is_zeroes flag to set default value for each element of Vector.
      */
-    explicit Vector(index_type d): capacity(d), data({}) {
-        for (auto i = 0llu; i < d; ++i) {
-            data.push_back(0u);
-        }
+    explicit Vector(index_type d): capacity() {
+        set_capacity(d);
     }
 
     /**
@@ -493,24 +488,43 @@ public:
      *
      * @param file_path name of a file to be parsed.
      */
-    Vector(const char* file_path) {
+    Vector(const char* file_path): capacity(0) {
         std::ifstream infile(file_path);
-        if (infile.bad()) {
-//            throw FileNotFoundException();
-            throw std::runtime_error("FileNotFoundException: " + std::string(file_path));
+        if (!infile.good()) {
+            throw FileNotFoundException(file_path);
         }
-        //todo: implement
+        infile >> *this;
+        if (infile.bad()) {
+            throw ParseException("Error while parsing vector.");
+        }
     }
 
     /**
      * @return amount of elements in data.
      */
-    [[nodiscard]] index_type get_pages() const {
-        return std::ceil((long double)(capacity) / double(bits_per_uint));
+    [[nodiscard]] static index_type get_pages(index_type cap) {
+        return std::ceil((long double)(cap) / double(bits_per_uint));
     }
 
+    /**
+     * @param index
+     * @return index of required page
+     */
     static index_type get_element_page(index_type index) {
         return std::floor((long double)(index) / double(bits_per_uint));
+    }
+
+    /**
+     * Set capacity and delete all elements from Vector.
+     *
+     * @param new_capacity
+     */
+    void set_capacity(index_type new_capacity) {
+        capacity = new_capacity;
+        data = std::vector<uint64_t>();
+        for (auto i = 0; i < get_pages(new_capacity); ++i) {
+            data.push_back(0llu);
+        }
     }
 
     /**
@@ -521,7 +535,7 @@ public:
     [[nodiscard]] int get_size() const {
         int result = 0;
         std::vector<uint64_t> tmp = data;
-        for (auto i = 0; i < get_pages(); ++i) {
+        for (auto i = 0; i < get_pages(capacity); ++i) {
             while (tmp[i]) {
                 result += int(tmp[i] & 1u);
                 tmp[i] >>= 1;
@@ -571,12 +585,12 @@ public:
      */
     Vector<bool> operator~() {
         Vector<bool> result = *this;
-        for (int i = 0; i < get_pages(); ++i) {
+        for (int i = 0; i < get_pages(capacity); ++i) {
             result.data[i] ^= -1;
         }
         auto extra_cells = bits_per_uint - (capacity % bits_per_uint);
-        result.data[get_pages() - 1] <<= extra_cells;
-        result.data[get_pages() - 1] >>= extra_cells;
+        result.data[get_pages(capacity) - 1] <<= extra_cells;
+        result.data[get_pages(capacity) - 1] >>= extra_cells;
         return result;
     }
 
@@ -586,12 +600,12 @@ public:
      * @param index index of element.
      * @return value of element on position [index].
      */
-    bool operator()(int index) const {
+    bool operator()(index_type index) const {
         if (index >= capacity) {
             throw OutOfRangeException("Index " + std::to_string(index) + " is out of range, ["
                                       + std::to_string(capacity) + "] is maximal possible index.");
         }
-        return (data[get_element_page(index)] & (1 << (index % bits_per_uint))) >> (index % bits_per_uint);
+        return (data[get_element_page(index)] >> (index % bits_per_uint)) & 1llu;
     }
 
     /**
@@ -601,13 +615,14 @@ public:
      * @param value value to be set.
      * @return value of element on position [index].
      */
-    bool operator()(int index, bool value) {
+    bool operator()(index_type index, bool value) {
         if (index >= capacity) {
             throw OutOfRangeException("Index " + std::to_string(index) + " is out of range ("
                                       + std::to_string(capacity) + " is maximum possible index).");
         }
-        if (data[get_element_page(index)] >> (index % bits_per_uint) != value) {
-            data[get_element_page(index)] ^= 1 << (index % bits_per_uint);
+        auto index_at_page = index % bits_per_uint;
+        if (((data[get_element_page(index)] >> index_at_page) & 1) != value) {
+            data[get_element_page(index)] ^= 1llu << index_at_page;
         }
         return value;
     }
@@ -622,7 +637,7 @@ public:
         if (capacity != rhs.capacity) {
             throw IllegalCapacityException();
         }
-        for (int i = 0; i < capacity; ++i) {
+        for (int i = 0; i < get_pages(capacity); ++i) {
             data[i] |= rhs.data[i];
         }
         return *this;
@@ -638,8 +653,8 @@ public:
         if (capacity != rhs.capacity) {
             throw IllegalCapacityException();
         }
-        for (int i = 0; i < capacity; ++i) {
-            data[i] &= rhs.data[i];
+        for (int i = 0; i < get_pages(capacity); ++i) {
+            data[i] = data[i] & rhs.data[i];
         }
         return *this;
     }
@@ -673,7 +688,7 @@ public:
     /**
      * Maximum possible Vector length.
      */
-    static constexpr int bits_per_uint = 64;
+    static constexpr index_type bits_per_uint = 64;
 private:
     /**
      * Data is stored as vector of uint64_t where i-th bit is 1 if i-th value is true and 0 if value is false.
@@ -683,7 +698,7 @@ private:
     /**
      * Vector capacity.
      */
-    unsigned long long capacity;
+    index_type capacity;
 };
 
 #endif //COUNTING_STARS_VECTOR_H

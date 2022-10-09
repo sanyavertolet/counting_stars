@@ -8,9 +8,14 @@
 #include "../../src/Rational_number/Rational_number.h"
 #include "../../src/Complex_number/Complex_number.h"
 #include "../../src/Vector/Vector.h"
+
+#include "../../src/utils.h"
+
 #include "gtest/gtest.h"
 
 class Vector_test : public testing::Test { };
+
+std::filesystem::path test_path = project_path / "test" / "Vector";
 
 TEST(Vector_test, int_test)
 {
@@ -109,7 +114,21 @@ TEST(Vector_test, bool_test)
     std::stringstream ss;
     ss << bool_vector;
     ASSERT_EQ(ss.str(), "vector bit 100\n\n2 1\n");
-    ASSERT_THROW(ss >> another_bool_vector, std::runtime_error);
+//    ASSERT_THROW(ss >> another_bool_vector, std::runtime_error);
     ASSERT_TRUE(bool_vector != another_bool_vector);
     ASSERT_TRUE(bool_vector == ~~bool_vector);
+    std::stringstream is("vector bit 100\n\n2 1\n");
+    Vector<bool>vector_from_input(100);
+    is >> vector_from_input;
+    ASSERT_FALSE(is.bad());
+    ASSERT_TRUE(bool_vector == vector_from_input);
+    ASSERT_EQ(bool_vector, vector_from_input);
+    is = std::stringstream ("vector bit 100\n\n\n");
+    is >> vector_from_input;
+    ASSERT_EQ(to_string(vector_from_input), "vector bit 100\n\n");
+    vector_from_input = Vector<bool>(std::string(test_path / "vector1.txt").c_str());
+    ASSERT_EQ(vector_from_input(1 - 1), true);
+    ASSERT_EQ(vector_from_input(6000 - 1), true);
+    ASSERT_EQ(vector_from_input(7 - 1), true);
+    ASSERT_EQ(vector_from_input(22 - 1), true);
 }
