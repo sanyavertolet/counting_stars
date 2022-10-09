@@ -210,7 +210,11 @@ std::ostream& operator<<(std::ostream& os, Rational_number const& x) {
 std::istream& operator>>(std::istream& is, Rational_number& x) {
     std::string rational_number_string;
     is >> rational_number_string;
-    x = Rational_number(rational_number_string);
+    try {
+        x = Rational_number(rational_number_string);
+    } catch (std::exception& exception) {
+        is.setstate(std::ios::failbit);
+    }
     return is;
 }
 

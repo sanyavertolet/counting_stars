@@ -127,6 +127,7 @@ public:
         std::string input;
         is.get(ch);
         if (ch != '(') {
+            is.setstate(std::ios::failbit);
             throw ParseException("Error while parsing Complex_number: unknown symbol instead of '(': " + std::string(1, ch));
         }
         TReal new_re;
@@ -135,6 +136,7 @@ public:
 
         is.get(ch);
         if (ch != ',') {
+            is.setstate(std::ios::failbit);
             throw ParseException("Error while parsing Complex_number: unknown symbol instead of ',': " + std::string(1, ch));
         }
 
@@ -144,6 +146,7 @@ public:
 
         is.get(ch);
         if (ch != ')') {
+            is.setstate(std::ios::failbit);
             throw ParseException("Error while parsing Complex_number: unknown symbol instead of ')': " + std::string(1, ch));
         }
 

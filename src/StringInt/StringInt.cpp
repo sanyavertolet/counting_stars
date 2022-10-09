@@ -152,7 +152,11 @@ std::ostream& operator<<(std::ostream& os, StringInt const& x) {
 std::istream& operator>>(std::istream& is, StringInt& x) {
     std::string number;
     is >> number;
-    x = StringInt(number);
+    try {
+        x = StringInt(number);
+    } catch(std::exception& exception) {
+        is.setstate(std::ios::failbit);
+    }
     return is;
 }
 
