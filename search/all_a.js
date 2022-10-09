@@ -34,5 +34,5 @@ var searchData=
   ['outofintegerdivisionexception_80',['OutOfIntegerDivisionException',['../classOutOfIntegerDivisionException.html',1,'']]],
   ['outofrangeexception_81',['OutOfRangeException',['../classOutOfRangeException.html',1,'']]],
   ['overflowexception_82',['OverflowException',['../classOverflowException.html',1,'']]],
-  ['string_83',['string',['../classComplex__number.html#a30b9b96317800ab27c5f720f2f6d8dd6',1,'Complex_number::string()'],['../classRational__number.html#a2aff3fcade7b7da35f15d1895d7539da',1,'Rational_number::string()'],['../classStringInt.html#a8ed07f8969e8fe400e011e92db011785',1,'StringInt::string()']]]
+  ['string_83',['string',['../classRational__number.html#a2aff3fcade7b7da35f15d1895d7539da',1,'Rational_number::string()'],['../classStringInt.html#a8ed07f8969e8fe400e011e92db011785',1,'StringInt::string()']]]
 ];

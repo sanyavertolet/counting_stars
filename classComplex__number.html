@@ -88,7 +88,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a278e7977c6f3d4d9a432697b96a1d137"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classComplex__number.html#a278e7977c6f3d4d9a432697b96a1d137">Complex_number</a> (const TReal &amp;real, const TImaginary &amp;imaginary)</td></tr>
 <tr class="memdesc:a278e7977c6f3d4d9a432697b96a1d137"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor from real and imaginary parts of complex number.  <a href="classComplex__number.html#a278e7977c6f3d4d9a432697b96a1d137">More...</a><br /></td></tr>
 <tr class="separator:a278e7977c6f3d4d9a432697b96a1d137"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8875d758780767ab1b5ae41f7e479931"><td class="memTemplParams" colspan="2">template&lt;typename TRealRight , typename TImaginaryRight &gt; </td></tr>
+<tr class="memitem:a8875d758780767ab1b5ae41f7e479931"><td class="memTemplParams" colspan="2">template&lt;typename TRealRight  = double, typename TImaginaryRight  = double&gt; </td></tr>
 <tr class="memitem:a8875d758780767ab1b5ae41f7e479931"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classComplex__number.html">Complex_number</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classComplex__number.html#a8875d758780767ab1b5ae41f7e479931">operator=</a> (<a class="el" href="classComplex__number.html">Complex_number</a>&lt; TRealRight, TImaginaryRight &gt; &amp;rhs)</td></tr>
 <tr class="memdesc:a8875d758780767ab1b5ae41f7e479931"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy operator.  <a href="classComplex__number.html#a8875d758780767ab1b5ae41f7e479931">More...</a><br /></td></tr>
 <tr class="separator:a8875d758780767ab1b5ae41f7e479931"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -125,9 +125,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a885f81c616e3058590e1fc10833f9d8b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classComplex__number.html">Complex_number</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classComplex__number.html#a885f81c616e3058590e1fc10833f9d8b">operator~</a> () const</td></tr>
 <tr class="memdesc:a885f81c616e3058590e1fc10833f9d8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get conjugated complex number of this <a class="el" href="classComplex__number.html" title="Header containing Complex_number class declaration and implementation (partially).">Complex_number</a>.  <a href="classComplex__number.html#a885f81c616e3058590e1fc10833f9d8b">More...</a><br /></td></tr>
 <tr class="separator:a885f81c616e3058590e1fc10833f9d8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a30b9b96317800ab27c5f720f2f6d8dd6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classComplex__number.html#a30b9b96317800ab27c5f720f2f6d8dd6">operator std::string</a> () const</td></tr>
-<tr class="memdesc:a30b9b96317800ab27c5f720f2f6d8dd6"><td class="mdescLeft">&#160;</td><td class="mdescRight">std::string cast operator.  <a href="classComplex__number.html#a30b9b96317800ab27c5f720f2f6d8dd6">More...</a><br /></td></tr>
-<tr class="separator:a30b9b96317800ab27c5f720f2f6d8dd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad38c825056e20dec37b38f800887ead1"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classComplex__number.html#ad38c825056e20dec37b38f800887ead1">modulus</a> () const</td></tr>
 <tr class="memdesc:ad38c825056e20dec37b38f800887ead1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get modulus of this <a class="el" href="classComplex__number.html" title="Header containing Complex_number class declaration and implementation (partially).">Complex_number</a>.  <a href="classComplex__number.html#ad38c825056e20dec37b38f800887ead1">More...</a><br /></td></tr>
 <tr class="separator:ad38c825056e20dec37b38f800887ead1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -170,7 +167,8 @@ Friends</h2></td></tr>
 class Complex_number&lt; TReal, TImaginary &gt;</h3>
 
 <p>Header containing <a class="el" href="classComplex__number.html" title="Header containing Complex_number class declaration and implementation (partially).">Complex_number</a> class declaration and implementation (partially). </p>
-<dl class="section author"><dt>Author</dt><dd>sanyavertolet Template class that implements <a class="el" href="classComplex__number.html" title="Header containing Complex_number class declaration and implementation (partially).">Complex_number</a>.</dd></dl>
+<p>Template class that implements <a class="el" href="classComplex__number.html" title="Header containing Complex_number class declaration and implementation (partially).">Complex_number</a>.</p>
+<dl class="section author"><dt>Author</dt><dd>sanyavertolet</dd></dl>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">TReal</td><td>real part type, which is double by default. </td></tr>
@@ -350,36 +348,6 @@ template&lt;typename TReal  = double, typename TImaginary  = double&gt; </div>
 
 <p>Get modulus of this <a class="el" href="classComplex__number.html" title="Header containing Complex_number class declaration and implementation (partially).">Complex_number</a>. </p>
 <dl class="section return"><dt>Returns</dt><dd>modulus of this <a class="el" href="classComplex__number.html" title="Header containing Complex_number class declaration and implementation (partially).">Complex_number</a>. </dd></dl>
-
-</div>
-</div>
-<a id="a30b9b96317800ab27c5f720f2f6d8dd6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a30b9b96317800ab27c5f720f2f6d8dd6">&#9670;&nbsp;</a></span>operator std::string()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename TReal  = double, typename TImaginary  = double&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classComplex__number.html">Complex_number</a>&lt; TReal, TImaginary &gt;::operator std::string </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>std::string cast operator. </p>
-<dl class="section return"><dt>Returns</dt><dd>string representation of this <a class="el" href="classComplex__number.html" title="Header containing Complex_number class declaration and implementation (partially).">Complex_number</a>. </dd></dl>
 
 </div>
 </div>
@@ -623,7 +591,7 @@ Here is the call graph for this function:</div>
 <div class="memtemplate">
 template&lt;typename TReal  = double, typename TImaginary  = double&gt; </div>
 <div class="memtemplate">
-template&lt;typename TRealRight , typename TImaginaryRight &gt; </div>
+template&lt;typename TRealRight  = double, typename TImaginaryRight  = double&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">

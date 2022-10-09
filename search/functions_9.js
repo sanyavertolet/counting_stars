@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['set_5fcapacity_192',['set_capacity',['../classMatrix.html#a1a4f348367c7fcbbdfae710922d576d5',1,'Matrix::set_capacity()'],['../classVector_3_01bool_01_4.html#a2c1aacf471fe2979c899869a56f07a21',1,'Vector&lt; bool &gt;::set_capacity()']]],
+  ['set_5fcapacity_192',['set_capacity',['../classMatrix.html#a1a4f348367c7fcbbdfae710922d576d5',1,'Matrix::set_capacity()'],['../classVector.html#aa3d58f6cdd4c12f14ddd600b51164222',1,'Vector::set_capacity()'],['../classVector_3_01bool_01_4.html#a2c1aacf471fe2979c899869a56f07a21',1,'Vector&lt; bool &gt;::set_capacity()']]],
   ['set_5fdenominator_193',['set_denominator',['../classRational__number.html#ad245c32d03f01ad39d60bef228f98794',1,'Rational_number']]],
   ['set_5fi_194',['set_i',['../classPos.html#ab3e4b289a029b62e389154018535b0fd',1,'Pos']]],
   ['set_5fim_195',['set_im',['../classComplex__number.html#a81127d4eac5ac8ad58e80f2255768592',1,'Complex_number']]],

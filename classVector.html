@@ -92,12 +92,12 @@ Public Member Functions</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVector.html#aa16d15503ebe13635c29ea06f50c3a86">Vector</a> ()</td></tr>
 <tr class="memdesc:aa16d15503ebe13635c29ea06f50c3a86"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor. <br /></td></tr>
 <tr class="separator:aa16d15503ebe13635c29ea06f50c3a86"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a20fed5c654c680da20a93a8aaec7dbd1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVector.html#a20fed5c654c680da20a93a8aaec7dbd1">Vector</a> (<a class="el" href="classStringInt.html">index_type</a> required_capacity, double default_value=0, precision_type required_precision=default_precision)</td></tr>
-<tr class="memdesc:a20fed5c654c680da20a93a8aaec7dbd1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for almost any case.  <a href="classVector.html#a20fed5c654c680da20a93a8aaec7dbd1">More...</a><br /></td></tr>
-<tr class="separator:a20fed5c654c680da20a93a8aaec7dbd1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aea8db665c90a843748b1e606f6f9d468"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVector.html#aea8db665c90a843748b1e606f6f9d468">Vector</a> (const char *file_path, precision_type required_precision=default_precision, TValue default_value=0)</td></tr>
-<tr class="memdesc:aea8db665c90a843748b1e606f6f9d468"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor from file.  <a href="classVector.html#aea8db665c90a843748b1e606f6f9d468">More...</a><br /></td></tr>
-<tr class="separator:aea8db665c90a843748b1e606f6f9d468"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2f7ca907cf596737f1e0f4b74c47304f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVector.html#a2f7ca907cf596737f1e0f4b74c47304f">Vector</a> (<a class="el" href="classStringInt.html">index_type</a> required_capacity, double default_value=0, precision_type required_precision=0)</td></tr>
+<tr class="memdesc:a2f7ca907cf596737f1e0f4b74c47304f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for almost any case.  <a href="classVector.html#a2f7ca907cf596737f1e0f4b74c47304f">More...</a><br /></td></tr>
+<tr class="separator:a2f7ca907cf596737f1e0f4b74c47304f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a88b99197eed0349e97da4af56a69130a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVector.html#a88b99197eed0349e97da4af56a69130a">Vector</a> (const char *file_path, precision_type required_precision=0, TValue default_value=0)</td></tr>
+<tr class="memdesc:a88b99197eed0349e97da4af56a69130a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor from file.  <a href="classVector.html#a88b99197eed0349e97da4af56a69130a">More...</a><br /></td></tr>
+<tr class="separator:a88b99197eed0349e97da4af56a69130a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4922c0812d3be1a946b6394637ab439d"><td class="memItemLeft" align="right" valign="top"><a id="a4922c0812d3be1a946b6394637ab439d"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>Vector</b> (const <a class="el" href="classMatrix__proxy.html">Matrix_proxy</a>&lt; TValue &gt; &amp;proxy)</td></tr>
 <tr class="separator:a4922c0812d3be1a946b6394637ab439d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -125,6 +125,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a8a4e3bae1ce66a5553ea4ad8f5afa1d7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classStringInt.html">index_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVector.html#a8a4e3bae1ce66a5553ea4ad8f5afa1d7">get_size</a> ()</td></tr>
 <tr class="memdesc:a8a4e3bae1ce66a5553ea4ad8f5afa1d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get number of not-null elements.  <a href="classVector.html#a8a4e3bae1ce66a5553ea4ad8f5afa1d7">More...</a><br /></td></tr>
 <tr class="separator:a8a4e3bae1ce66a5553ea4ad8f5afa1d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa3d58f6cdd4c12f14ddd600b51164222"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVector.html#aa3d58f6cdd4c12f14ddd600b51164222">set_capacity</a> (<a class="el" href="classStringInt.html">index_type</a> new_capacity)</td></tr>
+<tr class="memdesc:aa3d58f6cdd4c12f14ddd600b51164222"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set capacity of a <a class="el" href="classVector.html" title="Header containing Vector class declaration.">Vector</a>.  <a href="classVector.html#aa3d58f6cdd4c12f14ddd600b51164222">More...</a><br /></td></tr>
+<tr class="separator:aa3d58f6cdd4c12f14ddd600b51164222"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4d6ac52262995c211743693b6ddde3d5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classStringInt.html">index_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVector.html#a4d6ac52262995c211743693b6ddde3d5">get_capacity</a> ()</td></tr>
 <tr class="memdesc:a4d6ac52262995c211743693b6ddde3d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get capacity of this <a class="el" href="classVector.html" title="Header containing Vector class declaration.">Vector</a>.  <a href="classVector.html#a4d6ac52262995c211743693b6ddde3d5">More...</a><br /></td></tr>
 <tr class="separator:a4d6ac52262995c211743693b6ddde3d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -201,8 +204,8 @@ class Vector&lt; TValue &gt;</h3>
   </dd>
 </dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a20fed5c654c680da20a93a8aaec7dbd1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a20fed5c654c680da20a93a8aaec7dbd1">&#9670;&nbsp;</a></span>Vector() <span class="overload">[1/4]</span></h2>
+<a id="a2f7ca907cf596737f1e0f4b74c47304f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2f7ca907cf596737f1e0f4b74c47304f">&#9670;&nbsp;</a></span>Vector() <span class="overload">[1/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -228,7 +231,7 @@ template&lt;typename TValue &gt; </div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">precision_type&#160;</td>
-          <td class="paramname"><em>required_precision</em> = <code>default_precision</code>&#160;</td>
+          <td class="paramname"><em>required_precision</em> = <code>0</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -255,8 +258,8 @@ template&lt;typename TValue &gt; </div>
 
 </div>
 </div>
-<a id="aea8db665c90a843748b1e606f6f9d468"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aea8db665c90a843748b1e606f6f9d468">&#9670;&nbsp;</a></span>Vector() <span class="overload">[2/4]</span></h2>
+<a id="a88b99197eed0349e97da4af56a69130a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a88b99197eed0349e97da4af56a69130a">&#9670;&nbsp;</a></span>Vector() <span class="overload">[2/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -276,7 +279,7 @@ template&lt;typename TValue &gt; </div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">precision_type&#160;</td>
-          <td class="paramname"><em>required_precision</em> = <code>default_precision</code>, </td>
+          <td class="paramname"><em>required_precision</em> = <code>0</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -737,6 +740,43 @@ template&lt;typename TValue &gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>this <a class="el" href="classVector.html" title="Header containing Vector class declaration.">Vector</a> filled with rhs fields. </dd></dl>
+
+</div>
+</div>
+<a id="aa3d58f6cdd4c12f14ddd600b51164222"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa3d58f6cdd4c12f14ddd600b51164222">&#9670;&nbsp;</a></span>set_capacity()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TValue &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classVector.html">Vector</a>&lt; TValue &gt;::set_capacity </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classStringInt.html">index_type</a>&#160;</td>
+          <td class="paramname"><em>new_capacity</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set capacity of a <a class="el" href="classVector.html" title="Header containing Vector class declaration.">Vector</a>. </p>
+<p>Notice that this method could rubbish existing data.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">new_capacity</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -1277,8 +1317,7 @@ template&lt;typename TValueLeft , typename TValueRight &gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>true of lhs and rhs are equal, false otherwise.</dd></dl>
-<dl class="section author"><dt>Author</dt><dd>sanyavertolet </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>true of lhs and rhs are equal, false otherwise. </dd></dl>
 
 </div>
 </div>
