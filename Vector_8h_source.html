@@ -96,419 +96,425 @@ $(function() {
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keyword">using</span> precision_type = decltype(abs(std::declval&lt;TValue&gt;()));</div>
 <div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="classVector.html#aa16d15503ebe13635c29ea06f50c3a86">   41</a></span>&#160;    <a class="code" href="classVector.html#aa16d15503ebe13635c29ea06f50c3a86">Vector</a>(): precision(0), capacity(-1), mass_transform(0), data({}) {}</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
-<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="classVector.html#a2f7ca907cf596737f1e0f4b74c47304f">   50</a></span>&#160;    <span class="keyword">explicit</span> <a class="code" href="classVector.html#a2f7ca907cf596737f1e0f4b74c47304f">Vector</a>(</div>
+<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="classVector.html#ac3f92e00bd78c0bd0f42e7bbe36dce40">   50</a></span>&#160;    <span class="keyword">explicit</span> <a class="code" href="classVector.html#ac3f92e00bd78c0bd0f42e7bbe36dce40">Vector</a>(</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;            <a class="code" href="classStringInt.html">index_type</a> required_capacity,</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;            <span class="keywordtype">double</span> default_value = 0,</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;            TValue default_value = TValue(),</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;            precision_type required_precision = 0</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;                    ): capacity(std::move(required_capacity)), mass_transform(default_value), precision(required_precision), data({}) { }</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
-<div class="line"><a name="l00063"></a><span class="lineno"><a class="line" href="classVector.html#a88b99197eed0349e97da4af56a69130a">   63</a></span>&#160;    <a class="code" href="classVector.html#a88b99197eed0349e97da4af56a69130a">Vector</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* file_path, precision_type required_precision = 0, TValue default_value = 0):</div>
+<div class="line"><a name="l00063"></a><span class="lineno"><a class="line" href="classVector.html#a0d30289e231ebb3fa6c78e84aa78c93e">   63</a></span>&#160;    <span class="keyword">explicit</span> <a class="code" href="classVector.html#a0d30289e231ebb3fa6c78e84aa78c93e">Vector</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* file_path, precision_type required_precision = 0, TValue default_value = TValue()):</div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;            mass_transform(default_value), precision(required_precision) {</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        std::ifstream infile(file_path);</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        infile &gt;&gt; *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    }</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="keyword">explicit</span> <a class="code" href="classVector.html#aa16d15503ebe13635c29ea06f50c3a86">Vector</a>(<span class="keyword">const</span> <a class="code" href="classMatrix__proxy.html">Matrix_proxy&lt;TValue&gt;</a>&amp; proxy): mass_transform(0), precision(proxy.<a class="code" href="classVector.html#a5f89a3d2c3964ca758df2e49ff02c592">get_precision</a>()) {</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        capacity = std::max(proxy.<a class="code" href="classMatrix__proxy.html#acab62b1e0ffff9ea44ba504705f7f7ca">get_capacity</a>().<a class="code" href="classPos.html#afeea819c9f21be202f907dd9797209f1">get_i</a>(), proxy.<a class="code" href="classMatrix__proxy.html#acab62b1e0ffff9ea44ba504705f7f7ca">get_capacity</a>().<a class="code" href="classPos.html#abc4d294c12c25bed750be0777b7523da">get_j</a>());</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        data = proxy.<a class="code" href="classMatrix__proxy.html#a6bf6d64fc79581da282322da79a82307">get_values_as_map</a>();</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    }</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
-<div class="line"><a name="l00079"></a><span class="lineno"><a class="line" href="classVector.html#adf96547dd48681301a7feaeeb4476238">   79</a></span>&#160;    <a class="code" href="classVector.html#adf96547dd48681301a7feaeeb4476238">Vector</a>(<span class="keyword">const</span> <a class="code" href="classVector.html">Vector</a>&amp; rhs): capacity(rhs.capacity), mass_transform(rhs.mass_transform), precision(rhs.precision), data(rhs.data) { }</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; </div>
-<div class="line"><a name="l00086"></a><span class="lineno"><a class="line" href="classVector.html#a9f232ab8b551276f5c6411b1f5c6ee46">   86</a></span>&#160;    <a class="code" href="classVector.html#a9f232ab8b551276f5c6411b1f5c6ee46">Vector</a>(<a class="code" href="classVector.html">Vector</a>&amp;&amp; rhs) noexcept : capacity(rhs.capacity), mass_transform(rhs.mass_transform), precision(rhs.precision), data(rhs.data) {</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        rhs.capacity = <a class="code" href="classStringInt.html">StringInt</a>();</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        rhs.mass_transform = TValue();</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        rhs.precision = TValue();</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;        rhs.data = {};</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    }</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160; </div>
-<div class="line"><a name="l00099"></a><span class="lineno"><a class="line" href="classVector.html#a8e911b15cad2198998caa24e9ab99421">   99</a></span>&#160;    <a class="code" href="classVector.html">Vector</a>&amp; <a class="code" href="classVector.html#a8e911b15cad2198998caa24e9ab99421">operator=</a>(<span class="keyword">const</span> <a class="code" href="classVector.html">Vector</a>&amp; rhs) {</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        <a class="code" href="classVector.html">Vector</a> tmp(rhs);</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        std::swap(capacity, tmp.capacity);</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;        std::swap(mass_transform, tmp.mass_transform);</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        std::swap(precision, tmp.precision);</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;        std::swap(data, tmp.data);</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    }</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160; </div>
-<div class="line"><a name="l00114"></a><span class="lineno"><a class="line" href="classVector.html#a4bacd0c9f0b0a7ddb2202cc36b104846">  114</a></span>&#160;    <a class="code" href="classVector.html">Vector</a>&amp; <a class="code" href="classVector.html#a4bacd0c9f0b0a7ddb2202cc36b104846">operator=</a>(<a class="code" href="classVector.html">Vector</a>&amp;&amp; rhs) noexcept {</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;        capacity = std::move(rhs.capacity);</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;        rhs.capacity = <a class="code" href="classStringInt.html">StringInt</a>();</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;        mass_transform = std::move(rhs.mass_transform);</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;        rhs.mass_transform = TValue();</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;        precision = std::move(rhs.precision);</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;        rhs.precision = Vector::precision_type();</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;        data = std::move(rhs.data);</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;        rhs.data = {};</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;    }</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160; </div>
-<div class="line"><a name="l00132"></a><span class="lineno"><a class="line" href="classVector.html#a0475696e979d4ff0c6d60108cb475059">  132</a></span>&#160;    <a class="code" href="classVector.html">Vector</a>&amp; <a class="code" href="classVector.html#a0475696e979d4ff0c6d60108cb475059">operator=</a>(std::map&lt;index_type, TValue&gt;&amp;&amp; data_to_move) noexcept {</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;        data = std::move(data_to_move);</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;        data_to_move = {};</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;    }</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160; </div>
-<div class="line"><a name="l00143"></a><span class="lineno"><a class="line" href="classVector.html#ab439cbcd8e088c9cd769ec0ba4bd38e6">  143</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classVector.html#ab439cbcd8e088c9cd769ec0ba4bd38e6">set_precision</a>(precision_type new_precision) {</div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;        precision = new_precision;</div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;        delete_zero_elements();</div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;    }</div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160; </div>
-<div class="line"><a name="l00153"></a><span class="lineno"><a class="line" href="classVector.html#a5f89a3d2c3964ca758df2e49ff02c592">  153</a></span>&#160;    precision_type <a class="code" href="classVector.html#a5f89a3d2c3964ca758df2e49ff02c592">get_precision</a>() {</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;        <span class="keywordflow">return</span> precision;</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;    }</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160; </div>
-<div class="line"><a name="l00162"></a><span class="lineno"><a class="line" href="classVector.html#a8a4e3bae1ce66a5553ea4ad8f5afa1d7">  162</a></span>&#160;    <a class="code" href="classStringInt.html">index_type</a> <a class="code" href="classVector.html#a8a4e3bae1ce66a5553ea4ad8f5afa1d7">get_size</a>() {</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;        delete_zero_elements();</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="classStringInt.html">index_type</a>(data.size());</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;    }</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160; </div>
-<div class="line"><a name="l00173"></a><span class="lineno"><a class="line" href="classVector.html#aa3d58f6cdd4c12f14ddd600b51164222">  173</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classVector.html#aa3d58f6cdd4c12f14ddd600b51164222">set_capacity</a>(<a class="code" href="classStringInt.html">index_type</a> new_capacity) {</div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;        capacity = std::move(new_capacity);</div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;        data = {};</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;    }</div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160; </div>
-<div class="line"><a name="l00183"></a><span class="lineno"><a class="line" href="classVector.html#a4d6ac52262995c211743693b6ddde3d5">  183</a></span>&#160;    <a class="code" href="classStringInt.html">index_type</a> <a class="code" href="classVector.html#a4d6ac52262995c211743693b6ddde3d5">get_capacity</a>() {</div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;        <span class="keywordflow">return</span> capacity;</div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;    }</div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160; </div>
-<div class="line"><a name="l00194"></a><span class="lineno"><a class="line" href="classVector.html#a6b41516d318aadc76c67752cbe7a85e5">  194</a></span>&#160;    <span class="keyword">friend</span> std::ostream&amp; <a class="code" href="classVector.html#a6b41516d318aadc76c67752cbe7a85e5">operator&lt;&lt;</a>(std::ostream&amp; os, <a class="code" href="classVector.html">Vector</a> <span class="keyword">const</span>&amp; x) {</div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;        os &lt;&lt; <a class="code" href="classVector.html#a98d42ecbf86bdf0ee5d8a9ce574dc04c">to_string</a>(x);</div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;        <span class="keywordflow">return</span> os;</div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;    }</div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160; </div>
-<div class="line"><a name="l00206"></a><span class="lineno"><a class="line" href="classVector.html#a45c72980a8c466a2e2946c6064bdcd81">  206</a></span>&#160;    <span class="keyword">friend</span> std::istream&amp; <a class="code" href="classVector.html#a45c72980a8c466a2e2946c6064bdcd81">operator&gt;&gt;</a>(std::istream&amp; is, <a class="code" href="classVector.html">Vector&lt;TValue&gt;</a>&amp; x) {</div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;        std::string structure_name;</div>
-<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;        std::string type_name;</div>
-<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;        is &gt;&gt; structure_name;</div>
-<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;        <span class="keywordflow">if</span> (structure_name != <span class="stringliteral">&quot;vector&quot;</span>) {</div>
-<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;            is.setstate(std::ios::failbit);</div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;<span class="comment">//        throw ParseException(structure_name + &quot; cannot be parsed to vector.&quot;);</span></div>
-<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;        }</div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;        is &gt;&gt; type_name;</div>
-<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;        <span class="keywordflow">if</span> (type_name != <span class="stringliteral">&quot;complex&quot;</span> &amp;&amp; type_name != <span class="stringliteral">&quot;rational&quot;</span>) {</div>
-<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;            is.setstate(std::ios::failbit);</div>
-<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;<span class="comment">//        throw CastException(type_name + &quot; cannot be stored to vector.&quot;);</span></div>
-<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;        }</div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;        <a class="code" href="classStringInt.html">Vector::index_type</a> capacity_from_input;</div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;        is &gt;&gt; capacity_from_input;</div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;        x.<a class="code" href="classVector.html#aa3d58f6cdd4c12f14ddd600b51164222">set_capacity</a>(capacity_from_input);</div>
-<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;        <a class="code" href="classStringInt.html">Vector::index_type</a> index;</div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;        TValue value;</div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;        <span class="keywordflow">while</span>(is &gt;&gt; index &gt;&gt; value) {</div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;            <span class="keywordflow">if</span> (is.fail()) {</div>
-<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;                <span class="keywordflow">return</span> is;</div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;            }</div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;            x(index - 1) = value;</div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;        }</div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160; </div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;        <span class="keywordflow">return</span> is;</div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;    }</div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160; </div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160; </div>
-<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> TValueLeft, <span class="keyword">typename</span> TValueRight&gt;</div>
-<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;    <span class="keyword">friend</span> <span class="keywordtype">bool</span> <a class="code" href="classVector.html#a4124b5f4e05a9a7091875827e2a5216a">operator==</a>(<span class="keyword">const</span> <a class="code" href="classVector.html">Vector&lt;TValueLeft&gt;</a> &amp;lhs, <span class="keyword">const</span> <a class="code" href="classVector.html">Vector&lt;TValueRight&gt;</a> &amp;rhs);</div>
-<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160; </div>
-<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> TValueLeft, <span class="keyword">typename</span> TValueRight&gt;</div>
-<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;    <span class="keyword">friend</span> <span class="keywordtype">bool</span> <a class="code" href="classVector.html#aea9c0fd3cf6abbd1ea9dacc5367a9707">operator!=</a>(<span class="keyword">const</span> <a class="code" href="classVector.html">Vector&lt;TValueLeft&gt;</a> &amp;lhs, <span class="keyword">const</span> <a class="code" href="classVector.html">Vector&lt;TValueRight&gt;</a> &amp;rhs);</div>
-<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160; </div>
-<div class="line"><a name="l00264"></a><span class="lineno"><a class="line" href="classVector.html#a1b1ab94d845dafd9e2084f5a1d4cc5fc">  264</a></span>&#160;    <a class="code" href="classVector.html">Vector</a> <a class="code" href="classVector.html#a1b1ab94d845dafd9e2084f5a1d4cc5fc">operator-</a>() {</div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;        delete_zero_elements();</div>
-<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;        <a class="code" href="classVector.html">Vector&lt;TValue&gt;</a> result(*<span class="keyword">this</span>);</div>
-<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;        <span class="keywordflow">for</span>(<span class="keyword">auto</span>&amp; [key, value]: result.data) {</div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;            value = -value;</div>
-<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;        }</div>
-<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;        mass_transform = -mass_transform;</div>
-<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;        <span class="keywordflow">return</span> result;</div>
-<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;    }</div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160; </div>
-<div class="line"><a name="l00280"></a><span class="lineno"><a class="line" href="classVector.html#a0a72146e5c9e87c59f07b50e9a40e341">  280</a></span>&#160;    TValue&amp; <a class="code" href="classVector.html#a0a72146e5c9e87c59f07b50e9a40e341">operator()</a>(<span class="keyword">const</span> <a class="code" href="classStringInt.html">StringInt</a>&amp; index) {</div>
-<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;        delete_zero_elements();</div>
-<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;        <span class="keywordflow">if</span> (capacity &gt;= 0) {</div>
-<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;            <span class="keywordflow">if</span> (index &gt;= capacity) {</div>
-<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;                <span class="keywordflow">throw</span> <a class="code" href="classOutOfRangeException.html">OutOfRangeException</a>(<span class="stringliteral">&quot;OutOfRangeException&quot;</span>);</div>
-<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;            }</div>
-<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;        }</div>
-<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;        <span class="keywordflow">if</span> (data.find(index) == data.end()) {</div>
-<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;            data[index] = mass_transform;</div>
-<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;        }</div>
-<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;        <span class="keywordflow">if</span> (data[index] &lt;= TValue(precision)) {</div>
-<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;            data[index] = TValue(0);</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        <span class="keywordflow">if</span> (!std::filesystem::exists(file_path)) {</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;            <span class="keywordflow">throw</span> <a class="code" href="classFileNotFoundException.html">FileNotFoundException</a>(file_path);</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        }</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        std::ifstream infile(file_path);</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        infile &gt;&gt; *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        <span class="keywordflow">if</span> (!infile.eof()) {</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;            <span class="keywordflow">throw</span> <a class="code" href="classParseException.html">ParseException</a>(<span class="stringliteral">&quot;Error while parsing vector.&quot;</span>);</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        }</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    }</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <span class="keyword">explicit</span> <a class="code" href="classVector.html#aa16d15503ebe13635c29ea06f50c3a86">Vector</a>(<span class="keyword">const</span> <a class="code" href="classMatrix__proxy.html">Matrix_proxy&lt;TValue&gt;</a>&amp; proxy): mass_transform(0), precision(proxy.<a class="code" href="classVector.html#a5f89a3d2c3964ca758df2e49ff02c592">get_precision</a>()) {</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        capacity = std::max(proxy.<a class="code" href="classMatrix__proxy.html#acab62b1e0ffff9ea44ba504705f7f7ca">get_capacity</a>().<a class="code" href="classPos.html#afeea819c9f21be202f907dd9797209f1">get_i</a>(), proxy.<a class="code" href="classMatrix__proxy.html#acab62b1e0ffff9ea44ba504705f7f7ca">get_capacity</a>().<a class="code" href="classPos.html#abc4d294c12c25bed750be0777b7523da">get_j</a>());</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        data = proxy.<a class="code" href="classMatrix__proxy.html#a6bf6d64fc79581da282322da79a82307">get_values_as_map</a>();</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    }</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160; </div>
+<div class="line"><a name="l00085"></a><span class="lineno"><a class="line" href="classVector.html#adf96547dd48681301a7feaeeb4476238">   85</a></span>&#160;    <a class="code" href="classVector.html#adf96547dd48681301a7feaeeb4476238">Vector</a>(<span class="keyword">const</span> <a class="code" href="classVector.html">Vector</a>&amp; rhs): capacity(rhs.capacity), mass_transform(rhs.mass_transform), precision(rhs.precision), data(rhs.data) { }</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160; </div>
+<div class="line"><a name="l00092"></a><span class="lineno"><a class="line" href="classVector.html#a9f232ab8b551276f5c6411b1f5c6ee46">   92</a></span>&#160;    <a class="code" href="classVector.html#a9f232ab8b551276f5c6411b1f5c6ee46">Vector</a>(<a class="code" href="classVector.html">Vector</a>&amp;&amp; rhs) noexcept : capacity(rhs.capacity), mass_transform(rhs.mass_transform), precision(rhs.precision), data(rhs.data) {</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        rhs.capacity = <a class="code" href="classStringInt.html">StringInt</a>();</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;        rhs.mass_transform = TValue();</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        rhs.precision = TValue();</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        rhs.data = {};</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    }</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160; </div>
+<div class="line"><a name="l00105"></a><span class="lineno"><a class="line" href="classVector.html#a8e911b15cad2198998caa24e9ab99421">  105</a></span>&#160;    <a class="code" href="classVector.html">Vector</a>&amp; <a class="code" href="classVector.html#a8e911b15cad2198998caa24e9ab99421">operator=</a>(<span class="keyword">const</span> <a class="code" href="classVector.html">Vector</a>&amp; rhs) {</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        <a class="code" href="classVector.html">Vector</a> tmp(rhs);</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        std::swap(capacity, tmp.capacity);</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;        std::swap(mass_transform, tmp.mass_transform);</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        std::swap(precision, tmp.precision);</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        std::swap(data, tmp.data);</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    }</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160; </div>
+<div class="line"><a name="l00120"></a><span class="lineno"><a class="line" href="classVector.html#a4bacd0c9f0b0a7ddb2202cc36b104846">  120</a></span>&#160;    <a class="code" href="classVector.html">Vector</a>&amp; <a class="code" href="classVector.html#a4bacd0c9f0b0a7ddb2202cc36b104846">operator=</a>(<a class="code" href="classVector.html">Vector</a>&amp;&amp; rhs) noexcept {</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;        capacity = std::move(rhs.capacity);</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;        rhs.capacity = <a class="code" href="classStringInt.html">StringInt</a>();</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;        mass_transform = std::move(rhs.mass_transform);</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;        rhs.mass_transform = TValue();</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;        precision = std::move(rhs.precision);</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;        rhs.precision = Vector::precision_type();</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;        data = std::move(rhs.data);</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;        rhs.data = {};</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;    }</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160; </div>
+<div class="line"><a name="l00138"></a><span class="lineno"><a class="line" href="classVector.html#a0475696e979d4ff0c6d60108cb475059">  138</a></span>&#160;    <a class="code" href="classVector.html">Vector</a>&amp; <a class="code" href="classVector.html#a0475696e979d4ff0c6d60108cb475059">operator=</a>(std::map&lt;index_type, TValue&gt;&amp;&amp; data_to_move) noexcept {</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;        data = std::move(data_to_move);</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;        data_to_move = {};</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;    }</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160; </div>
+<div class="line"><a name="l00149"></a><span class="lineno"><a class="line" href="classVector.html#ab439cbcd8e088c9cd769ec0ba4bd38e6">  149</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classVector.html#ab439cbcd8e088c9cd769ec0ba4bd38e6">set_precision</a>(precision_type new_precision) {</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;        precision = new_precision;</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;        delete_zero_elements();</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;    }</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160; </div>
+<div class="line"><a name="l00159"></a><span class="lineno"><a class="line" href="classVector.html#a5f89a3d2c3964ca758df2e49ff02c592">  159</a></span>&#160;    precision_type <a class="code" href="classVector.html#a5f89a3d2c3964ca758df2e49ff02c592">get_precision</a>() {</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;        <span class="keywordflow">return</span> precision;</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;    }</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160; </div>
+<div class="line"><a name="l00168"></a><span class="lineno"><a class="line" href="classVector.html#a8a4e3bae1ce66a5553ea4ad8f5afa1d7">  168</a></span>&#160;    <a class="code" href="classStringInt.html">index_type</a> <a class="code" href="classVector.html#a8a4e3bae1ce66a5553ea4ad8f5afa1d7">get_size</a>() {</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;        delete_zero_elements();</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="classStringInt.html">index_type</a>(data.size());</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;    }</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160; </div>
+<div class="line"><a name="l00179"></a><span class="lineno"><a class="line" href="classVector.html#aa3d58f6cdd4c12f14ddd600b51164222">  179</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classVector.html#aa3d58f6cdd4c12f14ddd600b51164222">set_capacity</a>(<a class="code" href="classStringInt.html">index_type</a> new_capacity) {</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;        capacity = std::move(new_capacity);</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;        data = {};</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;    }</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160; </div>
+<div class="line"><a name="l00189"></a><span class="lineno"><a class="line" href="classVector.html#a4d6ac52262995c211743693b6ddde3d5">  189</a></span>&#160;    <a class="code" href="classStringInt.html">index_type</a> <a class="code" href="classVector.html#a4d6ac52262995c211743693b6ddde3d5">get_capacity</a>() {</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;        <span class="keywordflow">return</span> capacity;</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;    }</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160; </div>
+<div class="line"><a name="l00200"></a><span class="lineno"><a class="line" href="classVector.html#a6b41516d318aadc76c67752cbe7a85e5">  200</a></span>&#160;    <span class="keyword">friend</span> std::ostream&amp; <a class="code" href="classVector.html#a6b41516d318aadc76c67752cbe7a85e5">operator&lt;&lt;</a>(std::ostream&amp; os, <a class="code" href="classVector.html">Vector</a> <span class="keyword">const</span>&amp; x) {</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;        os &lt;&lt; <a class="code" href="classVector.html#a98d42ecbf86bdf0ee5d8a9ce574dc04c">to_string</a>(x);</div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;        <span class="keywordflow">return</span> os;</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;    }</div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160; </div>
+<div class="line"><a name="l00212"></a><span class="lineno"><a class="line" href="classVector.html#a45c72980a8c466a2e2946c6064bdcd81">  212</a></span>&#160;    <span class="keyword">friend</span> std::istream&amp; <a class="code" href="classVector.html#a45c72980a8c466a2e2946c6064bdcd81">operator&gt;&gt;</a>(std::istream&amp; is, <a class="code" href="classVector.html">Vector&lt;TValue&gt;</a>&amp; x) {</div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;        std::string structure_name;</div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;        std::string type_name;</div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;        is &gt;&gt; structure_name;</div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;        <span class="keywordflow">if</span> (structure_name != <span class="stringliteral">&quot;vector&quot;</span>) {</div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;            is.setstate(std::ios::failbit);</div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;<span class="comment">//        throw ParseException(structure_name + &quot; cannot be parsed to vector.&quot;);</span></div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;        }</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;        is &gt;&gt; type_name;</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;        <span class="keywordflow">if</span> (type_name != <span class="stringliteral">&quot;complex&quot;</span> &amp;&amp; type_name != <span class="stringliteral">&quot;rational&quot;</span>) {</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;            is.setstate(std::ios::failbit);</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;<span class="comment">//        throw CastException(type_name + &quot; cannot be stored to vector.&quot;);</span></div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;        }</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;        <a class="code" href="classStringInt.html">Vector::index_type</a> capacity_from_input;</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;        is &gt;&gt; capacity_from_input;</div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;        x.<a class="code" href="classVector.html#aa3d58f6cdd4c12f14ddd600b51164222">set_capacity</a>(capacity_from_input);</div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;        <a class="code" href="classStringInt.html">Vector::index_type</a> index;</div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;        TValue value;</div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;        <span class="keywordflow">while</span>(is &gt;&gt; index &gt;&gt; value) {</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;            <span class="keywordflow">if</span> (is.fail()) {</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;                <span class="keywordflow">return</span> is;</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;            }</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;            x(index - 1) = value;</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;        }</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160; </div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;        <span class="keywordflow">return</span> is;</div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;    }</div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160; </div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160; </div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> TValueLeft, <span class="keyword">typename</span> TValueRight&gt;</div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;    <span class="keyword">friend</span> <span class="keywordtype">bool</span> <a class="code" href="classVector.html#a4124b5f4e05a9a7091875827e2a5216a">operator==</a>(<span class="keyword">const</span> <a class="code" href="classVector.html">Vector&lt;TValueLeft&gt;</a> &amp;lhs, <span class="keyword">const</span> <a class="code" href="classVector.html">Vector&lt;TValueRight&gt;</a> &amp;rhs);</div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160; </div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> TValueLeft, <span class="keyword">typename</span> TValueRight&gt;</div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;    <span class="keyword">friend</span> <span class="keywordtype">bool</span> <a class="code" href="classVector.html#aea9c0fd3cf6abbd1ea9dacc5367a9707">operator!=</a>(<span class="keyword">const</span> <a class="code" href="classVector.html">Vector&lt;TValueLeft&gt;</a> &amp;lhs, <span class="keyword">const</span> <a class="code" href="classVector.html">Vector&lt;TValueRight&gt;</a> &amp;rhs);</div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160; </div>
+<div class="line"><a name="l00270"></a><span class="lineno"><a class="line" href="classVector.html#a1b1ab94d845dafd9e2084f5a1d4cc5fc">  270</a></span>&#160;    <a class="code" href="classVector.html">Vector</a> <a class="code" href="classVector.html#a1b1ab94d845dafd9e2084f5a1d4cc5fc">operator-</a>() {</div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;        delete_zero_elements();</div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;        <a class="code" href="classVector.html">Vector&lt;TValue&gt;</a> result(*<span class="keyword">this</span>);</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;        <span class="keywordflow">for</span>(<span class="keyword">auto</span>&amp; [key, value]: result.data) {</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;            value = -value;</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;        }</div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;        mass_transform = -mass_transform;</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;        <span class="keywordflow">return</span> result;</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;    }</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160; </div>
+<div class="line"><a name="l00286"></a><span class="lineno"><a class="line" href="classVector.html#a0a72146e5c9e87c59f07b50e9a40e341">  286</a></span>&#160;    TValue&amp; <a class="code" href="classVector.html#a0a72146e5c9e87c59f07b50e9a40e341">operator()</a>(<span class="keyword">const</span> <a class="code" href="classStringInt.html">StringInt</a>&amp; index) {</div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;        delete_zero_elements();</div>
+<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;        <span class="keywordflow">if</span> (capacity &gt;= 0) {</div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;            <span class="keywordflow">if</span> (index &gt;= capacity) {</div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;                <span class="keywordflow">throw</span> <a class="code" href="classOutOfRangeException.html">OutOfRangeException</a>(<span class="stringliteral">&quot;OutOfRangeException&quot;</span>);</div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;            }</div>
 <div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;        }</div>
-<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;        <span class="keywordflow">return</span> data[index];</div>
-<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;    }</div>
-<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160; </div>
-<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> TValueRight&gt;</div>
-<div class="line"><a name="l00304"></a><span class="lineno"><a class="line" href="classVector.html#ac7f7756f30f7bd60dcc15e747783c7de">  304</a></span>&#160;    <span class="keyword">auto</span>&amp; <a class="code" href="classVector.html#ac7f7756f30f7bd60dcc15e747783c7de">operator+=</a>(<span class="keyword">const</span> <a class="code" href="classVector.html">Vector&lt;TValueRight&gt;</a> &amp;rhs) {</div>
-<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;        mass_transform += rhs.mass_transform;</div>
-<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;        <span class="keywordflow">for</span> (<span class="keyword">auto</span> [key, value] : rhs.data) {</div>
-<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;            <span class="keywordflow">if</span> (data.find(key) == data.end()) {</div>
-<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;                data[key] = mass_transform + value;</div>
-<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;            } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;                data[key] += value;</div>
-<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;            }</div>
-<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;        }</div>
-<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;        delete_zero_elements();</div>
-<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;    }</div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160; </div>
-<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> TValueRight&gt;</div>
-<div class="line"><a name="l00325"></a><span class="lineno"><a class="line" href="classVector.html#a788a09568485e36915546c84b0a66e62">  325</a></span>&#160;    <span class="keyword">auto</span>&amp; <a class="code" href="classVector.html#a788a09568485e36915546c84b0a66e62">operator-=</a>(<span class="keyword">const</span> <a class="code" href="classVector.html">Vector&lt;TValueRight&gt;</a> &amp;rhs) {</div>
-<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;        mass_transform -= rhs.mass_transform;</div>
-<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;        <span class="keywordflow">for</span> (<span class="keyword">auto</span> [key, value] : rhs.data) {</div>
-<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;            <span class="keywordflow">if</span> (data.find(key) == data.end()) {</div>
-<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;                data[key] = mass_transform - value;</div>
-<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;            } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;                data[key] -= value;</div>
-<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;            }</div>
-<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;        }</div>
-<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;        delete_zero_elements();</div>
-<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;    }</div>
-<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160; </div>
-<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> TValueLeft, <span class="keyword">typename</span> TValueRight&gt;</div>
-<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;    <span class="keyword">friend</span> <span class="keyword">auto</span> <a class="code" href="classVector.html#aef5db57a4cab4079886e751343bc968a">operator+</a>(<span class="keyword">const</span> <a class="code" href="classVector.html">Vector&lt;TValueLeft&gt;</a> &amp;lhs, <span class="keyword">const</span> <a class="code" href="classVector.html">Vector&lt;TValueRight&gt;</a> &amp;rhs);</div>
-<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160; </div>
-<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> TValueLeft, <span class="keyword">typename</span> TValueRight&gt;</div>
-<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;    <span class="keyword">friend</span> <span class="keyword">auto</span> <a class="code" href="classVector.html#a1b1ab94d845dafd9e2084f5a1d4cc5fc">operator-</a>(<span class="keyword">const</span> <a class="code" href="classVector.html">Vector&lt;TValueLeft&gt;</a> &amp;lhs, <span class="keyword">const</span> <a class="code" href="classVector.html">Vector&lt;TValueRight&gt;</a> &amp;rhs);</div>
-<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160; </div>
-<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> TValueLeft, <span class="keyword">typename</span> TValueRight&gt;</div>
-<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;    <span class="keyword">friend</span> <span class="keyword">auto</span> <a class="code" href="classVector.html#aef5db57a4cab4079886e751343bc968a">operator+</a>(<a class="code" href="classVector.html">Vector&lt;TValueLeft&gt;</a> lhs, <span class="keyword">const</span> TValueRight&amp; rhs);</div>
-<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160; </div>
-<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> TValueLeft, <span class="keyword">typename</span> TValueRight&gt;</div>
-<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;    <span class="keyword">friend</span> <span class="keyword">auto</span> <a class="code" href="classVector.html#a1b1ab94d845dafd9e2084f5a1d4cc5fc">operator-</a>(<a class="code" href="classVector.html">Vector&lt;TValueLeft&gt;</a> lhs, <span class="keyword">const</span> TValueRight&amp; rhs);</div>
-<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160; </div>
-<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> TValueLeft, <span class="keyword">typename</span> TValueRight&gt;</div>
-<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;    <span class="keyword">friend</span> <span class="keyword">auto</span> <a class="code" href="classVector.html#a9db46e9c4a51ac790dfb2d5712d0732f">operator*</a>(<a class="code" href="classVector.html">Vector&lt;TValueLeft&gt;</a> lhs, <span class="keyword">const</span> TValueRight&amp; rhs);</div>
-<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160; </div>
-<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> TValueLeft, <span class="keyword">typename</span> TValueRight&gt;</div>
-<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;    <span class="keyword">friend</span> <span class="keyword">auto</span> <a class="code" href="classVector.html#acf2932f237da22c7ba2c9999d0772243">operator/</a>(<a class="code" href="classVector.html">Vector&lt;TValueLeft&gt;</a> lhs, <span class="keyword">const</span> TValueRight&amp; rhs);</div>
-<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160; </div>
-<div class="line"><a name="l00416"></a><span class="lineno"><a class="line" href="classVector.html#a98d42ecbf86bdf0ee5d8a9ce574dc04c">  416</a></span>&#160;    <span class="keyword">friend</span> std::string <a class="code" href="classVector.html#a98d42ecbf86bdf0ee5d8a9ce574dc04c">to_string</a>(<a class="code" href="classVector.html">Vector</a> vector) {</div>
-<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;        std::stringstream ss;</div>
-<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;        std::string type_name;</div>
-<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;        ss &lt;&lt; <span class="stringliteral">&quot;vector &quot;</span> &lt;&lt; get_type_name(TValue()) &lt;&lt; <span class="stringliteral">&quot; &quot;</span> &lt;&lt; vector.capacity &lt;&lt; std::endl &lt;&lt; std::endl;</div>
-<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;        <span class="keywordflow">for</span> (<span class="keyword">auto</span> [key, value]: vector.data) {</div>
-<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;            ss &lt;&lt; (key + 1) &lt;&lt; <span class="stringliteral">&quot; &quot;</span> &lt;&lt;  value &lt;&lt; std::endl;</div>
-<div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;        }</div>
-<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;        <span class="keywordflow">return</span> ss.str();</div>
-<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;    }</div>
-<div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160; </div>
-<div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160;    <a class="code" href="classStringInt.html">StringInt</a> capacity;</div>
-<div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160; </div>
-<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;    TValue mass_transform;</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;        <span class="keywordflow">if</span> (data.find(index) == data.end()) {</div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;            data[index] = mass_transform;</div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;        }</div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;        <span class="keywordflow">if</span> (data[index] &lt;= TValue(precision)) {</div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;            data[index] = TValue(0);</div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;        }</div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;        <span class="keywordflow">return</span> data[index];</div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;    }</div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160; </div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> TValueRight&gt;</div>
+<div class="line"><a name="l00310"></a><span class="lineno"><a class="line" href="classVector.html#ac7f7756f30f7bd60dcc15e747783c7de">  310</a></span>&#160;    <span class="keyword">auto</span>&amp; <a class="code" href="classVector.html#ac7f7756f30f7bd60dcc15e747783c7de">operator+=</a>(<span class="keyword">const</span> <a class="code" href="classVector.html">Vector&lt;TValueRight&gt;</a> &amp;rhs) {</div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;        mass_transform += rhs.mass_transform;</div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;        <span class="keywordflow">for</span> (<span class="keyword">auto</span> [key, value] : rhs.data) {</div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;            <span class="keywordflow">if</span> (data.find(key) == data.end()) {</div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;                data[key] = mass_transform + value;</div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;            } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;                data[key] += value;</div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;            }</div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;        }</div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;        delete_zero_elements();</div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;    }</div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160; </div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> TValueRight&gt;</div>
+<div class="line"><a name="l00331"></a><span class="lineno"><a class="line" href="classVector.html#a788a09568485e36915546c84b0a66e62">  331</a></span>&#160;    <span class="keyword">auto</span>&amp; <a class="code" href="classVector.html#a788a09568485e36915546c84b0a66e62">operator-=</a>(<span class="keyword">const</span> <a class="code" href="classVector.html">Vector&lt;TValueRight&gt;</a> &amp;rhs) {</div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;        mass_transform -= rhs.mass_transform;</div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;        <span class="keywordflow">for</span> (<span class="keyword">auto</span> [key, value] : rhs.data) {</div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;            <span class="keywordflow">if</span> (data.find(key) == data.end()) {</div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;                data[key] = mass_transform - value;</div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;            } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;                data[key] -= value;</div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;            }</div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;        }</div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;        delete_zero_elements();</div>
+<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;    }</div>
+<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160; </div>
+<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> TValueLeft, <span class="keyword">typename</span> TValueRight&gt;</div>
+<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;    <span class="keyword">friend</span> <span class="keyword">auto</span> <a class="code" href="classVector.html#aef5db57a4cab4079886e751343bc968a">operator+</a>(<span class="keyword">const</span> <a class="code" href="classVector.html">Vector&lt;TValueLeft&gt;</a> &amp;lhs, <span class="keyword">const</span> <a class="code" href="classVector.html">Vector&lt;TValueRight&gt;</a> &amp;rhs);</div>
+<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160; </div>
+<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> TValueLeft, <span class="keyword">typename</span> TValueRight&gt;</div>
+<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;    <span class="keyword">friend</span> <span class="keyword">auto</span> <a class="code" href="classVector.html#a1b1ab94d845dafd9e2084f5a1d4cc5fc">operator-</a>(<span class="keyword">const</span> <a class="code" href="classVector.html">Vector&lt;TValueLeft&gt;</a> &amp;lhs, <span class="keyword">const</span> <a class="code" href="classVector.html">Vector&lt;TValueRight&gt;</a> &amp;rhs);</div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160; </div>
+<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> TValueLeft, <span class="keyword">typename</span> TValueRight&gt;</div>
+<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;    <span class="keyword">friend</span> <span class="keyword">auto</span> <a class="code" href="classVector.html#aef5db57a4cab4079886e751343bc968a">operator+</a>(<a class="code" href="classVector.html">Vector&lt;TValueLeft&gt;</a> lhs, <span class="keyword">const</span> TValueRight&amp; rhs);</div>
+<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160; </div>
+<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> TValueLeft, <span class="keyword">typename</span> TValueRight&gt;</div>
+<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;    <span class="keyword">friend</span> <span class="keyword">auto</span> <a class="code" href="classVector.html#a1b1ab94d845dafd9e2084f5a1d4cc5fc">operator-</a>(<a class="code" href="classVector.html">Vector&lt;TValueLeft&gt;</a> lhs, <span class="keyword">const</span> TValueRight&amp; rhs);</div>
+<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160; </div>
+<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> TValueLeft, <span class="keyword">typename</span> TValueRight&gt;</div>
+<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;    <span class="keyword">friend</span> <span class="keyword">auto</span> <a class="code" href="classVector.html#a9db46e9c4a51ac790dfb2d5712d0732f">operator*</a>(<a class="code" href="classVector.html">Vector&lt;TValueLeft&gt;</a> lhs, <span class="keyword">const</span> TValueRight&amp; rhs);</div>
+<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160; </div>
+<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> TValueLeft, <span class="keyword">typename</span> TValueRight&gt;</div>
+<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;    <span class="keyword">friend</span> <span class="keyword">auto</span> <a class="code" href="classVector.html#acf2932f237da22c7ba2c9999d0772243">operator/</a>(<a class="code" href="classVector.html">Vector&lt;TValueLeft&gt;</a> lhs, <span class="keyword">const</span> TValueRight&amp; rhs);</div>
+<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160; </div>
+<div class="line"><a name="l00422"></a><span class="lineno"><a class="line" href="classVector.html#a98d42ecbf86bdf0ee5d8a9ce574dc04c">  422</a></span>&#160;    <span class="keyword">friend</span> std::string <a class="code" href="classVector.html#a98d42ecbf86bdf0ee5d8a9ce574dc04c">to_string</a>(<a class="code" href="classVector.html">Vector</a> vector) {</div>
+<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;        std::stringstream ss;</div>
+<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;        std::string type_name;</div>
+<div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160;        ss &lt;&lt; <span class="stringliteral">&quot;vector &quot;</span> &lt;&lt; get_type_name(TValue()) &lt;&lt; <span class="stringliteral">&quot; &quot;</span> &lt;&lt; vector.capacity &lt;&lt; std::endl &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160;        <span class="keywordflow">for</span> (<span class="keyword">auto</span> [key, value]: vector.data) {</div>
+<div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160;            ss &lt;&lt; (key + 1) &lt;&lt; <span class="stringliteral">&quot; &quot;</span> &lt;&lt;  value &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160;        }</div>
+<div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;        <span class="keywordflow">return</span> ss.str();</div>
+<div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160;    }</div>
+<div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160; </div>
+<div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;    <a class="code" href="classStringInt.html">StringInt</a> capacity;</div>
 <div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160; </div>
-<div class="line"><a name="l00443"></a><span class="lineno">  443</span>&#160;    precision_type precision;</div>
+<div class="line"><a name="l00443"></a><span class="lineno">  443</span>&#160;    TValue mass_transform;</div>
 <div class="line"><a name="l00444"></a><span class="lineno">  444</span>&#160; </div>
-<div class="line"><a name="l00451"></a><span class="lineno">  451</span>&#160;    std::map&lt;index_type, TValue&gt; data;</div>
-<div class="line"><a name="l00452"></a><span class="lineno">  452</span>&#160; </div>
-<div class="line"><a name="l00453"></a><span class="lineno">  453</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> TComplexReal = <span class="keywordtype">double</span>, <span class="keyword">typename</span> TComplexImaginary = <span class="keywordtype">double</span>&gt;</div>
-<div class="line"><a name="l00454"></a><span class="lineno">  454</span>&#160;    <span class="keyword">static</span> std::string get_type_name(TValue) {</div>
-<div class="line"><a name="l00455"></a><span class="lineno">  455</span>&#160;        std::string type_name;</div>
-<div class="line"><a name="l00456"></a><span class="lineno">  456</span>&#160;        <span class="keywordflow">if</span> (<span class="keyword">typeid</span>(TValue) == <span class="keyword">typeid</span>(<a class="code" href="classRational__number.html">Rational_number</a>)) {</div>
-<div class="line"><a name="l00457"></a><span class="lineno">  457</span>&#160;            type_name = <span class="stringliteral">&quot;rational&quot;</span>;</div>
-<div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160;        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<span class="keyword">typeid</span>(TValue) == <span class="keyword">typeid</span>(<span class="keywordtype">bool</span>)) {</div>
-<div class="line"><a name="l00459"></a><span class="lineno">  459</span>&#160;            type_name = <span class="stringliteral">&quot;bit&quot;</span>;</div>
-<div class="line"><a name="l00460"></a><span class="lineno">  460</span>&#160;        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<span class="keyword">typeid</span>(TValue) == <span class="keyword">typeid</span>(<a class="code" href="classComplex__number.html">Complex_number&lt;TComplexReal, TComplexImaginary&gt;</a>)) {</div>
-<div class="line"><a name="l00461"></a><span class="lineno">  461</span>&#160;            type_name = <span class="stringliteral">&quot;complex&quot;</span>;</div>
-<div class="line"><a name="l00462"></a><span class="lineno">  462</span>&#160;        } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00463"></a><span class="lineno">  463</span>&#160;            type_name = <span class="stringliteral">&quot;&lt;&quot;</span> + std::string(<span class="keyword">typeid</span>(TValue).name()) + <span class="stringliteral">&quot;&gt;&quot;</span>;</div>
-<div class="line"><a name="l00464"></a><span class="lineno">  464</span>&#160;        }</div>
-<div class="line"><a name="l00465"></a><span class="lineno">  465</span>&#160;        <span class="keywordflow">return</span> type_name;</div>
-<div class="line"><a name="l00466"></a><span class="lineno">  466</span>&#160;    }</div>
-<div class="line"><a name="l00467"></a><span class="lineno">  467</span>&#160; </div>
-<div class="line"><a name="l00471"></a><span class="lineno">  471</span>&#160;    <span class="keywordtype">void</span> delete_zero_elements() {</div>
-<div class="line"><a name="l00472"></a><span class="lineno">  472</span>&#160;        std::set&lt;index_type&gt; to_delete;</div>
-<div class="line"><a name="l00473"></a><span class="lineno">  473</span>&#160;        <span class="keywordflow">if</span> (abs(mass_transform) &lt;= precision) {</div>
-<div class="line"><a name="l00474"></a><span class="lineno">  474</span>&#160;            mass_transform = TValue(0);</div>
-<div class="line"><a name="l00475"></a><span class="lineno">  475</span>&#160;        }</div>
-<div class="line"><a name="l00476"></a><span class="lineno">  476</span>&#160;        <span class="keywordflow">for</span> (<span class="keyword">auto</span> [key, value] : data) {</div>
-<div class="line"><a name="l00477"></a><span class="lineno">  477</span>&#160;            <span class="keywordflow">if</span> (abs(value) &lt;= precision) {</div>
-<div class="line"><a name="l00478"></a><span class="lineno">  478</span>&#160;                to_delete.insert(key);</div>
-<div class="line"><a name="l00479"></a><span class="lineno">  479</span>&#160;            }</div>
-<div class="line"><a name="l00480"></a><span class="lineno">  480</span>&#160;        }</div>
-<div class="line"><a name="l00481"></a><span class="lineno">  481</span>&#160;        <span class="keywordflow">for</span> (<span class="keyword">auto</span> key : to_delete) {</div>
-<div class="line"><a name="l00482"></a><span class="lineno">  482</span>&#160;            data.erase(key);</div>
-<div class="line"><a name="l00483"></a><span class="lineno">  483</span>&#160;        }</div>
-<div class="line"><a name="l00484"></a><span class="lineno">  484</span>&#160;    }</div>
-<div class="line"><a name="l00485"></a><span class="lineno">  485</span>&#160;};</div>
-<div class="line"><a name="l00486"></a><span class="lineno">  486</span>&#160; </div>
-<div class="line"><a name="l00494"></a><span class="lineno">  494</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> TValue&gt;</div>
-<div class="line"><a name="l00495"></a><span class="lineno">  495</span>&#160;<a class="code" href="classVector.html">Vector&lt;TValue&gt;</a> parse_from_ifstream(std::ifstream &amp;is);</div>
-<div class="line"><a name="l00496"></a><span class="lineno">  496</span>&#160; </div>
-<div class="line"><a name="l00501"></a><span class="lineno">  501</span>&#160;<span class="keyword">template</span>&lt;&gt;</div>
-<div class="line"><a name="l00502"></a><span class="lineno"><a class="line" href="classVector_3_01bool_01_4.html">  502</a></span>&#160;<span class="keyword">class </span><a class="code" href="classVector.html">Vector</a>&lt;bool&gt; {</div>
-<div class="line"><a name="l00503"></a><span class="lineno">  503</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00504"></a><span class="lineno">  504</span>&#160;    <span class="keyword">using</span> index_type = <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> long;</div>
-<div class="line"><a name="l00508"></a><span class="lineno"><a class="line" href="classVector_3_01bool_01_4.html#af047ef99ecd696a68c9d2897b7a61ef0">  508</a></span>&#160;    <a class="code" href="classVector_3_01bool_01_4.html#af047ef99ecd696a68c9d2897b7a61ef0">Vector</a>(): capacity(0), data({}) { }</div>
-<div class="line"><a name="l00509"></a><span class="lineno">  509</span>&#160; </div>
-<div class="line"><a name="l00515"></a><span class="lineno"><a class="line" href="classVector_3_01bool_01_4.html#acbfd3be4324865b754c41d750bc6bab6">  515</a></span>&#160;    <span class="keyword">explicit</span> <a class="code" href="classVector_3_01bool_01_4.html#acbfd3be4324865b754c41d750bc6bab6">Vector</a>(index_type d): capacity() {</div>
-<div class="line"><a name="l00516"></a><span class="lineno">  516</span>&#160;        <a class="code" href="classVector.html#aa3d58f6cdd4c12f14ddd600b51164222">set_capacity</a>(d);</div>
-<div class="line"><a name="l00517"></a><span class="lineno">  517</span>&#160;    }</div>
-<div class="line"><a name="l00518"></a><span class="lineno">  518</span>&#160; </div>
-<div class="line"><a name="l00524"></a><span class="lineno"><a class="line" href="classVector_3_01bool_01_4.html#af7e68c89defa392efd337c5420d676af">  524</a></span>&#160;    <a class="code" href="classVector_3_01bool_01_4.html#af7e68c89defa392efd337c5420d676af">Vector</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* file_path): capacity(0) {</div>
-<div class="line"><a name="l00525"></a><span class="lineno">  525</span>&#160;        std::ifstream infile(file_path);</div>
-<div class="line"><a name="l00526"></a><span class="lineno">  526</span>&#160;        <span class="keywordflow">if</span> (!infile.good()) {</div>
-<div class="line"><a name="l00527"></a><span class="lineno">  527</span>&#160;            <span class="keywordflow">throw</span> <a class="code" href="classFileNotFoundException.html">FileNotFoundException</a>(file_path);</div>
-<div class="line"><a name="l00528"></a><span class="lineno">  528</span>&#160;        }</div>
-<div class="line"><a name="l00529"></a><span class="lineno">  529</span>&#160;        infile &gt;&gt; *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00530"></a><span class="lineno">  530</span>&#160;        <span class="keywordflow">if</span> (infile.bad()) {</div>
-<div class="line"><a name="l00531"></a><span class="lineno">  531</span>&#160;            <span class="keywordflow">throw</span> <a class="code" href="classParseException.html">ParseException</a>(<span class="stringliteral">&quot;Error while parsing vector.&quot;</span>);</div>
-<div class="line"><a name="l00532"></a><span class="lineno">  532</span>&#160;        }</div>
-<div class="line"><a name="l00533"></a><span class="lineno">  533</span>&#160;    }</div>
-<div class="line"><a name="l00534"></a><span class="lineno">  534</span>&#160; </div>
-<div class="line"><a name="l00538"></a><span class="lineno"><a class="line" href="classVector_3_01bool_01_4.html#a4240d80f4bb20edf0e2c357c6be0ab49">  538</a></span>&#160;    [[nodiscard]] <span class="keyword">static</span> index_type <a class="code" href="classVector_3_01bool_01_4.html#a4240d80f4bb20edf0e2c357c6be0ab49">get_pages</a>(index_type cap) {</div>
-<div class="line"><a name="l00539"></a><span class="lineno">  539</span>&#160;        <span class="keywordflow">return</span> std::ceil((<span class="keywordtype">long</span> <span class="keywordtype">double</span>)(cap) / <span class="keywordtype">double</span>(bits_per_uint));</div>
-<div class="line"><a name="l00540"></a><span class="lineno">  540</span>&#160;    }</div>
-<div class="line"><a name="l00541"></a><span class="lineno">  541</span>&#160; </div>
-<div class="line"><a name="l00546"></a><span class="lineno"><a class="line" href="classVector_3_01bool_01_4.html#aa37b5fb9015d1ef50d4e65951e7da37a">  546</a></span>&#160;    <span class="keyword">static</span> index_type <a class="code" href="classVector_3_01bool_01_4.html#aa37b5fb9015d1ef50d4e65951e7da37a">get_element_page</a>(index_type index) {</div>
-<div class="line"><a name="l00547"></a><span class="lineno">  547</span>&#160;        <span class="keywordflow">return</span> std::floor((<span class="keywordtype">long</span> <span class="keywordtype">double</span>)(index) / <span class="keywordtype">double</span>(bits_per_uint));</div>
-<div class="line"><a name="l00548"></a><span class="lineno">  548</span>&#160;    }</div>
-<div class="line"><a name="l00549"></a><span class="lineno">  549</span>&#160; </div>
-<div class="line"><a name="l00555"></a><span class="lineno"><a class="line" href="classVector_3_01bool_01_4.html#a2c1aacf471fe2979c899869a56f07a21">  555</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classVector_3_01bool_01_4.html#a2c1aacf471fe2979c899869a56f07a21">set_capacity</a>(index_type new_capacity) {</div>
-<div class="line"><a name="l00556"></a><span class="lineno">  556</span>&#160;        capacity = new_capacity;</div>
-<div class="line"><a name="l00557"></a><span class="lineno">  557</span>&#160;        data = std::vector&lt;uint64_t&gt;();</div>
-<div class="line"><a name="l00558"></a><span class="lineno">  558</span>&#160;        <span class="keywordflow">for</span> (<span class="keyword">auto</span> i = 0; i &lt; get_pages(new_capacity); ++i) {</div>
-<div class="line"><a name="l00559"></a><span class="lineno">  559</span>&#160;            data.push_back(0llu);</div>
-<div class="line"><a name="l00560"></a><span class="lineno">  560</span>&#160;        }</div>
-<div class="line"><a name="l00561"></a><span class="lineno">  561</span>&#160;    }</div>
-<div class="line"><a name="l00562"></a><span class="lineno">  562</span>&#160; </div>
-<div class="line"><a name="l00568"></a><span class="lineno"><a class="line" href="classVector_3_01bool_01_4.html#a5f00aa30ba3a3796822be154cd2bf029">  568</a></span>&#160;    [[nodiscard]] <span class="keywordtype">int</span> <a class="code" href="classVector_3_01bool_01_4.html#a5f00aa30ba3a3796822be154cd2bf029">get_size</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00569"></a><span class="lineno">  569</span>&#160;        <span class="keywordtype">int</span> result = 0;</div>
-<div class="line"><a name="l00570"></a><span class="lineno">  570</span>&#160;        std::vector&lt;uint64_t&gt; tmp = data;</div>
-<div class="line"><a name="l00571"></a><span class="lineno">  571</span>&#160;        <span class="keywordflow">for</span> (<span class="keyword">auto</span> i = 0; i &lt; get_pages(capacity); ++i) {</div>
-<div class="line"><a name="l00572"></a><span class="lineno">  572</span>&#160;            <span class="keywordflow">while</span> (tmp[i]) {</div>
-<div class="line"><a name="l00573"></a><span class="lineno">  573</span>&#160;                result += int(tmp[i] &amp; 1u);</div>
-<div class="line"><a name="l00574"></a><span class="lineno">  574</span>&#160;                tmp[i] &gt;&gt;= 1;</div>
-<div class="line"><a name="l00575"></a><span class="lineno">  575</span>&#160;            }</div>
-<div class="line"><a name="l00576"></a><span class="lineno">  576</span>&#160;        }</div>
-<div class="line"><a name="l00577"></a><span class="lineno">  577</span>&#160;        <span class="keywordflow">return</span> result;</div>
-<div class="line"><a name="l00578"></a><span class="lineno">  578</span>&#160;    }</div>
-<div class="line"><a name="l00579"></a><span class="lineno">  579</span>&#160; </div>
-<div class="line"><a name="l00587"></a><span class="lineno">  587</span>&#160;    <span class="keyword">friend</span> std::ostream&amp; <a class="code" href="classVector.html#a6b41516d318aadc76c67752cbe7a85e5">operator&lt;&lt;</a>(std::ostream&amp; os, <a class="code" href="classVector_3_01bool_01_4.html">Vector&lt;bool&gt;</a> <span class="keyword">const</span>&amp; x);</div>
-<div class="line"><a name="l00588"></a><span class="lineno">  588</span>&#160; </div>
-<div class="line"><a name="l00596"></a><span class="lineno">  596</span>&#160;    <span class="keyword">friend</span> std::istream&amp; <a class="code" href="classVector.html#a45c72980a8c466a2e2946c6064bdcd81">operator&gt;&gt;</a>(std::istream&amp; is, <a class="code" href="classVector_3_01bool_01_4.html">Vector&lt;bool&gt;</a>&amp; x);</div>
-<div class="line"><a name="l00597"></a><span class="lineno">  597</span>&#160; </div>
-<div class="line"><a name="l00605"></a><span class="lineno">  605</span>&#160;    <span class="keyword">friend</span> <span class="keywordtype">bool</span> <a class="code" href="classVector.html#a4124b5f4e05a9a7091875827e2a5216a">operator==</a>(<span class="keyword">const</span> <a class="code" href="classVector_3_01bool_01_4.html">Vector&lt;bool&gt;</a> &amp;lhs, <span class="keyword">const</span> <a class="code" href="classVector_3_01bool_01_4.html">Vector&lt;bool&gt;</a> &amp;rhs);</div>
-<div class="line"><a name="l00606"></a><span class="lineno">  606</span>&#160; </div>
-<div class="line"><a name="l00614"></a><span class="lineno">  614</span>&#160;    <span class="keyword">friend</span> <span class="keywordtype">bool</span> <a class="code" href="classVector.html#aea9c0fd3cf6abbd1ea9dacc5367a9707">operator!=</a>(<span class="keyword">const</span> <a class="code" href="classVector_3_01bool_01_4.html">Vector&lt;bool&gt;</a> &amp;lhs, <span class="keyword">const</span> <a class="code" href="classVector_3_01bool_01_4.html">Vector&lt;bool&gt;</a> &amp;rhs);</div>
-<div class="line"><a name="l00615"></a><span class="lineno">  615</span>&#160; </div>
-<div class="line"><a name="l00619"></a><span class="lineno"><a class="line" href="classVector_3_01bool_01_4.html#ae6f420f72dd8449a51c82f1693222aed">  619</a></span>&#160;    <a class="code" href="classVector_3_01bool_01_4.html">Vector&lt;bool&gt;</a> <a class="code" href="classVector_3_01bool_01_4.html#ae6f420f72dd8449a51c82f1693222aed">operator~</a>() {</div>
-<div class="line"><a name="l00620"></a><span class="lineno">  620</span>&#160;        <a class="code" href="classVector_3_01bool_01_4.html">Vector&lt;bool&gt;</a> result = *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00621"></a><span class="lineno">  621</span>&#160;        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; get_pages(capacity); ++i) {</div>
-<div class="line"><a name="l00622"></a><span class="lineno">  622</span>&#160;            result.data[i] ^= -1;</div>
-<div class="line"><a name="l00623"></a><span class="lineno">  623</span>&#160;        }</div>
-<div class="line"><a name="l00624"></a><span class="lineno">  624</span>&#160;        <span class="keyword">auto</span> extra_cells = bits_per_uint - (capacity % bits_per_uint);</div>
-<div class="line"><a name="l00625"></a><span class="lineno">  625</span>&#160;        result.data[get_pages(capacity) - 1] &lt;&lt;= extra_cells;</div>
-<div class="line"><a name="l00626"></a><span class="lineno">  626</span>&#160;        result.data[get_pages(capacity) - 1] &gt;&gt;= extra_cells;</div>
-<div class="line"><a name="l00627"></a><span class="lineno">  627</span>&#160;        <span class="keywordflow">return</span> result;</div>
-<div class="line"><a name="l00628"></a><span class="lineno">  628</span>&#160;    }</div>
-<div class="line"><a name="l00629"></a><span class="lineno">  629</span>&#160; </div>
-<div class="line"><a name="l00636"></a><span class="lineno"><a class="line" href="classVector_3_01bool_01_4.html#a4cbfac42a71654ce439a6ab20d380954">  636</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classVector_3_01bool_01_4.html#a4cbfac42a71654ce439a6ab20d380954">operator()</a>(index_type index)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00637"></a><span class="lineno">  637</span>&#160;        <span class="keywordflow">if</span> (index &gt;= capacity) {</div>
-<div class="line"><a name="l00638"></a><span class="lineno">  638</span>&#160;            <span class="keywordflow">throw</span> <a class="code" href="classOutOfRangeException.html">OutOfRangeException</a>(<span class="stringliteral">&quot;Index &quot;</span> + std::to_string(index) + <span class="stringliteral">&quot; is out of range, [&quot;</span></div>
-<div class="line"><a name="l00639"></a><span class="lineno">  639</span>&#160;                                      + std::to_string(capacity) + <span class="stringliteral">&quot;] is maximal possible index.&quot;</span>);</div>
-<div class="line"><a name="l00640"></a><span class="lineno">  640</span>&#160;        }</div>
-<div class="line"><a name="l00641"></a><span class="lineno">  641</span>&#160;        <span class="keywordflow">return</span> (data[get_element_page(index)] &gt;&gt; (index % bits_per_uint)) &amp; 1llu;</div>
-<div class="line"><a name="l00642"></a><span class="lineno">  642</span>&#160;    }</div>
-<div class="line"><a name="l00643"></a><span class="lineno">  643</span>&#160; </div>
-<div class="line"><a name="l00651"></a><span class="lineno"><a class="line" href="classVector_3_01bool_01_4.html#a991fec93bd76af30058ee3eacae2856c">  651</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classVector_3_01bool_01_4.html#a991fec93bd76af30058ee3eacae2856c">operator()</a>(index_type index, <span class="keywordtype">bool</span> value) {</div>
-<div class="line"><a name="l00652"></a><span class="lineno">  652</span>&#160;        <span class="keywordflow">if</span> (index &gt;= capacity) {</div>
-<div class="line"><a name="l00653"></a><span class="lineno">  653</span>&#160;            <span class="keywordflow">throw</span> <a class="code" href="classOutOfRangeException.html">OutOfRangeException</a>(<span class="stringliteral">&quot;Index &quot;</span> + std::to_string(index) + <span class="stringliteral">&quot; is out of range (&quot;</span></div>
-<div class="line"><a name="l00654"></a><span class="lineno">  654</span>&#160;                                      + std::to_string(capacity) + <span class="stringliteral">&quot; is maximum possible index).&quot;</span>);</div>
-<div class="line"><a name="l00655"></a><span class="lineno">  655</span>&#160;        }</div>
-<div class="line"><a name="l00656"></a><span class="lineno">  656</span>&#160;        <span class="keyword">auto</span> index_at_page = index % bits_per_uint;</div>
-<div class="line"><a name="l00657"></a><span class="lineno">  657</span>&#160;        <span class="keywordflow">if</span> (((data[get_element_page(index)] &gt;&gt; index_at_page) &amp; 1) != value) {</div>
-<div class="line"><a name="l00658"></a><span class="lineno">  658</span>&#160;            data[get_element_page(index)] ^= 1llu &lt;&lt; index_at_page;</div>
-<div class="line"><a name="l00659"></a><span class="lineno">  659</span>&#160;        }</div>
-<div class="line"><a name="l00660"></a><span class="lineno">  660</span>&#160;        <span class="keywordflow">return</span> value;</div>
-<div class="line"><a name="l00661"></a><span class="lineno">  661</span>&#160;    }</div>
-<div class="line"><a name="l00662"></a><span class="lineno">  662</span>&#160; </div>
-<div class="line"><a name="l00669"></a><span class="lineno"><a class="line" href="classVector_3_01bool_01_4.html#a94ebe9c3f999c063f44eef168b49e865">  669</a></span>&#160;    <a class="code" href="classVector_3_01bool_01_4.html">Vector&lt;bool&gt;</a>&amp; <a class="code" href="classVector_3_01bool_01_4.html#a94ebe9c3f999c063f44eef168b49e865">operator+=</a>(<span class="keyword">const</span> <a class="code" href="classVector_3_01bool_01_4.html">Vector&lt;bool&gt;</a> &amp;rhs) {</div>
-<div class="line"><a name="l00670"></a><span class="lineno">  670</span>&#160;        <span class="keywordflow">if</span> (capacity != rhs.capacity) {</div>
-<div class="line"><a name="l00671"></a><span class="lineno">  671</span>&#160;            <span class="keywordflow">throw</span> <a class="code" href="classIllegalCapacityException.html">IllegalCapacityException</a>();</div>
-<div class="line"><a name="l00672"></a><span class="lineno">  672</span>&#160;        }</div>
-<div class="line"><a name="l00673"></a><span class="lineno">  673</span>&#160;        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; get_pages(capacity); ++i) {</div>
-<div class="line"><a name="l00674"></a><span class="lineno">  674</span>&#160;            data[i] |= rhs.data[i];</div>
-<div class="line"><a name="l00675"></a><span class="lineno">  675</span>&#160;        }</div>
-<div class="line"><a name="l00676"></a><span class="lineno">  676</span>&#160;        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00677"></a><span class="lineno">  677</span>&#160;    }</div>
-<div class="line"><a name="l00678"></a><span class="lineno">  678</span>&#160; </div>
-<div class="line"><a name="l00685"></a><span class="lineno"><a class="line" href="classVector_3_01bool_01_4.html#ab3e5b888519b5a84eb3a1fc7daedb187">  685</a></span>&#160;    <a class="code" href="classVector_3_01bool_01_4.html">Vector&lt;bool&gt;</a>&amp; <a class="code" href="classVector_3_01bool_01_4.html#ab3e5b888519b5a84eb3a1fc7daedb187">operator*=</a>(<span class="keyword">const</span> <a class="code" href="classVector_3_01bool_01_4.html">Vector&lt;bool&gt;</a> &amp;rhs) {</div>
-<div class="line"><a name="l00686"></a><span class="lineno">  686</span>&#160;        <span class="keywordflow">if</span> (capacity != rhs.capacity) {</div>
-<div class="line"><a name="l00687"></a><span class="lineno">  687</span>&#160;            <span class="keywordflow">throw</span> <a class="code" href="classIllegalCapacityException.html">IllegalCapacityException</a>();</div>
-<div class="line"><a name="l00688"></a><span class="lineno">  688</span>&#160;        }</div>
-<div class="line"><a name="l00689"></a><span class="lineno">  689</span>&#160;        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; get_pages(capacity); ++i) {</div>
-<div class="line"><a name="l00690"></a><span class="lineno">  690</span>&#160;            data[i] = data[i] &amp; rhs.data[i];</div>
-<div class="line"><a name="l00691"></a><span class="lineno">  691</span>&#160;        }</div>
-<div class="line"><a name="l00692"></a><span class="lineno">  692</span>&#160;        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00693"></a><span class="lineno">  693</span>&#160;    }</div>
-<div class="line"><a name="l00694"></a><span class="lineno">  694</span>&#160; </div>
-<div class="line"><a name="l00702"></a><span class="lineno">  702</span>&#160;    <span class="keyword">friend</span> <a class="code" href="classVector_3_01bool_01_4.html">Vector&lt;bool&gt;</a> <a class="code" href="classVector.html#aef5db57a4cab4079886e751343bc968a">operator+</a>(<a class="code" href="classVector_3_01bool_01_4.html">Vector&lt;bool&gt;</a> lhs, <span class="keyword">const</span> <a class="code" href="classVector_3_01bool_01_4.html">Vector&lt;bool&gt;</a> &amp;rhs);</div>
-<div class="line"><a name="l00703"></a><span class="lineno">  703</span>&#160; </div>
-<div class="line"><a name="l00711"></a><span class="lineno">  711</span>&#160;    <span class="keyword">friend</span> <a class="code" href="classVector_3_01bool_01_4.html">Vector&lt;bool&gt;</a> <a class="code" href="classVector.html#a9db46e9c4a51ac790dfb2d5712d0732f">operator*</a>(<a class="code" href="classVector_3_01bool_01_4.html">Vector&lt;bool&gt;</a> lhs, <span class="keyword">const</span> <a class="code" href="classVector_3_01bool_01_4.html">Vector&lt;bool&gt;</a> &amp;rhs);</div>
-<div class="line"><a name="l00712"></a><span class="lineno">  712</span>&#160; </div>
-<div class="line"><a name="l00719"></a><span class="lineno">  719</span>&#160;    <span class="keyword">friend</span> std::string <a class="code" href="classVector.html#a98d42ecbf86bdf0ee5d8a9ce574dc04c">to_string</a>(<a class="code" href="classVector_3_01bool_01_4.html">Vector&lt;bool&gt;</a> vector);</div>
-<div class="line"><a name="l00720"></a><span class="lineno">  720</span>&#160; </div>
-<div class="line"><a name="l00724"></a><span class="lineno"><a class="line" href="classVector_3_01bool_01_4.html#af9c1a1b45514932739472437a0162004">  724</a></span>&#160;    <span class="keyword">static</span> constexpr index_type bits_per_uint = 64;</div>
-<div class="line"><a name="l00725"></a><span class="lineno">  725</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00729"></a><span class="lineno">  729</span>&#160;    std::vector&lt;uint64_t&gt; data;</div>
-<div class="line"><a name="l00730"></a><span class="lineno">  730</span>&#160; </div>
-<div class="line"><a name="l00734"></a><span class="lineno">  734</span>&#160;    index_type capacity;</div>
-<div class="line"><a name="l00735"></a><span class="lineno">  735</span>&#160;};</div>
+<div class="line"><a name="l00449"></a><span class="lineno">  449</span>&#160;    precision_type precision;</div>
+<div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160; </div>
+<div class="line"><a name="l00457"></a><span class="lineno">  457</span>&#160;    std::map&lt;index_type, TValue&gt; data;</div>
+<div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160; </div>
+<div class="line"><a name="l00459"></a><span class="lineno">  459</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> TComplexReal = <span class="keywordtype">double</span>, <span class="keyword">typename</span> TComplexImaginary = <span class="keywordtype">double</span>&gt;</div>
+<div class="line"><a name="l00460"></a><span class="lineno">  460</span>&#160;    <span class="keyword">static</span> std::string get_type_name(TValue) {</div>
+<div class="line"><a name="l00461"></a><span class="lineno">  461</span>&#160;        std::string type_name;</div>
+<div class="line"><a name="l00462"></a><span class="lineno">  462</span>&#160;        <span class="keywordflow">if</span> (<span class="keyword">typeid</span>(TValue) == <span class="keyword">typeid</span>(<a class="code" href="classRational__number.html">Rational_number</a>)) {</div>
+<div class="line"><a name="l00463"></a><span class="lineno">  463</span>&#160;            type_name = <span class="stringliteral">&quot;rational&quot;</span>;</div>
+<div class="line"><a name="l00464"></a><span class="lineno">  464</span>&#160;        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<span class="keyword">typeid</span>(TValue) == <span class="keyword">typeid</span>(<span class="keywordtype">bool</span>)) {</div>
+<div class="line"><a name="l00465"></a><span class="lineno">  465</span>&#160;            type_name = <span class="stringliteral">&quot;bit&quot;</span>;</div>
+<div class="line"><a name="l00466"></a><span class="lineno">  466</span>&#160;        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<span class="keyword">typeid</span>(TValue) == <span class="keyword">typeid</span>(<a class="code" href="classComplex__number.html">Complex_number&lt;TComplexReal, TComplexImaginary&gt;</a>)) {</div>
+<div class="line"><a name="l00467"></a><span class="lineno">  467</span>&#160;            type_name = <span class="stringliteral">&quot;complex&quot;</span>;</div>
+<div class="line"><a name="l00468"></a><span class="lineno">  468</span>&#160;        } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00469"></a><span class="lineno">  469</span>&#160;            type_name = <span class="stringliteral">&quot;&lt;&quot;</span> + std::string(<span class="keyword">typeid</span>(TValue).name()) + <span class="stringliteral">&quot;&gt;&quot;</span>;</div>
+<div class="line"><a name="l00470"></a><span class="lineno">  470</span>&#160;        }</div>
+<div class="line"><a name="l00471"></a><span class="lineno">  471</span>&#160;        <span class="keywordflow">return</span> type_name;</div>
+<div class="line"><a name="l00472"></a><span class="lineno">  472</span>&#160;    }</div>
+<div class="line"><a name="l00473"></a><span class="lineno">  473</span>&#160; </div>
+<div class="line"><a name="l00477"></a><span class="lineno">  477</span>&#160;    <span class="keywordtype">void</span> delete_zero_elements() {</div>
+<div class="line"><a name="l00478"></a><span class="lineno">  478</span>&#160;        std::set&lt;index_type&gt; to_delete;</div>
+<div class="line"><a name="l00479"></a><span class="lineno">  479</span>&#160;        <span class="keywordflow">if</span> (abs(mass_transform) &lt;= precision) {</div>
+<div class="line"><a name="l00480"></a><span class="lineno">  480</span>&#160;            mass_transform = TValue(0);</div>
+<div class="line"><a name="l00481"></a><span class="lineno">  481</span>&#160;        }</div>
+<div class="line"><a name="l00482"></a><span class="lineno">  482</span>&#160;        <span class="keywordflow">for</span> (<span class="keyword">auto</span> [key, value] : data) {</div>
+<div class="line"><a name="l00483"></a><span class="lineno">  483</span>&#160;            <span class="keywordflow">if</span> (abs(value) &lt;= precision) {</div>
+<div class="line"><a name="l00484"></a><span class="lineno">  484</span>&#160;                to_delete.insert(key);</div>
+<div class="line"><a name="l00485"></a><span class="lineno">  485</span>&#160;            }</div>
+<div class="line"><a name="l00486"></a><span class="lineno">  486</span>&#160;        }</div>
+<div class="line"><a name="l00487"></a><span class="lineno">  487</span>&#160;        <span class="keywordflow">for</span> (<span class="keyword">auto</span> key : to_delete) {</div>
+<div class="line"><a name="l00488"></a><span class="lineno">  488</span>&#160;            data.erase(key);</div>
+<div class="line"><a name="l00489"></a><span class="lineno">  489</span>&#160;        }</div>
+<div class="line"><a name="l00490"></a><span class="lineno">  490</span>&#160;    }</div>
+<div class="line"><a name="l00491"></a><span class="lineno">  491</span>&#160;};</div>
+<div class="line"><a name="l00492"></a><span class="lineno">  492</span>&#160; </div>
+<div class="line"><a name="l00500"></a><span class="lineno">  500</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> TValue&gt;</div>
+<div class="line"><a name="l00501"></a><span class="lineno">  501</span>&#160;<a class="code" href="classVector.html">Vector&lt;TValue&gt;</a> parse_from_ifstream(std::ifstream &amp;is);</div>
+<div class="line"><a name="l00502"></a><span class="lineno">  502</span>&#160; </div>
+<div class="line"><a name="l00507"></a><span class="lineno">  507</span>&#160;<span class="keyword">template</span>&lt;&gt;</div>
+<div class="line"><a name="l00508"></a><span class="lineno"><a class="line" href="classVector_3_01bool_01_4.html">  508</a></span>&#160;<span class="keyword">class </span><a class="code" href="classVector.html">Vector</a>&lt;bool&gt; {</div>
+<div class="line"><a name="l00509"></a><span class="lineno">  509</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00510"></a><span class="lineno">  510</span>&#160;    <span class="keyword">using</span> index_type = <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> long;</div>
+<div class="line"><a name="l00514"></a><span class="lineno"><a class="line" href="classVector_3_01bool_01_4.html#af047ef99ecd696a68c9d2897b7a61ef0">  514</a></span>&#160;    <a class="code" href="classVector_3_01bool_01_4.html#af047ef99ecd696a68c9d2897b7a61ef0">Vector</a>(): capacity(0), data({}) { }</div>
+<div class="line"><a name="l00515"></a><span class="lineno">  515</span>&#160; </div>
+<div class="line"><a name="l00521"></a><span class="lineno"><a class="line" href="classVector_3_01bool_01_4.html#acbfd3be4324865b754c41d750bc6bab6">  521</a></span>&#160;    <span class="keyword">explicit</span> <a class="code" href="classVector_3_01bool_01_4.html#acbfd3be4324865b754c41d750bc6bab6">Vector</a>(index_type d): capacity() {</div>
+<div class="line"><a name="l00522"></a><span class="lineno">  522</span>&#160;        <a class="code" href="classVector.html#aa3d58f6cdd4c12f14ddd600b51164222">set_capacity</a>(d);</div>
+<div class="line"><a name="l00523"></a><span class="lineno">  523</span>&#160;    }</div>
+<div class="line"><a name="l00524"></a><span class="lineno">  524</span>&#160; </div>
+<div class="line"><a name="l00530"></a><span class="lineno"><a class="line" href="classVector_3_01bool_01_4.html#af7e68c89defa392efd337c5420d676af">  530</a></span>&#160;    <a class="code" href="classVector_3_01bool_01_4.html#af7e68c89defa392efd337c5420d676af">Vector</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* file_path): capacity(0) {</div>
+<div class="line"><a name="l00531"></a><span class="lineno">  531</span>&#160;        std::ifstream infile(file_path);</div>
+<div class="line"><a name="l00532"></a><span class="lineno">  532</span>&#160;        <span class="keywordflow">if</span> (!infile.good()) {</div>
+<div class="line"><a name="l00533"></a><span class="lineno">  533</span>&#160;            <span class="keywordflow">throw</span> <a class="code" href="classFileNotFoundException.html">FileNotFoundException</a>(file_path);</div>
+<div class="line"><a name="l00534"></a><span class="lineno">  534</span>&#160;        }</div>
+<div class="line"><a name="l00535"></a><span class="lineno">  535</span>&#160;        infile &gt;&gt; *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00536"></a><span class="lineno">  536</span>&#160;        <span class="keywordflow">if</span> (infile.bad()) {</div>
+<div class="line"><a name="l00537"></a><span class="lineno">  537</span>&#160;            <span class="keywordflow">throw</span> <a class="code" href="classParseException.html">ParseException</a>(<span class="stringliteral">&quot;Error while parsing vector.&quot;</span>);</div>
+<div class="line"><a name="l00538"></a><span class="lineno">  538</span>&#160;        }</div>
+<div class="line"><a name="l00539"></a><span class="lineno">  539</span>&#160;    }</div>
+<div class="line"><a name="l00540"></a><span class="lineno">  540</span>&#160; </div>
+<div class="line"><a name="l00544"></a><span class="lineno"><a class="line" href="classVector_3_01bool_01_4.html#a4240d80f4bb20edf0e2c357c6be0ab49">  544</a></span>&#160;    [[nodiscard]] <span class="keyword">static</span> index_type <a class="code" href="classVector_3_01bool_01_4.html#a4240d80f4bb20edf0e2c357c6be0ab49">get_pages</a>(index_type cap) {</div>
+<div class="line"><a name="l00545"></a><span class="lineno">  545</span>&#160;        <span class="keywordflow">return</span> std::ceil((<span class="keywordtype">long</span> <span class="keywordtype">double</span>)(cap) / <span class="keywordtype">double</span>(bits_per_uint));</div>
+<div class="line"><a name="l00546"></a><span class="lineno">  546</span>&#160;    }</div>
+<div class="line"><a name="l00547"></a><span class="lineno">  547</span>&#160; </div>
+<div class="line"><a name="l00552"></a><span class="lineno"><a class="line" href="classVector_3_01bool_01_4.html#aa37b5fb9015d1ef50d4e65951e7da37a">  552</a></span>&#160;    <span class="keyword">static</span> index_type <a class="code" href="classVector_3_01bool_01_4.html#aa37b5fb9015d1ef50d4e65951e7da37a">get_element_page</a>(index_type index) {</div>
+<div class="line"><a name="l00553"></a><span class="lineno">  553</span>&#160;        <span class="keywordflow">return</span> std::floor((<span class="keywordtype">long</span> <span class="keywordtype">double</span>)(index) / <span class="keywordtype">double</span>(bits_per_uint));</div>
+<div class="line"><a name="l00554"></a><span class="lineno">  554</span>&#160;    }</div>
+<div class="line"><a name="l00555"></a><span class="lineno">  555</span>&#160; </div>
+<div class="line"><a name="l00561"></a><span class="lineno"><a class="line" href="classVector_3_01bool_01_4.html#a2c1aacf471fe2979c899869a56f07a21">  561</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classVector_3_01bool_01_4.html#a2c1aacf471fe2979c899869a56f07a21">set_capacity</a>(index_type new_capacity) {</div>
+<div class="line"><a name="l00562"></a><span class="lineno">  562</span>&#160;        capacity = new_capacity;</div>
+<div class="line"><a name="l00563"></a><span class="lineno">  563</span>&#160;        data = std::vector&lt;uint64_t&gt;();</div>
+<div class="line"><a name="l00564"></a><span class="lineno">  564</span>&#160;        <span class="keywordflow">for</span> (<span class="keyword">auto</span> i = 0; i &lt; get_pages(new_capacity); ++i) {</div>
+<div class="line"><a name="l00565"></a><span class="lineno">  565</span>&#160;            data.push_back(0llu);</div>
+<div class="line"><a name="l00566"></a><span class="lineno">  566</span>&#160;        }</div>
+<div class="line"><a name="l00567"></a><span class="lineno">  567</span>&#160;    }</div>
+<div class="line"><a name="l00568"></a><span class="lineno">  568</span>&#160; </div>
+<div class="line"><a name="l00574"></a><span class="lineno"><a class="line" href="classVector_3_01bool_01_4.html#a5f00aa30ba3a3796822be154cd2bf029">  574</a></span>&#160;    [[nodiscard]] <span class="keywordtype">int</span> <a class="code" href="classVector_3_01bool_01_4.html#a5f00aa30ba3a3796822be154cd2bf029">get_size</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00575"></a><span class="lineno">  575</span>&#160;        <span class="keywordtype">int</span> result = 0;</div>
+<div class="line"><a name="l00576"></a><span class="lineno">  576</span>&#160;        std::vector&lt;uint64_t&gt; tmp = data;</div>
+<div class="line"><a name="l00577"></a><span class="lineno">  577</span>&#160;        <span class="keywordflow">for</span> (<span class="keyword">auto</span> i = 0; i &lt; get_pages(capacity); ++i) {</div>
+<div class="line"><a name="l00578"></a><span class="lineno">  578</span>&#160;            <span class="keywordflow">while</span> (tmp[i]) {</div>
+<div class="line"><a name="l00579"></a><span class="lineno">  579</span>&#160;                result += int(tmp[i] &amp; 1u);</div>
+<div class="line"><a name="l00580"></a><span class="lineno">  580</span>&#160;                tmp[i] &gt;&gt;= 1;</div>
+<div class="line"><a name="l00581"></a><span class="lineno">  581</span>&#160;            }</div>
+<div class="line"><a name="l00582"></a><span class="lineno">  582</span>&#160;        }</div>
+<div class="line"><a name="l00583"></a><span class="lineno">  583</span>&#160;        <span class="keywordflow">return</span> result;</div>
+<div class="line"><a name="l00584"></a><span class="lineno">  584</span>&#160;    }</div>
+<div class="line"><a name="l00585"></a><span class="lineno">  585</span>&#160; </div>
+<div class="line"><a name="l00593"></a><span class="lineno">  593</span>&#160;    <span class="keyword">friend</span> std::ostream&amp; <a class="code" href="classVector.html#a6b41516d318aadc76c67752cbe7a85e5">operator&lt;&lt;</a>(std::ostream&amp; os, <a class="code" href="classVector_3_01bool_01_4.html">Vector&lt;bool&gt;</a> <span class="keyword">const</span>&amp; x);</div>
+<div class="line"><a name="l00594"></a><span class="lineno">  594</span>&#160; </div>
+<div class="line"><a name="l00602"></a><span class="lineno">  602</span>&#160;    <span class="keyword">friend</span> std::istream&amp; <a class="code" href="classVector.html#a45c72980a8c466a2e2946c6064bdcd81">operator&gt;&gt;</a>(std::istream&amp; is, <a class="code" href="classVector_3_01bool_01_4.html">Vector&lt;bool&gt;</a>&amp; x);</div>
+<div class="line"><a name="l00603"></a><span class="lineno">  603</span>&#160; </div>
+<div class="line"><a name="l00611"></a><span class="lineno">  611</span>&#160;    <span class="keyword">friend</span> <span class="keywordtype">bool</span> <a class="code" href="classVector.html#a4124b5f4e05a9a7091875827e2a5216a">operator==</a>(<span class="keyword">const</span> <a class="code" href="classVector_3_01bool_01_4.html">Vector&lt;bool&gt;</a> &amp;lhs, <span class="keyword">const</span> <a class="code" href="classVector_3_01bool_01_4.html">Vector&lt;bool&gt;</a> &amp;rhs);</div>
+<div class="line"><a name="l00612"></a><span class="lineno">  612</span>&#160; </div>
+<div class="line"><a name="l00620"></a><span class="lineno">  620</span>&#160;    <span class="keyword">friend</span> <span class="keywordtype">bool</span> <a class="code" href="classVector.html#aea9c0fd3cf6abbd1ea9dacc5367a9707">operator!=</a>(<span class="keyword">const</span> <a class="code" href="classVector_3_01bool_01_4.html">Vector&lt;bool&gt;</a> &amp;lhs, <span class="keyword">const</span> <a class="code" href="classVector_3_01bool_01_4.html">Vector&lt;bool&gt;</a> &amp;rhs);</div>
+<div class="line"><a name="l00621"></a><span class="lineno">  621</span>&#160; </div>
+<div class="line"><a name="l00625"></a><span class="lineno"><a class="line" href="classVector_3_01bool_01_4.html#ae6f420f72dd8449a51c82f1693222aed">  625</a></span>&#160;    <a class="code" href="classVector_3_01bool_01_4.html">Vector&lt;bool&gt;</a> <a class="code" href="classVector_3_01bool_01_4.html#ae6f420f72dd8449a51c82f1693222aed">operator~</a>() {</div>
+<div class="line"><a name="l00626"></a><span class="lineno">  626</span>&#160;        <a class="code" href="classVector_3_01bool_01_4.html">Vector&lt;bool&gt;</a> result = *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00627"></a><span class="lineno">  627</span>&#160;        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; get_pages(capacity); ++i) {</div>
+<div class="line"><a name="l00628"></a><span class="lineno">  628</span>&#160;            result.data[i] ^= -1;</div>
+<div class="line"><a name="l00629"></a><span class="lineno">  629</span>&#160;        }</div>
+<div class="line"><a name="l00630"></a><span class="lineno">  630</span>&#160;        <span class="keyword">auto</span> extra_cells = bits_per_uint - (capacity % bits_per_uint);</div>
+<div class="line"><a name="l00631"></a><span class="lineno">  631</span>&#160;        result.data[get_pages(capacity) - 1] &lt;&lt;= extra_cells;</div>
+<div class="line"><a name="l00632"></a><span class="lineno">  632</span>&#160;        result.data[get_pages(capacity) - 1] &gt;&gt;= extra_cells;</div>
+<div class="line"><a name="l00633"></a><span class="lineno">  633</span>&#160;        <span class="keywordflow">return</span> result;</div>
+<div class="line"><a name="l00634"></a><span class="lineno">  634</span>&#160;    }</div>
+<div class="line"><a name="l00635"></a><span class="lineno">  635</span>&#160; </div>
+<div class="line"><a name="l00642"></a><span class="lineno"><a class="line" href="classVector_3_01bool_01_4.html#a4cbfac42a71654ce439a6ab20d380954">  642</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classVector_3_01bool_01_4.html#a4cbfac42a71654ce439a6ab20d380954">operator()</a>(index_type index)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00643"></a><span class="lineno">  643</span>&#160;        <span class="keywordflow">if</span> (index &gt;= capacity) {</div>
+<div class="line"><a name="l00644"></a><span class="lineno">  644</span>&#160;            <span class="keywordflow">throw</span> <a class="code" href="classOutOfRangeException.html">OutOfRangeException</a>(<span class="stringliteral">&quot;Index &quot;</span> + std::to_string(index) + <span class="stringliteral">&quot; is out of range, [&quot;</span></div>
+<div class="line"><a name="l00645"></a><span class="lineno">  645</span>&#160;                                      + std::to_string(capacity) + <span class="stringliteral">&quot;] is maximal possible index.&quot;</span>);</div>
+<div class="line"><a name="l00646"></a><span class="lineno">  646</span>&#160;        }</div>
+<div class="line"><a name="l00647"></a><span class="lineno">  647</span>&#160;        <span class="keywordflow">return</span> (data[get_element_page(index)] &gt;&gt; (index % bits_per_uint)) &amp; 1llu;</div>
+<div class="line"><a name="l00648"></a><span class="lineno">  648</span>&#160;    }</div>
+<div class="line"><a name="l00649"></a><span class="lineno">  649</span>&#160; </div>
+<div class="line"><a name="l00657"></a><span class="lineno"><a class="line" href="classVector_3_01bool_01_4.html#a991fec93bd76af30058ee3eacae2856c">  657</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classVector_3_01bool_01_4.html#a991fec93bd76af30058ee3eacae2856c">operator()</a>(index_type index, <span class="keywordtype">bool</span> value) {</div>
+<div class="line"><a name="l00658"></a><span class="lineno">  658</span>&#160;        <span class="keywordflow">if</span> (index &gt;= capacity) {</div>
+<div class="line"><a name="l00659"></a><span class="lineno">  659</span>&#160;            <span class="keywordflow">throw</span> <a class="code" href="classOutOfRangeException.html">OutOfRangeException</a>(<span class="stringliteral">&quot;Index &quot;</span> + std::to_string(index) + <span class="stringliteral">&quot; is out of range (&quot;</span></div>
+<div class="line"><a name="l00660"></a><span class="lineno">  660</span>&#160;                                      + std::to_string(capacity) + <span class="stringliteral">&quot; is maximum possible index).&quot;</span>);</div>
+<div class="line"><a name="l00661"></a><span class="lineno">  661</span>&#160;        }</div>
+<div class="line"><a name="l00662"></a><span class="lineno">  662</span>&#160;        <span class="keyword">auto</span> index_at_page = index % bits_per_uint;</div>
+<div class="line"><a name="l00663"></a><span class="lineno">  663</span>&#160;        <span class="keywordflow">if</span> (((data[get_element_page(index)] &gt;&gt; index_at_page) &amp; 1) != value) {</div>
+<div class="line"><a name="l00664"></a><span class="lineno">  664</span>&#160;            data[get_element_page(index)] ^= 1llu &lt;&lt; index_at_page;</div>
+<div class="line"><a name="l00665"></a><span class="lineno">  665</span>&#160;        }</div>
+<div class="line"><a name="l00666"></a><span class="lineno">  666</span>&#160;        <span class="keywordflow">return</span> value;</div>
+<div class="line"><a name="l00667"></a><span class="lineno">  667</span>&#160;    }</div>
+<div class="line"><a name="l00668"></a><span class="lineno">  668</span>&#160; </div>
+<div class="line"><a name="l00675"></a><span class="lineno"><a class="line" href="classVector_3_01bool_01_4.html#a94ebe9c3f999c063f44eef168b49e865">  675</a></span>&#160;    <a class="code" href="classVector_3_01bool_01_4.html">Vector&lt;bool&gt;</a>&amp; <a class="code" href="classVector_3_01bool_01_4.html#a94ebe9c3f999c063f44eef168b49e865">operator+=</a>(<span class="keyword">const</span> <a class="code" href="classVector_3_01bool_01_4.html">Vector&lt;bool&gt;</a> &amp;rhs) {</div>
+<div class="line"><a name="l00676"></a><span class="lineno">  676</span>&#160;        <span class="keywordflow">if</span> (capacity != rhs.capacity) {</div>
+<div class="line"><a name="l00677"></a><span class="lineno">  677</span>&#160;            <span class="keywordflow">throw</span> <a class="code" href="classIllegalCapacityException.html">IllegalCapacityException</a>();</div>
+<div class="line"><a name="l00678"></a><span class="lineno">  678</span>&#160;        }</div>
+<div class="line"><a name="l00679"></a><span class="lineno">  679</span>&#160;        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; get_pages(capacity); ++i) {</div>
+<div class="line"><a name="l00680"></a><span class="lineno">  680</span>&#160;            data[i] |= rhs.data[i];</div>
+<div class="line"><a name="l00681"></a><span class="lineno">  681</span>&#160;        }</div>
+<div class="line"><a name="l00682"></a><span class="lineno">  682</span>&#160;        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00683"></a><span class="lineno">  683</span>&#160;    }</div>
+<div class="line"><a name="l00684"></a><span class="lineno">  684</span>&#160; </div>
+<div class="line"><a name="l00691"></a><span class="lineno"><a class="line" href="classVector_3_01bool_01_4.html#ab3e5b888519b5a84eb3a1fc7daedb187">  691</a></span>&#160;    <a class="code" href="classVector_3_01bool_01_4.html">Vector&lt;bool&gt;</a>&amp; <a class="code" href="classVector_3_01bool_01_4.html#ab3e5b888519b5a84eb3a1fc7daedb187">operator*=</a>(<span class="keyword">const</span> <a class="code" href="classVector_3_01bool_01_4.html">Vector&lt;bool&gt;</a> &amp;rhs) {</div>
+<div class="line"><a name="l00692"></a><span class="lineno">  692</span>&#160;        <span class="keywordflow">if</span> (capacity != rhs.capacity) {</div>
+<div class="line"><a name="l00693"></a><span class="lineno">  693</span>&#160;            <span class="keywordflow">throw</span> <a class="code" href="classIllegalCapacityException.html">IllegalCapacityException</a>();</div>
+<div class="line"><a name="l00694"></a><span class="lineno">  694</span>&#160;        }</div>
+<div class="line"><a name="l00695"></a><span class="lineno">  695</span>&#160;        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; get_pages(capacity); ++i) {</div>
+<div class="line"><a name="l00696"></a><span class="lineno">  696</span>&#160;            data[i] = data[i] &amp; rhs.data[i];</div>
+<div class="line"><a name="l00697"></a><span class="lineno">  697</span>&#160;        }</div>
+<div class="line"><a name="l00698"></a><span class="lineno">  698</span>&#160;        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00699"></a><span class="lineno">  699</span>&#160;    }</div>
+<div class="line"><a name="l00700"></a><span class="lineno">  700</span>&#160; </div>
+<div class="line"><a name="l00708"></a><span class="lineno">  708</span>&#160;    <span class="keyword">friend</span> <a class="code" href="classVector_3_01bool_01_4.html">Vector&lt;bool&gt;</a> <a class="code" href="classVector.html#aef5db57a4cab4079886e751343bc968a">operator+</a>(<a class="code" href="classVector_3_01bool_01_4.html">Vector&lt;bool&gt;</a> lhs, <span class="keyword">const</span> <a class="code" href="classVector_3_01bool_01_4.html">Vector&lt;bool&gt;</a> &amp;rhs);</div>
+<div class="line"><a name="l00709"></a><span class="lineno">  709</span>&#160; </div>
+<div class="line"><a name="l00717"></a><span class="lineno">  717</span>&#160;    <span class="keyword">friend</span> <a class="code" href="classVector_3_01bool_01_4.html">Vector&lt;bool&gt;</a> <a class="code" href="classVector.html#a9db46e9c4a51ac790dfb2d5712d0732f">operator*</a>(<a class="code" href="classVector_3_01bool_01_4.html">Vector&lt;bool&gt;</a> lhs, <span class="keyword">const</span> <a class="code" href="classVector_3_01bool_01_4.html">Vector&lt;bool&gt;</a> &amp;rhs);</div>
+<div class="line"><a name="l00718"></a><span class="lineno">  718</span>&#160; </div>
+<div class="line"><a name="l00725"></a><span class="lineno">  725</span>&#160;    <span class="keyword">friend</span> std::string <a class="code" href="classVector.html#a98d42ecbf86bdf0ee5d8a9ce574dc04c">to_string</a>(<a class="code" href="classVector_3_01bool_01_4.html">Vector&lt;bool&gt;</a> vector);</div>
+<div class="line"><a name="l00726"></a><span class="lineno">  726</span>&#160; </div>
+<div class="line"><a name="l00730"></a><span class="lineno"><a class="line" href="classVector_3_01bool_01_4.html#af9c1a1b45514932739472437a0162004">  730</a></span>&#160;    <span class="keyword">static</span> constexpr index_type bits_per_uint = 64;</div>
+<div class="line"><a name="l00731"></a><span class="lineno">  731</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00735"></a><span class="lineno">  735</span>&#160;    std::vector&lt;uint64_t&gt; data;</div>
 <div class="line"><a name="l00736"></a><span class="lineno">  736</span>&#160; </div>
-<div class="line"><a name="l00737"></a><span class="lineno">  737</span>&#160;<span class="preprocessor">#endif //COUNTING_STARS_VECTOR_H</span></div>
+<div class="line"><a name="l00740"></a><span class="lineno">  740</span>&#160;    index_type capacity;</div>
+<div class="line"><a name="l00741"></a><span class="lineno">  741</span>&#160;};</div>
+<div class="line"><a name="l00742"></a><span class="lineno">  742</span>&#160; </div>
+<div class="line"><a name="l00743"></a><span class="lineno">  743</span>&#160;<span class="preprocessor">#endif //COUNTING_STARS_VECTOR_H</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclassMatrix__proxy_html"><div class="ttname"><a href="classMatrix__proxy.html">Matrix_proxy</a></div><div class="ttdef"><b>Definition:</b> Matrix_proxy.h:28</div></div>
 <div class="ttc" id="aclassComplex__number_html"><div class="ttname"><a href="classComplex__number.html">Complex_number</a></div><div class="ttdoc">Header containing Complex_number class declaration and implementation (partially).</div><div class="ttdef"><b>Definition:</b> Complex_number.h:15</div></div>
 <div class="ttc" id="aclassFileNotFoundException_html"><div class="ttname"><a href="classFileNotFoundException.html">FileNotFoundException</a></div><div class="ttdoc">Header file that describes FileNotFoundException.</div><div class="ttdef"><b>Definition:</b> FileNotFoundException.h:18</div></div>
 <div class="ttc" id="aclassVector_html_aa16d15503ebe13635c29ea06f50c3a86"><div class="ttname"><a href="classVector.html#aa16d15503ebe13635c29ea06f50c3a86">Vector::Vector</a></div><div class="ttdeci">Vector()</div><div class="ttdoc">Default constructor.</div><div class="ttdef"><b>Definition:</b> Vector.h:41</div></div>
-<div class="ttc" id="aclassVector_html_a9f232ab8b551276f5c6411b1f5c6ee46"><div class="ttname"><a href="classVector.html#a9f232ab8b551276f5c6411b1f5c6ee46">Vector::Vector</a></div><div class="ttdeci">Vector(Vector &amp;&amp;rhs) noexcept</div><div class="ttdoc">Move constructor.</div><div class="ttdef"><b>Definition:</b> Vector.h:86</div></div>
-<div class="ttc" id="aclassVector_3_01bool_01_4_html_af047ef99ecd696a68c9d2897b7a61ef0"><div class="ttname"><a href="classVector_3_01bool_01_4.html#af047ef99ecd696a68c9d2897b7a61ef0">Vector&lt; bool &gt;::Vector</a></div><div class="ttdeci">Vector()</div><div class="ttdoc">Default constructor.</div><div class="ttdef"><b>Definition:</b> Vector.h:508</div></div>
+<div class="ttc" id="aclassVector_html_a9f232ab8b551276f5c6411b1f5c6ee46"><div class="ttname"><a href="classVector.html#a9f232ab8b551276f5c6411b1f5c6ee46">Vector::Vector</a></div><div class="ttdeci">Vector(Vector &amp;&amp;rhs) noexcept</div><div class="ttdoc">Move constructor.</div><div class="ttdef"><b>Definition:</b> Vector.h:92</div></div>
+<div class="ttc" id="aclassVector_3_01bool_01_4_html_af047ef99ecd696a68c9d2897b7a61ef0"><div class="ttname"><a href="classVector_3_01bool_01_4.html#af047ef99ecd696a68c9d2897b7a61ef0">Vector&lt; bool &gt;::Vector</a></div><div class="ttdeci">Vector()</div><div class="ttdoc">Default constructor.</div><div class="ttdef"><b>Definition:</b> Vector.h:514</div></div>
 <div class="ttc" id="aclassDivisionByZeroException_html"><div class="ttname"><a href="classDivisionByZeroException.html">DivisionByZeroException</a></div><div class="ttdoc">Header file that describes DivisionByZeroException.</div><div class="ttdef"><b>Definition:</b> DivisionByZeroException.h:18</div></div>
-<div class="ttc" id="aclassVector_html_a88b99197eed0349e97da4af56a69130a"><div class="ttname"><a href="classVector.html#a88b99197eed0349e97da4af56a69130a">Vector::Vector</a></div><div class="ttdeci">Vector(const char *file_path, precision_type required_precision=0, TValue default_value=0)</div><div class="ttdoc">Constructor from file.</div><div class="ttdef"><b>Definition:</b> Vector.h:63</div></div>
-<div class="ttc" id="aclassVector_3_01bool_01_4_html_ae6f420f72dd8449a51c82f1693222aed"><div class="ttname"><a href="classVector_3_01bool_01_4.html#ae6f420f72dd8449a51c82f1693222aed">Vector&lt; bool &gt;::operator~</a></div><div class="ttdeci">Vector&lt; bool &gt; operator~()</div><div class="ttdef"><b>Definition:</b> Vector.h:619</div></div>
-<div class="ttc" id="aclassVector_html_a8a4e3bae1ce66a5553ea4ad8f5afa1d7"><div class="ttname"><a href="classVector.html#a8a4e3bae1ce66a5553ea4ad8f5afa1d7">Vector::get_size</a></div><div class="ttdeci">index_type get_size()</div><div class="ttdoc">Get number of not-null elements.</div><div class="ttdef"><b>Definition:</b> Vector.h:162</div></div>
-<div class="ttc" id="aclassVector_3_01bool_01_4_html_a5f00aa30ba3a3796822be154cd2bf029"><div class="ttname"><a href="classVector_3_01bool_01_4.html#a5f00aa30ba3a3796822be154cd2bf029">Vector&lt; bool &gt;::get_size</a></div><div class="ttdeci">int get_size() const</div><div class="ttdoc">Get number of true elements.</div><div class="ttdef"><b>Definition:</b> Vector.h:568</div></div>
-<div class="ttc" id="aclassVector_html_aa3d58f6cdd4c12f14ddd600b51164222"><div class="ttname"><a href="classVector.html#aa3d58f6cdd4c12f14ddd600b51164222">Vector::set_capacity</a></div><div class="ttdeci">void set_capacity(index_type new_capacity)</div><div class="ttdoc">Set capacity of a Vector.</div><div class="ttdef"><b>Definition:</b> Vector.h:173</div></div>
-<div class="ttc" id="aclassVector_3_01bool_01_4_html_a991fec93bd76af30058ee3eacae2856c"><div class="ttname"><a href="classVector_3_01bool_01_4.html#a991fec93bd76af30058ee3eacae2856c">Vector&lt; bool &gt;::operator()</a></div><div class="ttdeci">bool operator()(index_type index, bool value)</div><div class="ttdoc">Element setter.</div><div class="ttdef"><b>Definition:</b> Vector.h:651</div></div>
+<div class="ttc" id="aclassVector_3_01bool_01_4_html_ae6f420f72dd8449a51c82f1693222aed"><div class="ttname"><a href="classVector_3_01bool_01_4.html#ae6f420f72dd8449a51c82f1693222aed">Vector&lt; bool &gt;::operator~</a></div><div class="ttdeci">Vector&lt; bool &gt; operator~()</div><div class="ttdef"><b>Definition:</b> Vector.h:625</div></div>
+<div class="ttc" id="aclassVector_html_a8a4e3bae1ce66a5553ea4ad8f5afa1d7"><div class="ttname"><a href="classVector.html#a8a4e3bae1ce66a5553ea4ad8f5afa1d7">Vector::get_size</a></div><div class="ttdeci">index_type get_size()</div><div class="ttdoc">Get number of not-null elements.</div><div class="ttdef"><b>Definition:</b> Vector.h:168</div></div>
+<div class="ttc" id="aclassVector_3_01bool_01_4_html_a5f00aa30ba3a3796822be154cd2bf029"><div class="ttname"><a href="classVector_3_01bool_01_4.html#a5f00aa30ba3a3796822be154cd2bf029">Vector&lt; bool &gt;::get_size</a></div><div class="ttdeci">int get_size() const</div><div class="ttdoc">Get number of true elements.</div><div class="ttdef"><b>Definition:</b> Vector.h:574</div></div>
+<div class="ttc" id="aclassVector_html_aa3d58f6cdd4c12f14ddd600b51164222"><div class="ttname"><a href="classVector.html#aa3d58f6cdd4c12f14ddd600b51164222">Vector::set_capacity</a></div><div class="ttdeci">void set_capacity(index_type new_capacity)</div><div class="ttdoc">Set capacity of a Vector.</div><div class="ttdef"><b>Definition:</b> Vector.h:179</div></div>
+<div class="ttc" id="aclassVector_3_01bool_01_4_html_a991fec93bd76af30058ee3eacae2856c"><div class="ttname"><a href="classVector_3_01bool_01_4.html#a991fec93bd76af30058ee3eacae2856c">Vector&lt; bool &gt;::operator()</a></div><div class="ttdeci">bool operator()(index_type index, bool value)</div><div class="ttdoc">Element setter.</div><div class="ttdef"><b>Definition:</b> Vector.h:657</div></div>
 <div class="ttc" id="aclassVector_html_a4124b5f4e05a9a7091875827e2a5216a"><div class="ttname"><a href="classVector.html#a4124b5f4e05a9a7091875827e2a5216a">Vector::operator==</a></div><div class="ttdeci">friend bool operator==(const Vector&lt; TValueLeft &gt; &amp;lhs, const Vector&lt; TValueRight &gt; &amp;rhs)</div><div class="ttdoc">Eq operator.</div></div>
-<div class="ttc" id="aclassVector_3_01bool_01_4_html_a2c1aacf471fe2979c899869a56f07a21"><div class="ttname"><a href="classVector_3_01bool_01_4.html#a2c1aacf471fe2979c899869a56f07a21">Vector&lt; bool &gt;::set_capacity</a></div><div class="ttdeci">void set_capacity(index_type new_capacity)</div><div class="ttdoc">Set capacity and delete all elements from Vector.</div><div class="ttdef"><b>Definition:</b> Vector.h:555</div></div>
-<div class="ttc" id="aclassVector_html_a0475696e979d4ff0c6d60108cb475059"><div class="ttname"><a href="classVector.html#a0475696e979d4ff0c6d60108cb475059">Vector::operator=</a></div><div class="ttdeci">Vector &amp; operator=(std::map&lt; index_type, TValue &gt; &amp;&amp;data_to_move) noexcept</div><div class="ttdoc">Move data operator.</div><div class="ttdef"><b>Definition:</b> Vector.h:132</div></div>
-<div class="ttc" id="aclassVector_html_a8e911b15cad2198998caa24e9ab99421"><div class="ttname"><a href="classVector.html#a8e911b15cad2198998caa24e9ab99421">Vector::operator=</a></div><div class="ttdeci">Vector &amp; operator=(const Vector &amp;rhs)</div><div class="ttdoc">Copy operator.</div><div class="ttdef"><b>Definition:</b> Vector.h:99</div></div>
+<div class="ttc" id="aclassVector_3_01bool_01_4_html_a2c1aacf471fe2979c899869a56f07a21"><div class="ttname"><a href="classVector_3_01bool_01_4.html#a2c1aacf471fe2979c899869a56f07a21">Vector&lt; bool &gt;::set_capacity</a></div><div class="ttdeci">void set_capacity(index_type new_capacity)</div><div class="ttdoc">Set capacity and delete all elements from Vector.</div><div class="ttdef"><b>Definition:</b> Vector.h:561</div></div>
+<div class="ttc" id="aclassVector_html_a0475696e979d4ff0c6d60108cb475059"><div class="ttname"><a href="classVector.html#a0475696e979d4ff0c6d60108cb475059">Vector::operator=</a></div><div class="ttdeci">Vector &amp; operator=(std::map&lt; index_type, TValue &gt; &amp;&amp;data_to_move) noexcept</div><div class="ttdoc">Move data operator.</div><div class="ttdef"><b>Definition:</b> Vector.h:138</div></div>
+<div class="ttc" id="aclassVector_html_a8e911b15cad2198998caa24e9ab99421"><div class="ttname"><a href="classVector.html#a8e911b15cad2198998caa24e9ab99421">Vector::operator=</a></div><div class="ttdeci">Vector &amp; operator=(const Vector &amp;rhs)</div><div class="ttdoc">Copy operator.</div><div class="ttdef"><b>Definition:</b> Vector.h:105</div></div>
 <div class="ttc" id="aclassStringInt_html"><div class="ttname"><a href="classStringInt.html">StringInt</a></div><div class="ttdoc">Header containing StringInt class declaration.</div><div class="ttdef"><b>Definition:</b> StringInt.h:21</div></div>
-<div class="ttc" id="aclassVector_html_a0a72146e5c9e87c59f07b50e9a40e341"><div class="ttname"><a href="classVector.html#a0a72146e5c9e87c59f07b50e9a40e341">Vector::operator()</a></div><div class="ttdeci">TValue &amp; operator()(const StringInt &amp;index)</div><div class="ttdoc">Access operator.</div><div class="ttdef"><b>Definition:</b> Vector.h:280</div></div>
-<div class="ttc" id="aclassVector_html_a5f89a3d2c3964ca758df2e49ff02c592"><div class="ttname"><a href="classVector.html#a5f89a3d2c3964ca758df2e49ff02c592">Vector::get_precision</a></div><div class="ttdeci">precision_type get_precision()</div><div class="ttdoc">precision getter.</div><div class="ttdef"><b>Definition:</b> Vector.h:153</div></div>
-<div class="ttc" id="aclassVector_3_01bool_01_4_html_a4cbfac42a71654ce439a6ab20d380954"><div class="ttname"><a href="classVector_3_01bool_01_4.html#a4cbfac42a71654ce439a6ab20d380954">Vector&lt; bool &gt;::operator()</a></div><div class="ttdeci">bool operator()(index_type index) const</div><div class="ttdoc">Element getter.</div><div class="ttdef"><b>Definition:</b> Vector.h:636</div></div>
+<div class="ttc" id="aclassVector_html_a0a72146e5c9e87c59f07b50e9a40e341"><div class="ttname"><a href="classVector.html#a0a72146e5c9e87c59f07b50e9a40e341">Vector::operator()</a></div><div class="ttdeci">TValue &amp; operator()(const StringInt &amp;index)</div><div class="ttdoc">Access operator.</div><div class="ttdef"><b>Definition:</b> Vector.h:286</div></div>
+<div class="ttc" id="aclassVector_html_a5f89a3d2c3964ca758df2e49ff02c592"><div class="ttname"><a href="classVector.html#a5f89a3d2c3964ca758df2e49ff02c592">Vector::get_precision</a></div><div class="ttdeci">precision_type get_precision()</div><div class="ttdoc">precision getter.</div><div class="ttdef"><b>Definition:</b> Vector.h:159</div></div>
+<div class="ttc" id="aclassVector_3_01bool_01_4_html_a4cbfac42a71654ce439a6ab20d380954"><div class="ttname"><a href="classVector_3_01bool_01_4.html#a4cbfac42a71654ce439a6ab20d380954">Vector&lt; bool &gt;::operator()</a></div><div class="ttdeci">bool operator()(index_type index) const</div><div class="ttdoc">Element getter.</div><div class="ttdef"><b>Definition:</b> Vector.h:642</div></div>
 <div class="ttc" id="aclassVector_html_aea9c0fd3cf6abbd1ea9dacc5367a9707"><div class="ttname"><a href="classVector.html#aea9c0fd3cf6abbd1ea9dacc5367a9707">Vector::operator!=</a></div><div class="ttdeci">friend bool operator!=(const Vector&lt; TValueLeft &gt; &amp;lhs, const Vector&lt; TValueRight &gt; &amp;rhs)</div><div class="ttdoc">Neq operator.</div><div class="ttdef"><b>Definition:</b> Vector.cpp:19</div></div>
-<div class="ttc" id="aclassVector_html_ac7f7756f30f7bd60dcc15e747783c7de"><div class="ttname"><a href="classVector.html#ac7f7756f30f7bd60dcc15e747783c7de">Vector::operator+=</a></div><div class="ttdeci">auto &amp; operator+=(const Vector&lt; TValueRight &gt; &amp;rhs)</div><div class="ttdoc">Plus and assign operator.</div><div class="ttdef"><b>Definition:</b> Vector.h:304</div></div>
-<div class="ttc" id="aclassVector_html_ab439cbcd8e088c9cd769ec0ba4bd38e6"><div class="ttname"><a href="classVector.html#ab439cbcd8e088c9cd769ec0ba4bd38e6">Vector::set_precision</a></div><div class="ttdeci">void set_precision(precision_type new_precision)</div><div class="ttdoc">precision setter.</div><div class="ttdef"><b>Definition:</b> Vector.h:143</div></div>
-<div class="ttc" id="aclassVector_3_01bool_01_4_html_af7e68c89defa392efd337c5420d676af"><div class="ttname"><a href="classVector_3_01bool_01_4.html#af7e68c89defa392efd337c5420d676af">Vector&lt; bool &gt;::Vector</a></div><div class="ttdeci">Vector(const char *file_path)</div><div class="ttdoc">Constructor from file.</div><div class="ttdef"><b>Definition:</b> Vector.h:524</div></div>
+<div class="ttc" id="aclassVector_html_ac7f7756f30f7bd60dcc15e747783c7de"><div class="ttname"><a href="classVector.html#ac7f7756f30f7bd60dcc15e747783c7de">Vector::operator+=</a></div><div class="ttdeci">auto &amp; operator+=(const Vector&lt; TValueRight &gt; &amp;rhs)</div><div class="ttdoc">Plus and assign operator.</div><div class="ttdef"><b>Definition:</b> Vector.h:310</div></div>
+<div class="ttc" id="aclassVector_html_ab439cbcd8e088c9cd769ec0ba4bd38e6"><div class="ttname"><a href="classVector.html#ab439cbcd8e088c9cd769ec0ba4bd38e6">Vector::set_precision</a></div><div class="ttdeci">void set_precision(precision_type new_precision)</div><div class="ttdoc">precision setter.</div><div class="ttdef"><b>Definition:</b> Vector.h:149</div></div>
+<div class="ttc" id="aclassVector_3_01bool_01_4_html_af7e68c89defa392efd337c5420d676af"><div class="ttname"><a href="classVector_3_01bool_01_4.html#af7e68c89defa392efd337c5420d676af">Vector&lt; bool &gt;::Vector</a></div><div class="ttdeci">Vector(const char *file_path)</div><div class="ttdoc">Constructor from file.</div><div class="ttdef"><b>Definition:</b> Vector.h:530</div></div>
 <div class="ttc" id="aclassMatrix__proxy_html_a6bf6d64fc79581da282322da79a82307"><div class="ttname"><a href="classMatrix__proxy.html#a6bf6d64fc79581da282322da79a82307">Matrix_proxy::get_values_as_map</a></div><div class="ttdeci">std::map&lt; StringInt, TMatrixValue &gt; get_values_as_map() const</div><div class="ttdef"><b>Definition:</b> Matrix_proxy.h:98</div></div>
-<div class="ttc" id="aclassVector_3_01bool_01_4_html_aa37b5fb9015d1ef50d4e65951e7da37a"><div class="ttname"><a href="classVector_3_01bool_01_4.html#aa37b5fb9015d1ef50d4e65951e7da37a">Vector&lt; bool &gt;::get_element_page</a></div><div class="ttdeci">static index_type get_element_page(index_type index)</div><div class="ttdef"><b>Definition:</b> Vector.h:546</div></div>
-<div class="ttc" id="aclassVector_html_a4d6ac52262995c211743693b6ddde3d5"><div class="ttname"><a href="classVector.html#a4d6ac52262995c211743693b6ddde3d5">Vector::get_capacity</a></div><div class="ttdeci">index_type get_capacity()</div><div class="ttdoc">Get capacity of this Vector.</div><div class="ttdef"><b>Definition:</b> Vector.h:183</div></div>
-<div class="ttc" id="aclassVector_3_01bool_01_4_html_acbfd3be4324865b754c41d750bc6bab6"><div class="ttname"><a href="classVector_3_01bool_01_4.html#acbfd3be4324865b754c41d750bc6bab6">Vector&lt; bool &gt;::Vector</a></div><div class="ttdeci">Vector(index_type d)</div><div class="ttdoc">Constructor that allows to set default value to data.</div><div class="ttdef"><b>Definition:</b> Vector.h:515</div></div>
+<div class="ttc" id="aclassVector_3_01bool_01_4_html_aa37b5fb9015d1ef50d4e65951e7da37a"><div class="ttname"><a href="classVector_3_01bool_01_4.html#aa37b5fb9015d1ef50d4e65951e7da37a">Vector&lt; bool &gt;::get_element_page</a></div><div class="ttdeci">static index_type get_element_page(index_type index)</div><div class="ttdef"><b>Definition:</b> Vector.h:552</div></div>
+<div class="ttc" id="aclassVector_html_a4d6ac52262995c211743693b6ddde3d5"><div class="ttname"><a href="classVector.html#a4d6ac52262995c211743693b6ddde3d5">Vector::get_capacity</a></div><div class="ttdeci">index_type get_capacity()</div><div class="ttdoc">Get capacity of this Vector.</div><div class="ttdef"><b>Definition:</b> Vector.h:189</div></div>
+<div class="ttc" id="aclassVector_3_01bool_01_4_html_acbfd3be4324865b754c41d750bc6bab6"><div class="ttname"><a href="classVector_3_01bool_01_4.html#acbfd3be4324865b754c41d750bc6bab6">Vector&lt; bool &gt;::Vector</a></div><div class="ttdeci">Vector(index_type d)</div><div class="ttdoc">Constructor that allows to set default value to data.</div><div class="ttdef"><b>Definition:</b> Vector.h:521</div></div>
 <div class="ttc" id="aclassRational__number_html"><div class="ttname"><a href="classRational__number.html">Rational_number</a></div><div class="ttdoc">Header containing Rational_number class declaration.</div><div class="ttdef"><b>Definition:</b> Rational_number.h:21</div></div>
 <div class="ttc" id="aclassPos_html_abc4d294c12c25bed750be0777b7523da"><div class="ttname"><a href="classPos.html#abc4d294c12c25bed750be0777b7523da">Pos::get_j</a></div><div class="ttdeci">StringInt get_j() const</div><div class="ttdoc">[j] getter.</div><div class="ttdef"><b>Definition:</b> Pos.cpp:35</div></div>
-<div class="ttc" id="aclassVector_html_a4bacd0c9f0b0a7ddb2202cc36b104846"><div class="ttname"><a href="classVector.html#a4bacd0c9f0b0a7ddb2202cc36b104846">Vector::operator=</a></div><div class="ttdeci">Vector &amp; operator=(Vector &amp;&amp;rhs) noexcept</div><div class="ttdoc">Move operator.</div><div class="ttdef"><b>Definition:</b> Vector.h:114</div></div>
+<div class="ttc" id="aclassVector_html_a4bacd0c9f0b0a7ddb2202cc36b104846"><div class="ttname"><a href="classVector.html#a4bacd0c9f0b0a7ddb2202cc36b104846">Vector::operator=</a></div><div class="ttdeci">Vector &amp; operator=(Vector &amp;&amp;rhs) noexcept</div><div class="ttdoc">Move operator.</div><div class="ttdef"><b>Definition:</b> Vector.h:120</div></div>
 <div class="ttc" id="aclassPos_html_afeea819c9f21be202f907dd9797209f1"><div class="ttname"><a href="classPos.html#afeea819c9f21be202f907dd9797209f1">Pos::get_i</a></div><div class="ttdeci">StringInt get_i() const</div><div class="ttdoc">[i] getter.</div><div class="ttdef"><b>Definition:</b> Pos.cpp:31</div></div>
-<div class="ttc" id="aclassVector_3_01bool_01_4_html_a94ebe9c3f999c063f44eef168b49e865"><div class="ttname"><a href="classVector_3_01bool_01_4.html#a94ebe9c3f999c063f44eef168b49e865">Vector&lt; bool &gt;::operator+=</a></div><div class="ttdeci">Vector&lt; bool &gt; &amp; operator+=(const Vector&lt; bool &gt; &amp;rhs)</div><div class="ttdoc">Plus and assign operator - OR.</div><div class="ttdef"><b>Definition:</b> Vector.h:669</div></div>
-<div class="ttc" id="aclassVector_html_a98d42ecbf86bdf0ee5d8a9ce574dc04c"><div class="ttname"><a href="classVector.html#a98d42ecbf86bdf0ee5d8a9ce574dc04c">Vector::to_string</a></div><div class="ttdeci">friend std::string to_string(Vector vector)</div><div class="ttdoc">std::to_string implementation for Vector.</div><div class="ttdef"><b>Definition:</b> Vector.h:416</div></div>
+<div class="ttc" id="aclassVector_html_ac3f92e00bd78c0bd0f42e7bbe36dce40"><div class="ttname"><a href="classVector.html#ac3f92e00bd78c0bd0f42e7bbe36dce40">Vector::Vector</a></div><div class="ttdeci">Vector(index_type required_capacity, TValue default_value=TValue(), precision_type required_precision=0)</div><div class="ttdoc">Constructor for almost any case.</div><div class="ttdef"><b>Definition:</b> Vector.h:50</div></div>
+<div class="ttc" id="aclassVector_3_01bool_01_4_html_a94ebe9c3f999c063f44eef168b49e865"><div class="ttname"><a href="classVector_3_01bool_01_4.html#a94ebe9c3f999c063f44eef168b49e865">Vector&lt; bool &gt;::operator+=</a></div><div class="ttdeci">Vector&lt; bool &gt; &amp; operator+=(const Vector&lt; bool &gt; &amp;rhs)</div><div class="ttdoc">Plus and assign operator - OR.</div><div class="ttdef"><b>Definition:</b> Vector.h:675</div></div>
+<div class="ttc" id="aclassVector_html_a98d42ecbf86bdf0ee5d8a9ce574dc04c"><div class="ttname"><a href="classVector.html#a98d42ecbf86bdf0ee5d8a9ce574dc04c">Vector::to_string</a></div><div class="ttdeci">friend std::string to_string(Vector vector)</div><div class="ttdoc">std::to_string implementation for Vector.</div><div class="ttdef"><b>Definition:</b> Vector.h:422</div></div>
 <div class="ttc" id="aclassMatrix__proxy_html_acab62b1e0ffff9ea44ba504705f7f7ca"><div class="ttname"><a href="classMatrix__proxy.html#acab62b1e0ffff9ea44ba504705f7f7ca">Matrix_proxy::get_capacity</a></div><div class="ttdeci">Pos get_capacity() const</div><div class="ttdoc">capacity getter.</div><div class="ttdef"><b>Definition:</b> Matrix_proxy.h:88</div></div>
 <div class="ttc" id="aclassIllegalCapacityException_html"><div class="ttname"><a href="classIllegalCapacityException.html">IllegalCapacityException</a></div><div class="ttdoc">Header file that describes IllegalCapacityException.</div><div class="ttdef"><b>Definition:</b> IllegalCapacityException.h:18</div></div>
-<div class="ttc" id="aclassVector_html_a788a09568485e36915546c84b0a66e62"><div class="ttname"><a href="classVector.html#a788a09568485e36915546c84b0a66e62">Vector::operator-=</a></div><div class="ttdeci">auto &amp; operator-=(const Vector&lt; TValueRight &gt; &amp;rhs)</div><div class="ttdoc">Minus and assign operator.</div><div class="ttdef"><b>Definition:</b> Vector.h:325</div></div>
-<div class="ttc" id="aclassVector_3_01bool_01_4_html_a4240d80f4bb20edf0e2c357c6be0ab49"><div class="ttname"><a href="classVector_3_01bool_01_4.html#a4240d80f4bb20edf0e2c357c6be0ab49">Vector&lt; bool &gt;::get_pages</a></div><div class="ttdeci">static index_type get_pages(index_type cap)</div><div class="ttdef"><b>Definition:</b> Vector.h:538</div></div>
-<div class="ttc" id="aclassVector_html_a1b1ab94d845dafd9e2084f5a1d4cc5fc"><div class="ttname"><a href="classVector.html#a1b1ab94d845dafd9e2084f5a1d4cc5fc">Vector::operator-</a></div><div class="ttdeci">Vector operator-()</div><div class="ttdoc">Unary minus operator.</div><div class="ttdef"><b>Definition:</b> Vector.h:264</div></div>
-<div class="ttc" id="aclassVector_html_a2f7ca907cf596737f1e0f4b74c47304f"><div class="ttname"><a href="classVector.html#a2f7ca907cf596737f1e0f4b74c47304f">Vector::Vector</a></div><div class="ttdeci">Vector(index_type required_capacity, double default_value=0, precision_type required_precision=0)</div><div class="ttdoc">Constructor for almost any case.</div><div class="ttdef"><b>Definition:</b> Vector.h:50</div></div>
-<div class="ttc" id="aclassVector_3_01bool_01_4_html"><div class="ttname"><a href="classVector_3_01bool_01_4.html">Vector&lt; bool &gt;</a></div><div class="ttdoc">Vector implementation for bool.</div><div class="ttdef"><b>Definition:</b> Vector.h:502</div></div>
+<div class="ttc" id="aclassVector_html_a788a09568485e36915546c84b0a66e62"><div class="ttname"><a href="classVector.html#a788a09568485e36915546c84b0a66e62">Vector::operator-=</a></div><div class="ttdeci">auto &amp; operator-=(const Vector&lt; TValueRight &gt; &amp;rhs)</div><div class="ttdoc">Minus and assign operator.</div><div class="ttdef"><b>Definition:</b> Vector.h:331</div></div>
+<div class="ttc" id="aclassVector_3_01bool_01_4_html_a4240d80f4bb20edf0e2c357c6be0ab49"><div class="ttname"><a href="classVector_3_01bool_01_4.html#a4240d80f4bb20edf0e2c357c6be0ab49">Vector&lt; bool &gt;::get_pages</a></div><div class="ttdeci">static index_type get_pages(index_type cap)</div><div class="ttdef"><b>Definition:</b> Vector.h:544</div></div>
+<div class="ttc" id="aclassVector_html_a1b1ab94d845dafd9e2084f5a1d4cc5fc"><div class="ttname"><a href="classVector.html#a1b1ab94d845dafd9e2084f5a1d4cc5fc">Vector::operator-</a></div><div class="ttdeci">Vector operator-()</div><div class="ttdoc">Unary minus operator.</div><div class="ttdef"><b>Definition:</b> Vector.h:270</div></div>
+<div class="ttc" id="aclassVector_3_01bool_01_4_html"><div class="ttname"><a href="classVector_3_01bool_01_4.html">Vector&lt; bool &gt;</a></div><div class="ttdoc">Vector implementation for bool.</div><div class="ttdef"><b>Definition:</b> Vector.h:508</div></div>
 <div class="ttc" id="aclassVector_html_a9db46e9c4a51ac790dfb2d5712d0732f"><div class="ttname"><a href="classVector.html#a9db46e9c4a51ac790dfb2d5712d0732f">Vector::operator*</a></div><div class="ttdeci">friend auto operator*(Vector&lt; TValueLeft &gt; lhs, const TValueRight &amp;rhs)</div><div class="ttdoc">Mass multiply operator.</div><div class="ttdef"><b>Definition:</b> Vector.cpp:80</div></div>
+<div class="ttc" id="aclassVector_html_a0d30289e231ebb3fa6c78e84aa78c93e"><div class="ttname"><a href="classVector.html#a0d30289e231ebb3fa6c78e84aa78c93e">Vector::Vector</a></div><div class="ttdeci">Vector(const char *file_path, precision_type required_precision=0, TValue default_value=TValue())</div><div class="ttdoc">Constructor from file.</div><div class="ttdef"><b>Definition:</b> Vector.h:63</div></div>
 <div class="ttc" id="aclassVector_html_aef5db57a4cab4079886e751343bc968a"><div class="ttname"><a href="classVector.html#aef5db57a4cab4079886e751343bc968a">Vector::operator+</a></div><div class="ttdeci">friend auto operator+(const Vector&lt; TValueLeft &gt; &amp;lhs, const Vector&lt; TValueRight &gt; &amp;rhs)</div><div class="ttdoc">Plus operator.</div><div class="ttdef"><b>Definition:</b> Vector.cpp:24</div></div>
-<div class="ttc" id="aclassVector_3_01bool_01_4_html_ab3e5b888519b5a84eb3a1fc7daedb187"><div class="ttname"><a href="classVector_3_01bool_01_4.html#ab3e5b888519b5a84eb3a1fc7daedb187">Vector&lt; bool &gt;::operator*=</a></div><div class="ttdeci">Vector&lt; bool &gt; &amp; operator*=(const Vector&lt; bool &gt; &amp;rhs)</div><div class="ttdoc">Multiply and assign operator - AND.</div><div class="ttdef"><b>Definition:</b> Vector.h:685</div></div>
-<div class="ttc" id="aclassVector_html_a6b41516d318aadc76c67752cbe7a85e5"><div class="ttname"><a href="classVector.html#a6b41516d318aadc76c67752cbe7a85e5">Vector::operator&lt;&lt;</a></div><div class="ttdeci">friend std::ostream &amp; operator&lt;&lt;(std::ostream &amp;os, Vector const &amp;x)</div><div class="ttdoc">Friend operator that prints Vector to std::ostream.</div><div class="ttdef"><b>Definition:</b> Vector.h:194</div></div>
-<div class="ttc" id="aclassVector_html_a45c72980a8c466a2e2946c6064bdcd81"><div class="ttname"><a href="classVector.html#a45c72980a8c466a2e2946c6064bdcd81">Vector::operator&gt;&gt;</a></div><div class="ttdeci">friend std::istream &amp; operator&gt;&gt;(std::istream &amp;is, Vector&lt; TValue &gt; &amp;x)</div><div class="ttdoc">Friend operator that reads Vector from std::istream.</div><div class="ttdef"><b>Definition:</b> Vector.h:206</div></div>
+<div class="ttc" id="aclassVector_3_01bool_01_4_html_ab3e5b888519b5a84eb3a1fc7daedb187"><div class="ttname"><a href="classVector_3_01bool_01_4.html#ab3e5b888519b5a84eb3a1fc7daedb187">Vector&lt; bool &gt;::operator*=</a></div><div class="ttdeci">Vector&lt; bool &gt; &amp; operator*=(const Vector&lt; bool &gt; &amp;rhs)</div><div class="ttdoc">Multiply and assign operator - AND.</div><div class="ttdef"><b>Definition:</b> Vector.h:691</div></div>
+<div class="ttc" id="aclassVector_html_a6b41516d318aadc76c67752cbe7a85e5"><div class="ttname"><a href="classVector.html#a6b41516d318aadc76c67752cbe7a85e5">Vector::operator&lt;&lt;</a></div><div class="ttdeci">friend std::ostream &amp; operator&lt;&lt;(std::ostream &amp;os, Vector const &amp;x)</div><div class="ttdoc">Friend operator that prints Vector to std::ostream.</div><div class="ttdef"><b>Definition:</b> Vector.h:200</div></div>
+<div class="ttc" id="aclassVector_html_a45c72980a8c466a2e2946c6064bdcd81"><div class="ttname"><a href="classVector.html#a45c72980a8c466a2e2946c6064bdcd81">Vector::operator&gt;&gt;</a></div><div class="ttdeci">friend std::istream &amp; operator&gt;&gt;(std::istream &amp;is, Vector&lt; TValue &gt; &amp;x)</div><div class="ttdoc">Friend operator that reads Vector from std::istream.</div><div class="ttdef"><b>Definition:</b> Vector.h:212</div></div>
 <div class="ttc" id="aclassVector_html"><div class="ttname"><a href="classVector.html">Vector</a></div><div class="ttdoc">Header containing Vector class declaration.</div><div class="ttdef"><b>Definition:</b> Vector.h:34</div></div>
-<div class="ttc" id="aclassVector_html_adf96547dd48681301a7feaeeb4476238"><div class="ttname"><a href="classVector.html#adf96547dd48681301a7feaeeb4476238">Vector::Vector</a></div><div class="ttdeci">Vector(const Vector &amp;rhs)</div><div class="ttdoc">Copy constructor.</div><div class="ttdef"><b>Definition:</b> Vector.h:79</div></div>
+<div class="ttc" id="aclassVector_html_adf96547dd48681301a7feaeeb4476238"><div class="ttname"><a href="classVector.html#adf96547dd48681301a7feaeeb4476238">Vector::Vector</a></div><div class="ttdeci">Vector(const Vector &amp;rhs)</div><div class="ttdoc">Copy constructor.</div><div class="ttdef"><b>Definition:</b> Vector.h:85</div></div>
 <div class="ttc" id="aclassVector_html_acf2932f237da22c7ba2c9999d0772243"><div class="ttname"><a href="classVector.html#acf2932f237da22c7ba2c9999d0772243">Vector::operator/</a></div><div class="ttdeci">friend auto operator/(Vector&lt; TValueLeft &gt; lhs, const TValueRight &amp;rhs)</div><div class="ttdoc">Mass divide operator.</div><div class="ttdef"><b>Definition:</b> Vector.cpp:90</div></div>
 <div class="ttc" id="aclassOutOfRangeException_html"><div class="ttname"><a href="classOutOfRangeException.html">OutOfRangeException</a></div><div class="ttdoc">Header file that describes OutOfRangeException.</div><div class="ttdef"><b>Definition:</b> OutOfRangeException.h:18</div></div>
 <div class="ttc" id="aclassParseException_html"><div class="ttname"><a href="classParseException.html">ParseException</a></div><div class="ttdoc">Header file that describes parse exception.</div><div class="ttdef"><b>Definition:</b> ParseException.h:18</div></div>
