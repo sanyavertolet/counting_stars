@@ -126,6 +126,14 @@ TEST(Vector_test, Complex_number_test)
     Vector<Complex_number<double, double>> new_complex_vector(1000000);
     ss >> new_complex_vector;
     ASSERT_EQ(to_string(new_complex_vector), to_string(complex_vector));
+    Vector<Complex_number<double, double>> vector_from_input;
+    vector_from_input = Vector<Complex_number<double, double>>(std::string(test_path / "vector2.txt").c_str());
+    ASSERT_EQ(vector_from_input(1 - 1), Complex_number<double>(1.1, 5.5));
+    ASSERT_EQ(vector_from_input(6000 - 1), Complex_number<double>(1.0, 1.0));
+    ASSERT_EQ(vector_from_input(7 - 1), Complex_number<double>(1.2, 5.5));
+    ASSERT_EQ(vector_from_input(22 - 1), Complex_number<double>(1.5, 0.0));
+    ASSERT_THROW(Vector<Complex_number<double>>(std::string(test_path / "vector.txt").c_str()), FileNotFoundException);
+    ASSERT_THROW(Vector<Complex_number<double>>(std::string(test_path / "vector-parse-exception.txt").c_str()), ParseException);
 }
 
 TEST(Vector_test, bool_test)

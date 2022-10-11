@@ -49,7 +49,7 @@ public:
      */
     explicit Vector(
             index_type required_capacity,
-            double default_value = 0,
+            TValue default_value = TValue(),
             precision_type required_precision = 0
                     ): capacity(std::move(required_capacity)), mass_transform(default_value), precision(required_precision), data({}) { }
 
@@ -60,10 +60,16 @@ public:
      * @param required_precision precision of contained elements, default is default_precision.
      * @param default_value value that should be set as default value for each element.
      */
-    Vector(const char* file_path, precision_type required_precision = 0, TValue default_value = 0):
+    explicit Vector(const char* file_path, precision_type required_precision = 0, TValue default_value = TValue()):
             mass_transform(default_value), precision(required_precision) {
+        if (!std::filesystem::exists(file_path)) {
+            throw FileNotFoundException(file_path);
+        }
         std::ifstream infile(file_path);
         infile >> *this;
+        if (!infile.eof()) {
+            throw ParseException("Error while parsing vector.");
+        }
     }
 
     explicit Vector(const Matrix_proxy<TValue>& proxy): mass_transform(0), precision(proxy.get_precision()) {
