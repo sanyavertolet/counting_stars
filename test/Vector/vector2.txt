@@ -1,5 +1,6 @@
+# comment
 vector complex 50000
-
+# comment
 1 (1.1,5.5)
 6000 (1.0,1.0)
 7 (1.2,5.5)

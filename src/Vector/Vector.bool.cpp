@@ -14,26 +14,45 @@ std::ostream& operator<<(std::ostream& os, Vector<bool> const& x) {
 std::istream& operator>>(std::istream& is, Vector<bool>& x) {
     std::string structure_name;
     std::string type_name;
-    is >> structure_name;
+
+    std::stringstream input_string_stream(get_uncommented_line(is));
+
+    input_string_stream >> structure_name;
     if (structure_name != "vector") {
         is.setstate(std::ios::failbit);
+        return is;
 //        throw ParseException(structure_name + " cannot be parsed to vector.");
     }
-    is >> type_name;
+    input_string_stream >> type_name;
     if (type_name != "bit") {
         is.setstate(std::ios::failbit);
+        return is;
 //        throw CastException(type_name + " cannot be cast to bit vector.");
     }
     Vector<bool>::index_type capacity;
-    is >> capacity;
+    input_string_stream >> capacity;
+    if (input_string_stream.fail()) {
+        is.setstate(std::ios::failbit);
+        return is;
+    }
     x.set_capacity(capacity);
     Vector<bool>::index_type index;
     bool value;
-    while(is >> index >> value) {
+    input_string_stream = std::stringstream(get_uncommented_line(is));
+    if (input_string_stream.str().empty()) {
+        is.clear();
+        return is;
+    }
+    while(input_string_stream >> index >> value) {
         if (is.fail()) {
             return is;
         }
         x(index - 1, value);
+        input_string_stream = std::stringstream(get_uncommented_line(is));
+        if (input_string_stream.str().empty()) {
+            is.clear();
+            break;
+        }
     }
 
     return is;

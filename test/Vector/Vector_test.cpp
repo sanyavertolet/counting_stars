@@ -15,7 +15,7 @@
 
 class Vector_test : public testing::Test { };
 
-std::filesystem::path test_path = project_path / "test" / "Vector";
+std::filesystem::path test_path = project_path() / "test" / "Vector";
 
 TEST(Vector_test, int_test)
 {
@@ -178,4 +178,10 @@ TEST(Vector_test, bool_test)
     ASSERT_EQ(vector_from_input(6000 - 1), true);
     ASSERT_EQ(vector_from_input(7 - 1), true);
     ASSERT_EQ(vector_from_input(22 - 1), true);
+    ASSERT_NO_THROW(Vector<bool>(std::string(test_path / "vector-empty.txt").c_str()));
+    ASSERT_THROW(Vector<bool>(std::string(test_path / "vector-broken.txt").c_str()), ParseException);
+}
+
+TEST(Vector_test, just_a_test) {
+    ASSERT_THROW(Vector<bool>(std::string(test_path / "vector-broken.txt").c_str()), ParseException);
 }

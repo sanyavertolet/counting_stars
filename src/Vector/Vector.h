@@ -15,6 +15,8 @@
 #include <vector>
 #include <set>
 
+#include "../utils.h"
+
 #include "../exceptions/exceptions.h"
 #include "../StringInt/StringInt.h"
 #include "../Rational_number/Rational_number.h"
@@ -67,7 +69,7 @@ public:
         }
         std::ifstream infile(file_path);
         infile >> *this;
-        if (!infile.eof()) {
+        if (infile.fail()) {
             throw ParseException("Error while parsing vector.");
         }
     }
@@ -212,26 +214,42 @@ public:
     friend std::istream& operator>>(std::istream& is, Vector<TValue>& x) {
         std::string structure_name;
         std::string type_name;
-        is >> structure_name;
+
+        std::stringstream input_string_stream(get_uncommented_line(is));
+
+        input_string_stream >> structure_name;
         if (structure_name != "vector") {
             is.setstate(std::ios::failbit);
+            return is;
 //        throw ParseException(structure_name + " cannot be parsed to vector.");
         }
-        is >> type_name;
+        input_string_stream >> type_name;
         if (type_name != "complex" && type_name != "rational") {
             is.setstate(std::ios::failbit);
+            return is;
 //        throw CastException(type_name + " cannot be stored to vector.");
         }
         Vector::index_type capacity_from_input;
-        is >> capacity_from_input;
+        input_string_stream >> capacity_from_input;
+        if (input_string_stream.fail()) {
+            is.setstate(std::ios::failbit);
+            return is;
+        }
         x.set_capacity(capacity_from_input);
         Vector::index_type index;
         TValue value;
-        while(is >> index >> value) {
-            if (is.fail()) {
-                return is;
-            }
+        input_string_stream = std::stringstream(get_uncommented_line(is));
+        if (input_string_stream.str().empty()) {
+            is.clear();
+            return is;
+        }
+        while(input_string_stream >> index >> value) {
             x(index - 1) = value;
+            input_string_stream = std::stringstream(get_uncommented_line(is));
+            if (input_string_stream.str().empty()) {
+                is.clear();
+                break;
+            }
         }
 
         return is;
@@ -491,16 +509,6 @@ private:
 };
 
 /**
- * Method to create Vector from input file stream (std::ifstream).
- *
- * @tparam TValue type of data for Vector.
- * @param is input file stream (std::ifstream).
- * @return Vector from std::ifstream.
- */
-template<typename TValue>
-Vector<TValue> parse_from_ifstream(std::ifstream &is);
-
-/**
  * Vector implementation for bool.
  * In this case data is stored as std::vector of uint64_t.
  */
@@ -528,12 +536,12 @@ public:
      * @param file_path name of a file to be parsed.
      */
     Vector(const char* file_path): capacity(0) {
-        std::ifstream infile(file_path);
-        if (!infile.good()) {
+        if (!std::filesystem::exists(file_path)) {
             throw FileNotFoundException(file_path);
         }
+        std::ifstream infile(file_path);
         infile >> *this;
-        if (infile.bad()) {
+        if (!infile.good()) {
             throw ParseException("Error while parsing vector.");
         }
     }

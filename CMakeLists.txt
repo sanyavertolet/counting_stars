@@ -21,7 +21,7 @@ set(Pos src/Pos/Pos.h src/Pos/Pos.cpp src/utils.h)
 set(Matrix src/Matrix/Matrix.h src/Matrix/Coords/Matrix_coords.h src/Matrix/Coords/Matrix_row_coord.h src/Matrix/Coords/Matrix_column_coord.h src/Matrix/Matrix_proxy.h src/Matrix/Coords/Matrix_coords.cpp src/Matrix/Coords/Matrix_row_coord.cpp src/Matrix/Coords/Matrix_column_coord.cpp src/utils.h)
 
 #add_library(counting_stars ${StringInt} ${Rational_number} ${Complex_number} ${Vector} ${Pos} ${Matrix} ${exceptions})
-set(counting_stars ${StringInt} ${Rational_number} ${Complex_number} ${Vector} ${Pos} ${Matrix} ${exceptions})
+set(counting_stars ${StringInt} ${Rational_number} ${Complex_number} ${Vector} ${Pos} ${Matrix} ${exceptions} src/utils.cpp)
 
 add_executable(tests test/StringInt/StringInt_constructor_test.cpp test/StringInt/StringInt_operators_test.cpp test/StringInt/StringInt_cast_test.cpp test/Rational_number/Rational_number_constructor_test.cpp test/Rational_number/Rational_number_operators_test.cpp test/Complex_number/Complex_number_constructor_test.cpp test/Complex_number/Complex_number_operators_test.cpp test/Vector/Vector_test.cpp test/Matrix/Coords/Matrix_coords_test.cpp test/Matrix/Coords/Matrix_row_coord_test.cpp test/Matrix/Coords/Matrix_column_coord_test.cpp test/Pos/Pos_test.cpp test/Matrix/Matrix_test.cpp ${counting_stars})
 #target_link_libraries(tests counting_stars)

@@ -1,5 +1,5 @@
 /**
- * File containing utilities for counting_stars library.
+ * Header containing utilities for counting_stars library.
  *
  * @author sanyavertolet
  */
@@ -10,8 +10,16 @@
 #include <iostream>
 #include <filesystem>
 
+/**
+ * @return path to project root dir
+ */
+std::filesystem::path project_path();
 
-std::filesystem::path project_path = std::filesystem::current_path().parent_path();
+/**
+ * @param is input file stream
+ * @return line that contains
+ */
+std::string get_uncommented_line(std::istream& is);
 
 
 #endif //COUNTING_STARS_UTILS_H
