@@ -17,7 +17,7 @@
 #include "../exceptions/exceptions.h"
 
 class Pos;
-std::string to_string(const Pos& pos, bool is_pretty_print = true);
+std::string to_string(const Pos& pos);
 
 /**
  * Class that defines position in Matrix.
@@ -76,18 +76,6 @@ public:
      * @return Pos with swapped coordinates.
      */
     Pos operator~();
-
-    /**
-     * Friend operator that prints Matrix to std::ostream.
-     *
-     * @param os output stream.
-     * @param x Matrix to print.
-     * @return os.
-     */
-    friend std::ostream& operator<<(std::ostream& os, Pos const& pos) {
-        os << to_string(pos);
-        return os;
-    }
 
     /**
      * Eq operator.
@@ -163,6 +151,24 @@ private:
 };
 
 bool operator==(const Pos& lhs, const Pos& rhs);
+
+/**
+ * Operator that prints Pos to std::ostream.
+ *
+ * @param os output stream.
+ * @param x Pos to print.
+ * @return os.
+ */
+std::ostream& operator<<(std::ostream& os, Pos const& pos);
+
+/**
+ * Operator that reads Pos from std::istream.
+ *
+ * @param is input stream.
+ * @param x Pos to read to.
+ * @return is.
+ */
+std::istream& operator>>(std::istream& is, Pos& pos);
 
 namespace std {
     template <>

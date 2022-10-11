@@ -15,7 +15,7 @@
 
 class Vector_test : public testing::Test { };
 
-std::filesystem::path test_path = project_path() / "test" / "Vector";
+std::filesystem::path vector_test_path = project_path() / "test" / "Vector" / "vector-files";
 
 TEST(Vector_test, int_test)
 {
@@ -127,13 +127,13 @@ TEST(Vector_test, Complex_number_test)
     ss >> new_complex_vector;
     ASSERT_EQ(to_string(new_complex_vector), to_string(complex_vector));
     Vector<Complex_number<double, double>> vector_from_input;
-    vector_from_input = Vector<Complex_number<double, double>>(std::string(test_path / "vector2.txt").c_str());
+    vector_from_input = Vector<Complex_number<double, double>>(std::string(vector_test_path / "vector2.txt").c_str());
     ASSERT_EQ(vector_from_input(1 - 1), Complex_number<double>(1.1, 5.5));
     ASSERT_EQ(vector_from_input(6000 - 1), Complex_number<double>(1.0, 1.0));
     ASSERT_EQ(vector_from_input(7 - 1), Complex_number<double>(1.2, 5.5));
     ASSERT_EQ(vector_from_input(22 - 1), Complex_number<double>(1.5, 0.0));
-    ASSERT_THROW(Vector<Complex_number<double>>(std::string(test_path / "vector.txt").c_str()), FileNotFoundException);
-    ASSERT_THROW(Vector<Complex_number<double>>(std::string(test_path / "vector-parse-exception.txt").c_str()), ParseException);
+    ASSERT_THROW(Vector<Complex_number<double>>(std::string(vector_test_path / "vector.txt").c_str()), FileNotFoundException);
+    ASSERT_THROW(Vector<Complex_number<double>>(std::string(vector_test_path / "vector-parse-exception.txt").c_str()), ParseException);
 }
 
 TEST(Vector_test, bool_test)
@@ -173,15 +173,15 @@ TEST(Vector_test, bool_test)
     is = std::stringstream ("vector bit 100\n\n\n");
     is >> vector_from_input;
     ASSERT_EQ(to_string(vector_from_input), "vector bit 100\n\n");
-    vector_from_input = Vector<bool>(std::string(test_path / "vector1.txt").c_str());
+    vector_from_input = Vector<bool>(std::string(vector_test_path / "vector1.txt").c_str());
     ASSERT_EQ(vector_from_input(1 - 1), true);
     ASSERT_EQ(vector_from_input(6000 - 1), true);
     ASSERT_EQ(vector_from_input(7 - 1), true);
     ASSERT_EQ(vector_from_input(22 - 1), true);
-    ASSERT_NO_THROW(Vector<bool>(std::string(test_path / "vector-empty.txt").c_str()));
-    ASSERT_THROW(Vector<bool>(std::string(test_path / "vector-broken.txt").c_str()), ParseException);
+    ASSERT_NO_THROW(Vector<bool>(std::string(vector_test_path / "vector-empty.txt").c_str()));
+    ASSERT_THROW(Vector<bool>(std::string(vector_test_path / "vector-broken.txt").c_str()), ParseException);
 }
 
 TEST(Vector_test, just_a_test) {
-    ASSERT_THROW(Vector<bool>(std::string(test_path / "vector-broken.txt").c_str()), ParseException);
+    ASSERT_THROW(Vector<bool>(std::string(vector_test_path / "vector-broken.txt").c_str()), ParseException);
 }

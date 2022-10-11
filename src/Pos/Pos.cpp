@@ -68,12 +68,33 @@ StringInt Pos::operator-(const Pos& rhs) const {
     return abs(i - rhs.i) + abs(j - rhs.j);
 }
 
-std::string to_string(const Pos& pos, bool is_pretty_print) {
-    if (is_pretty_print) {
-        return "(" + to_string(pos.get_i()) + ";" + to_string(pos.get_j()) + ")";
-    } else {
-        return to_string(pos.get_i()) + "\t" + to_string(pos.get_j());
+std::string to_string(const Pos& pos) {
+    return to_string(pos.get_i()) + " " + to_string(pos.get_j());
+}
+
+std::ostream& operator<<(std::ostream& os, const Pos& pos) {
+    os << to_string(pos);
+    return os;
+}
+
+std::istream& operator>>(std::istream& is, Pos& pos) {
+    StringInt ii, jj;
+    is >> ii >> jj;
+
+    try {
+        pos.set_i(ii);
+    } catch (IllegalStateException& illegalStateException) {
+        is.setstate(std::ios::failbit);
+        return is;
     }
+
+    try {
+        pos.set_j(jj);
+    } catch (IllegalStateException& illegalStateException) {
+        is.setstate(std::ios::failbit);
+    }
+
+    return is;
 }
 
 std::size_t std::hash<Pos>::operator()(const Pos& pos) const {

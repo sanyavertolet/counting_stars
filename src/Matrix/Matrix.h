@@ -30,6 +30,9 @@ class Matrix;
 template <typename T>
 std::ostream& operator<<(std::ostream& os, Matrix<T> const& x);
 
+template <typename T>
+std::ostream& operator>>(std::ostream& os, Matrix<T> const& x);
+
 template<typename TValueLeft, typename TValueRight>
 bool operator==(const Matrix<TValueLeft> &lhs, const Matrix<TValueRight> &rhs);
 
@@ -122,8 +125,14 @@ public:
      * @param file_path path to file with Matrix
      */
     explicit Matrix(const char* file_path): precision(0), mass_transform(0), data({}) {
-        // todo: depends on Matrix parser.
-        throw FileNotFoundException(file_path);
+        if (!std::filesystem::exists(file_path)) {
+            throw FileNotFoundException(file_path);
+        }
+        std::ifstream infile(file_path);
+        infile >> *this;
+        if (!infile.good()) {
+            throw ParseException("Error while parsing matrix.");
+        }
     }
 
     /**
@@ -240,25 +249,6 @@ public:
     [[nodiscard]] size_t get_size() const {
         return data.size();
     }
-
-    /**
-     * Friend operator that prints Matrix to std::ostream.
-     *
-     * @param os output stream.
-     * @param x Matrix to print.
-     * @return os.
-     */
-    template<typename T>
-    friend std::ostream& operator<<(std::ostream& os, Matrix<T> const& x);
-
-    /**
-     * Friend operator that reads Matrix from std::istream.
-     *
-     * @param is input stream.
-     * @param x Matrix to read to.
-     * @return is.
-     */
-    friend std::istream& operator>>(std::istream& is, Matrix& x);
 
     /**
      * Eq operator.
@@ -652,10 +642,69 @@ private:
     }
 };
 
+/**
+ * Operator that prints Matrix to std::ostream.
+ *
+ * @param os output stream.
+ * @param x Matrix to print.
+ * @return os.
+ */
 template <typename TValue>
 std::ostream& operator<<(std::ostream& os, Matrix<TValue> const& x) {
     os << to_string(x);
     return os;
+}
+
+/**
+ * Operator that reads Matrix from std::istream.
+ *
+ * @param is input stream.
+ * @param x Matrix to read to.
+ * @return is.
+ */
+template<typename TValue>
+std::istream& operator>>(std::istream& is, Matrix<TValue>& x) {
+    std::string structure_name;
+    std::string type_name;
+
+    std::stringstream input_string_stream(get_uncommented_line(is));
+
+    input_string_stream >> structure_name;
+    if (structure_name != "matrix") {
+        is.setstate(std::ios::failbit);
+        return is;
+//        throw ParseException(structure_name + " cannot be parsed to vector.");
+    }
+    input_string_stream >> type_name;
+    if (type_name != "complex" && type_name != "rational") {
+        is.setstate(std::ios::failbit);
+        return is;
+//        throw CastException(type_name + " cannot be stored to vector.");
+    }
+    typename Matrix<TValue>::index_type capacity_from_input;
+    input_string_stream >> capacity_from_input;
+    if (input_string_stream.fail()) {
+        is.setstate(std::ios::failbit);
+        return is;
+    }
+    x.set_capacity(capacity_from_input);
+    typename Matrix<TValue>::index_type index;
+    TValue value;
+    input_string_stream = std::stringstream(get_uncommented_line(is));
+    if (input_string_stream.str().empty()) {
+        is.clear();
+        return is;
+    }
+    while(input_string_stream >> index >> value) {
+        x({index.get_i() - 1, index.get_j() - 1}) = value;
+        input_string_stream = std::stringstream(get_uncommented_line(is));
+        if (input_string_stream.str().empty()) {
+            is.clear();
+            break;
+        }
+    }
+
+    return is;
 }
 
 template<typename TValueLeft, typename TValueRight>
@@ -781,9 +830,9 @@ template <typename TValue>
 std::string to_string(Matrix<TValue> matrix) {
     std::stringstream ss;
     std::string type_name;
-    ss << "matrix " << typeid(TValue()).name() << " " << to_string(matrix.capacity, false) << std::endl << std::endl;
+    ss << "matrix " << typeid(TValue()).name() << " " << to_string(matrix.capacity) << std::endl << std::endl;
     for (auto [key, value]: matrix.data) {
-        ss << to_string(key, false) << "\t\t" <<  value << std::endl;
+        ss << to_string({key.get_i() + 1, key.get_j() + 1}) << " " <<  value << std::endl;
     }
     return ss.str();
 }

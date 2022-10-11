@@ -19,7 +19,7 @@ class OutOfRangeException : std::exception {
 private:
     const char* message;
 public:
-    OutOfRangeException() : message("Could not cast properly.") {}
+    OutOfRangeException() : message("OutOfRangeException") {}
     explicit OutOfRangeException(const char* msg) : message(msg) {}
     explicit OutOfRangeException(const std::string& msg) : message(msg.c_str()) {}
     [[nodiscard]] const char* what() const noexcept override {
