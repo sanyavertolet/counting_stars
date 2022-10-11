@@ -9,6 +9,7 @@
 
 #include <iostream>
 #include <filesystem>
+#include <string>
 
 /**
  * @return path to project root dir
