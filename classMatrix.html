@@ -188,13 +188,6 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
 Friends</h2></td></tr>
-<tr class="memitem:abc98a15eb6480902c21a0000732515e0"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:abc98a15eb6480902c21a0000732515e0"><td class="memTemplItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classMatrix.html#abc98a15eb6480902c21a0000732515e0">operator&lt;&lt;</a> (std::ostream &amp;os, <a class="el" href="classMatrix.html">Matrix</a>&lt; T &gt; const &amp;x)</td></tr>
-<tr class="memdesc:abc98a15eb6480902c21a0000732515e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Friend operator that prints <a class="el" href="classMatrix.html" title="Header containing Matrix class declaration.">Matrix</a> to std::ostream.  <a href="classMatrix.html#abc98a15eb6480902c21a0000732515e0">More...</a><br /></td></tr>
-<tr class="separator:abc98a15eb6480902c21a0000732515e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1492859d276e224c89e148dcfff4a116"><td class="memItemLeft" align="right" valign="top">std::istream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMatrix.html#a1492859d276e224c89e148dcfff4a116">operator&gt;&gt;</a> (std::istream &amp;is, <a class="el" href="classMatrix.html">Matrix</a> &amp;x)</td></tr>
-<tr class="memdesc:a1492859d276e224c89e148dcfff4a116"><td class="mdescLeft">&#160;</td><td class="mdescRight">Friend operator that reads <a class="el" href="classMatrix.html" title="Header containing Matrix class declaration.">Matrix</a> from std::istream.  <a href="classMatrix.html#a1492859d276e224c89e148dcfff4a116">More...</a><br /></td></tr>
-<tr class="separator:a1492859d276e224c89e148dcfff4a116"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2f31919e93feb754a22e611ab5923e24"><td class="memTemplParams" colspan="2">template&lt;typename TValueLeft , typename TValueRight &gt; </td></tr>
 <tr class="memitem:a2f31919e93feb754a22e611ab5923e24"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classMatrix.html#a2f31919e93feb754a22e611ab5923e24">operator==</a> (const <a class="el" href="classMatrix.html">Matrix</a>&lt; TValueLeft &gt; &amp;lhs, const <a class="el" href="classMatrix.html">Matrix</a>&lt; TValueRight &gt; &amp;rhs)</td></tr>
 <tr class="memdesc:a2f31919e93feb754a22e611ab5923e24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Eq operator.  <a href="classMatrix.html#a2f31919e93feb754a22e611ab5923e24">More...</a><br /></td></tr>
@@ -1846,56 +1839,6 @@ template&lt;typename TValueLeft , typename TValueRight &gt; </div>
 
 </div>
 </div>
-<a id="abc98a15eb6480902c21a0000732515e0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abc98a15eb6480902c21a0000732515e0">&#9670;&nbsp;</a></span>operator&lt;&lt;</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename TValue &gt; </div>
-<div class="memtemplate">
-template&lt;typename T &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::ostream&amp; operator&lt;&lt; </td>
-          <td>(</td>
-          <td class="paramtype">std::ostream &amp;&#160;</td>
-          <td class="paramname"><em>os</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classMatrix.html">Matrix</a>&lt; T &gt; const &amp;&#160;</td>
-          <td class="paramname"><em>x</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Friend operator that prints <a class="el" href="classMatrix.html" title="Header containing Matrix class declaration.">Matrix</a> to std::ostream. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">os</td><td>output stream. </td></tr>
-    <tr><td class="paramname">x</td><td><a class="el" href="classMatrix.html" title="Header containing Matrix class declaration.">Matrix</a> to print. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>os. </dd></dl>
-
-</div>
-</div>
 <a id="a2f31919e93feb754a22e611ab5923e24"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2f31919e93feb754a22e611ab5923e24">&#9670;&nbsp;</a></span>operator==</h2>
 
@@ -1950,54 +1893,6 @@ template&lt;typename TValueLeft , typename TValueRight &gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true of lhs and rhs are equal, false otherwise. </dd></dl>
-
-</div>
-</div>
-<a id="a1492859d276e224c89e148dcfff4a116"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1492859d276e224c89e148dcfff4a116">&#9670;&nbsp;</a></span>operator&gt;&gt;</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename TValue &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::istream&amp; operator&gt;&gt; </td>
-          <td>(</td>
-          <td class="paramtype">std::istream &amp;&#160;</td>
-          <td class="paramname"><em>is</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classMatrix.html">Matrix</a>&lt; TValue &gt; &amp;&#160;</td>
-          <td class="paramname"><em>x</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Friend operator that reads <a class="el" href="classMatrix.html" title="Header containing Matrix class declaration.">Matrix</a> from std::istream. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">is</td><td>input stream. </td></tr>
-    <tr><td class="paramname">x</td><td><a class="el" href="classMatrix.html" title="Header containing Matrix class declaration.">Matrix</a> to read to. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>is. </dd></dl>
 
 </div>
 </div>
