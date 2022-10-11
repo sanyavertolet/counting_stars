@@ -311,7 +311,7 @@ public:
         if (data.find(index) == data.end()) {
             data[index] = mass_transform;
         }
-        if (data[index] <= TValue(precision)) {
+        if (abs(data[index]) <= precision) {
             data[index] = TValue(0);
         }
         return data[index];
