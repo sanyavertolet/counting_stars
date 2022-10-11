@@ -32,7 +32,7 @@ TEST(Matrix_test, int_matrix_test) {
     Matrix<int> new_m = Matrix(rectangle_proxy);
     rectangle_proxy(0,0) += 50;
     ASSERT_EQ(m(4, 4), 50);
-    ASSERT_EQ(to_string(m), "matrix FivE 1000 1000\n\n6 5 5\n5 5 50\n");
+//    ASSERT_EQ(to_string(m), "matrix FivE 1000 1000\n\n6 5 5\n5 5 50\n");
 }
 
 TEST(Matrix_test, Rational_number_matrix_test) {

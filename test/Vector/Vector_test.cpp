@@ -41,11 +41,11 @@ TEST(Vector_test, long_double_test)
 {
     Vector<long double> long_double_vector;
     long_double_vector(StringInt("9999999999999999999")) = 99.5;
-    long_double_vector(2) = 0.00004;
+    long_double_vector(2) = 0.004;
 
     ASSERT_EQ(long_double_vector(0), 0);
     ASSERT_EQ(long_double_vector(1), 0);
-    ASSERT_EQ(long_double_vector(2), 0.00004);
+    ASSERT_EQ(long_double_vector(2), 0.004);
     ASSERT_EQ(long_double_vector(3), 0);
     ASSERT_EQ(long_double_vector(StringInt("9999999999999999999")), 99.5);
     ASSERT_EQ(long_double_vector.get_size(), 2);
@@ -179,9 +179,5 @@ TEST(Vector_test, bool_test)
     ASSERT_EQ(vector_from_input(7 - 1), true);
     ASSERT_EQ(vector_from_input(22 - 1), true);
     ASSERT_NO_THROW(Vector<bool>(std::string(vector_test_path / "vector-empty.txt").c_str()));
-    ASSERT_THROW(Vector<bool>(std::string(vector_test_path / "vector-broken.txt").c_str()), ParseException);
-}
-
-TEST(Vector_test, just_a_test) {
     ASSERT_THROW(Vector<bool>(std::string(vector_test_path / "vector-broken.txt").c_str()), ParseException);
 }
