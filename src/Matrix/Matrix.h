@@ -832,7 +832,7 @@ std::string to_string(Matrix<TValue> matrix) {
     std::string type_name;
     ss << "matrix " << typeid(TValue()).name() << " " << to_string(matrix.capacity) << std::endl << std::endl;
     for (auto [key, value]: matrix.data) {
-        ss << to_string({key.get_i() + 1, key.get_j() + 1}) << " " <<  value << std::endl;
+        ss << to_string(Pos(key.get_i() + 1, key.get_j() + 1)) << " " <<  value << std::endl;
     }
     return ss.str();
 }

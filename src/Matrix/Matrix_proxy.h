@@ -106,6 +106,8 @@ public:
                 return matrix->get_column_values(from.get_j());
             case Matrix_proxy_type::RECTANGLE:
                 throw IllegalStateException("Cannot get rectangle slice values as std::map");
+            default:
+                throw IllegalStateException("Unknown Matrix_proxy_type.");
         }
     }
 
@@ -146,6 +148,8 @@ public:
                 return matrix->operator()({idx, from.get_j()});
             case Matrix_proxy_type::RECTANGLE:
                 throw IllegalStateException("Cannot get element of a rectangle slice by single coordinate.");
+            default:
+                throw IllegalStateException("Unknown Matrix_proxy_type.");
         }
     }
 
